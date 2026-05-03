@@ -1,0 +1,29 @@
+---
+import "./SiteHeader.scss";
+
+const links = [
+  { href: "/docs/", label: "Docs" },
+  { href: "https://github.com/webxsid/crona/releases", label: "Releases", external: true },
+  { href: "/support/", label: "Support" },
+];
+---
+
+<header class="site-header">
+  <a class="site-header__brand" href="/" aria-label="Crona home">
+    <span class="site-header__mark" aria-hidden="true">C</span>
+    <span>Crona</span>
+  </a>
+  <nav class="site-header__nav" id="primary-navigation" aria-label="Primary navigation">
+    {
+      links.map((link) => (
+        <a
+          class:list={{ "is-external": Boolean(link.external) }}
+          href={link.href}
+          {...(link.href.startsWith("http") ? { rel: "noreferrer" } : {})}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>

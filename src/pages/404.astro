@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "./_404/404.scss";
+---
+
+<BaseLayout title="404" description="The page you were looking for is not checked out.">
+  <section class="container section section--hero not-found">
+    <div class="not-found__content">
+      <div class="not-found__copy flow">
+        <p class="eyebrow">missing context</p>
+        <h1>No page is checked out here.</h1>
+        <p class="not-found__lede">
+          This route drifted out of scope somewhere between a repo switch and a late-night focus session.
+        </p>
+        <p>
+          Crona could not recover a valid context for this URL, but the rest of the workspace is fine. Pick a stable
+          entry point and continue from there.
+        </p>
+
+        <div class="not-found__actions">
+          <a class="button" href="/docs/">Open docs</a>
+          <a class="button button--secondary" href="/">Return home</a>
+        </div>
+
+        <ul class="not-found__links">
+          <li><a href="/docs/getting-started/">Start with Getting Started</a></li>
+          <li><a href="/docs/tui-keymap-reference/">Jump to the keymap</a></li>
+          <li><a href="/support/">Open support</a></li>
+        </ul>
+      </div>
+
+      <div class="not-found__scene" aria-hidden="true">
+        <div class="not-found__terminal">
+          <div class="not-found__terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="not-found__terminal-body">
+            <p><span>$</span> crona context get</p>
+            <p class="is-dim">repo: attached</p>
+            <p class="is-dim">stream: attached</p>
+            <p class="is-warning">issue: none</p>
+            <p class="is-error">route: /this-page-does-not-exist</p>
+            <p><span>&gt;</span> fallback to stable entrypoint</p>
+          </div>
+        </div>
+
+        <div class="not-found__stash">
+          <p>Recovered fragments</p>
+          <ul>
+            <li>docs/index</li>
+            <li>support/index</li>
+            <li>getting-started</li>
+          </ul>
+        </div>
+
+        <div class="not-found__cursor"></div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

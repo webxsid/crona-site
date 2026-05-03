@@ -1,0 +1,55 @@
+---
+import "./InstallCommandTabs.scss";
+---
+
+<div class="install-tabs" data-install-tabs>
+  <div class="install-tabs__topline">
+    <span class="install-tabs__label">install latest</span>
+    <div class="install-tabs__tablist" role="tablist" aria-label="Install command by operating system">
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="true" aria-controls="install-panel-macos" id="install-tab-macos" data-install-tab="macos">[ macOS ]</button>
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-linux" id="install-tab-linux" data-install-tab="linux">[ Linux ]</button>
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-windows" id="install-tab-windows" data-install-tab="windows">[ Windows ]</button>
+    </div>
+  </div>
+
+  <div class="install-tabs__command">
+    <div class="install-tabs__panel" role="tabpanel" id="install-panel-macos" aria-labelledby="install-tab-macos" data-install-panel="macos">
+      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.sh | sh</code></pre>
+    </div>
+
+    <div class="install-tabs__panel" role="tabpanel" id="install-panel-linux" aria-labelledby="install-tab-linux" data-install-panel="linux" hidden>
+      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.sh | sh</code></pre>
+    </div>
+
+    <div class="install-tabs__panel" role="tabpanel" id="install-panel-windows" aria-labelledby="install-tab-windows" data-install-panel="windows" hidden>
+      <pre><span aria-hidden="true">PS&gt; </span><code>Invoke-WebRequest "https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.ps1" -OutFile "$env:TEMP\install-crona-tui.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\install-crona-tui.ps1"</code></pre>
+    </div>
+
+    <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
+  </div>
+
+  <div class="install-tabs__links">
+    <a
+      class="external-link"
+      href="https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.sh"
+      rel="noreferrer"
+      data-script-link
+    >
+      <span>script</span>
+      <svg class="install-tabs__download-icon" aria-hidden="true" viewBox="0 0 16 16">
+        <path d="M8 2v8" />
+        <path d="M4.5 6.5 8 10l3.5-3.5" />
+        <path d="M3 13h10" />
+      </svg>
+    </a>
+    <span aria-hidden="true">/</span>
+    <a href="/docs/install/">install docs</a>
+    <span aria-hidden="true">/</span>
+    <a class="external-link" href="https://github.com/webxsid/crona/releases" rel="noreferrer">releases</a>
+  </div>
+</div>
+
+<script>
+  import "./InstallCommandTabs.js";
+</script>

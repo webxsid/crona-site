@@ -1,0 +1,132 @@
+---
+import "./DocsSidebar.scss";
+
+interface DocItem {
+  id: string;
+  data: {
+    title: string;
+    description?: string;
+  };
+}
+
+interface DocGroup {
+  id: string;
+  title: string;
+  description: string;
+  items: DocItem[];
+}
+
+const {
+  groups = [],
+  activeDocId = null,
+  showOverview = true,
+} = Astro.props as {
+  groups?: DocGroup[];
+  activeDocId?: string | null;
+  showOverview?: boolean;
+};
+
+const searchIndex = groups.flatMap((group) =>
+  group.items.map((item) => ({
+    id: item.id,
+    href: `/docs/${item.id}/`,
+    title: item.data.title,
+    description: item.data.description ?? "",
+    groupTitle: group.title,
+    searchText: [item.data.title, item.data.description ?? "", group.title, item.id.replaceAll("-", " ")]
+      .join(" ")
+      .trim(),
+  })),
+);
+
+const panelId = "docs-sidebar-panel";
+const titleId = "docs-sidebar-title";
+---
+
+<div class="docs-sidebar-shell" data-docs-sidebar>
+  <div class="docs-sidebar-mobilebar">
+    <span class="docs-sidebar-mobilebar__label">Docs</span>
+    <button
+      class="docs-sidebar-mobilebar__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls={panelId}
+      data-docs-sidebar-toggle
+    >
+      <span class="docs-sidebar-mobilebar__toggle-text">Menu</span>
+      <span class="docs-sidebar-mobilebar__toggle-icon" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+  </div>
+
+  <button class="docs-sidebar__backdrop" type="button" hidden aria-hidden="true" data-docs-sidebar-backdrop></button>
+
+  <aside
+    id={panelId}
+    class="docs-sidebar"
+    aria-labelledby={titleId}
+    data-docs-sidebar-panel
+  >
+    <div class="docs-sidebar__mobile-header">
+      <div>
+        <p class="docs-sidebar__mobile-eyebrow">Docs</p>
+        <h2 id={titleId}>Documentation Menu</h2>
+      </div>
+      <button class="docs-sidebar__close" type="button" data-docs-sidebar-close aria-label="Close documentation menu">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+
+    <div class="docs-sidebar__search">
+      <label class="docs-sidebar__search-label" for="docs-search">Search docs</label>
+      <div class="docs-sidebar__search-shell">
+        <span class="docs-sidebar__search-icon">/</span>
+        <input
+          id="docs-search"
+          type="search"
+          placeholder="Search the docs"
+          autocomplete="off"
+          spellcheck="false"
+          data-docs-search-input
+        />
+        <span class="docs-sidebar__search-shortcut" aria-hidden="true">/ · ⌘K</span>
+      </div>
+      <p class="docs-sidebar__search-note" data-docs-search-note>Search by page title, category, or topic.</p>
+    </div>
+
+    <div class="docs-sidebar__results" data-docs-search-results hidden>
+      <p class="docs-sidebar__results-label">Search Results</p>
+      <ul class="docs-sidebar__results-list" data-docs-search-results-list></ul>
+      <p class="docs-sidebar__empty" data-docs-search-empty hidden>No docs match that search yet.</p>
+    </div>
+
+    <nav class="docs-sidebar__nav" data-docs-sidebar-nav>
+      {showOverview && (
+        <a class:list={["docs-sidebar__overview", { "is-active": activeDocId === "__overview__" }]} href="/docs/">
+          <span class="docs-sidebar__overview-label">Welcome</span>
+          <strong>Documentation Home</strong>
+        </a>
+      )}
+
+      {groups.map((group) => (
+        <section class="docs-sidebar__group" aria-labelledby={`docs-group-${group.id}`}>
+          <h2 id={`docs-group-${group.id}`}>{group.title}</h2>
+          <ul>
+            {group.items.map((item) => (
+              <li>
+                <a class:list={{ "is-active": activeDocId === item.id }} href={`/docs/${item.id}/`}>
+                  <strong>{item.data.title}</strong>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </nav>
+  </aside>
+  <script is:inline type="application/json" data-docs-search-index set:html={JSON.stringify(searchIndex)}></script>
+  <script src="./DocsSidebar.js"></script>
+</div>

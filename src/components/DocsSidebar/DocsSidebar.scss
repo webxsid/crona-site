@@ -1,0 +1,387 @@
+.docs-sidebar-shell {
+  min-width: 0;
+  position: relative;
+}
+
+.docs-sidebar-mobilebar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: var(--space-4);
+}
+
+.docs-sidebar-mobilebar__label {
+  color: var(--color-warning);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.docs-sidebar-mobilebar__toggle,
+.docs-sidebar__close {
+  align-items: center;
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  color: var(--color-ink);
+  cursor: pointer;
+  display: inline-flex;
+  gap: 10px;
+  padding: 12px 14px;
+  transition:
+    border-color 140ms ease,
+    transform 140ms ease,
+    color 140ms ease;
+}
+
+.docs-sidebar-mobilebar__toggle:hover,
+.docs-sidebar-mobilebar__toggle:focus-visible,
+.docs-sidebar__close:hover,
+.docs-sidebar__close:focus-visible {
+  border-color: var(--color-line-strong);
+  color: var(--color-accent-strong);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.docs-sidebar-mobilebar__toggle-text {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+}
+
+.docs-sidebar-mobilebar__toggle-icon {
+  display: grid;
+  gap: 4px;
+}
+
+.docs-sidebar-mobilebar__toggle-icon span {
+  background: currentColor;
+  border-radius: 999px;
+  display: block;
+  height: 1.5px;
+  width: 16px;
+}
+
+.docs-sidebar__backdrop {
+  background: rgba(0, 0, 0, 0.56);
+  border: 0;
+  inset: 0;
+  position: fixed;
+  z-index: 39;
+}
+
+.docs-sidebar__mobile-header {
+  align-items: center;
+  border-bottom: 1px solid var(--color-line);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) 0;
+  padding: 18px var(--space-5) 16px;
+}
+
+.docs-sidebar__mobile-eyebrow {
+  color: var(--color-warning);
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+
+.docs-sidebar__mobile-header h2 {
+  color: var(--color-ink);
+  font-size: 1.02rem;
+  margin: 0;
+}
+
+.docs-sidebar__close {
+  flex: 0 0 auto;
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  justify-content: center;
+  line-height: 1;
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0;
+}
+
+.docs-sidebar {
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  display: grid;
+  gap: var(--space-5);
+  min-height: 0;
+  padding: var(--space-5);
+  position: fixed;
+  right: 0;
+  top: 0;
+  transform: translateX(100%);
+  transition: transform 180ms ease;
+  width: min(100%, 360px);
+  z-index: 40;
+}
+
+.docs-sidebar__search {
+  min-height: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.docs-sidebar__search-label {
+  color: var(--color-warning);
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.docs-sidebar__search-shell {
+  align-items: center;
+  background: color-mix(in srgb, var(--color-page) 40%, var(--color-panel));
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: auto 1fr auto;
+  min-height: 52px;
+  padding: 0 var(--space-4);
+}
+
+.docs-sidebar__search-icon {
+  color: var(--color-line-strong);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.docs-sidebar__search-shell input {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 0.98rem;
+  outline: none;
+  width: 100%;
+}
+
+.docs-sidebar__search-shell input::placeholder {
+  color: var(--color-muted);
+}
+
+.docs-sidebar__search-shortcut {
+  color: var(--color-line-strong);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.docs-sidebar__search-note {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.docs-sidebar__results {
+  display: grid;
+  gap: var(--space-3);
+  min-height: 0;
+}
+
+.docs-sidebar__results[hidden] {
+  display: none;
+}
+
+.docs-sidebar__results-label {
+  color: var(--color-warning);
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.docs-sidebar__results-list {
+  display: grid;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.docs-sidebar__result {
+  border: 1px solid transparent;
+  border-radius: 16px;
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+.docs-sidebar__result:hover,
+.docs-sidebar__result:focus-visible {
+  background: color-mix(in srgb, var(--color-panel-raised) 100%, transparent);
+  border-color: var(--color-line);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.docs-sidebar__result-group {
+  color: var(--color-warning);
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.docs-sidebar__result strong {
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.docs-sidebar__empty {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.docs-sidebar__nav {
+  display: grid;
+  gap: var(--space-5);
+  min-height: 0;
+}
+
+.docs-sidebar__overview,
+.docs-sidebar__group a {
+  border: 1px solid transparent;
+  border-radius: 16px;
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+.docs-sidebar__overview {
+  background: color-mix(in srgb, var(--color-panel-raised) 86%, transparent);
+}
+
+.docs-sidebar__overview:hover,
+.docs-sidebar__overview:focus-visible,
+.docs-sidebar__group a:hover,
+.docs-sidebar__group a:focus-visible {
+  background: color-mix(in srgb, var(--color-panel-raised) 100%, transparent);
+  border-color: var(--color-line);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.docs-sidebar__overview.is-active,
+.docs-sidebar__group a.is-active {
+  background: var(--color-panel-raised);
+  border-color: color-mix(in srgb, var(--color-accent) 30%, var(--color-line));
+}
+
+.docs-sidebar__overview-label,
+.docs-sidebar__group h2 {
+  color: var(--color-warning);
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.docs-sidebar__overview strong,
+.docs-sidebar__group strong {
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.docs-sidebar__group {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.docs-sidebar__group ul {
+  display: grid;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.docs-sidebar-shell[data-mobile-open="true"] .docs-sidebar {
+  transform: translateX(0);
+}
+
+:global(body.docs-menu-open) {
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .docs-sidebar-mobilebar,
+  .docs-sidebar__backdrop,
+  .docs-sidebar__mobile-header {
+    display: none;
+  }
+
+  .docs-sidebar {
+    height: calc(100dvh - var(--site-header-block) - var(--space-4));
+    overflow-y: auto;
+    position: sticky;
+    right: auto;
+    scrollbar-gutter: stable;
+    top: calc(var(--site-header-block) + var(--space-4));
+    transform: none;
+    transition: none;
+    width: auto;
+    z-index: 1;
+  }
+
+  .docs-sidebar__search {
+    background: var(--color-panel);
+    padding-bottom: var(--space-2);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .docs-sidebar__results,
+  .docs-sidebar__nav {
+    align-content: start;
+    padding-bottom: 8px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .docs-sidebar {
+    border-radius: 18px 0 0 18px;
+    bottom: 0;
+    height: 100dvh;
+    max-width: 360px;
+    overflow-y: auto;
+  }
+
+  .docs-sidebar__search-shortcut {
+    display: none;
+  }
+}

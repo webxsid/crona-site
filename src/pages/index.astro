@@ -1,0 +1,167 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AppScreenshot from "../components/AppScreenshot/AppScreenshot.astro";
+import InstallCommandTabs from "../components/InstallCommandTabs/InstallCommandTabs.astro";
+import "./_home/index.scss";
+---
+
+<BaseLayout
+  title="Crona"
+  description="Terminal-native work tracking for issues, focus sessions, check-ins, and exports."
+>
+  <section class="container section section--hero home-hero">
+    <div class="home-hero__stack">
+      <div class="home-hero__copy flow">
+        <p class="eyebrow">terminal-native work tracking</p>
+        <h1>Local-first work tracking for people who live in the terminal.</h1>
+        <p class="home-hero__lede">
+          Plan issues, run focused sessions, check in, and keep a readable record of what actually happened.
+        </p>
+        <p class="home-hero__body">
+          Crona keeps planning, timing, check-ins, and exports in one local system so the day does not disappear into
+          tabs, scratch notes, and half-finished context switches.
+        </p>
+
+        <div class="home-hero__actions">
+          <a class="button" href="/docs/getting-started/">See how it works</a>
+          <a class="button button--secondary" href="/docs/">Browse docs</a>
+        </div>
+      </div>
+
+      <div class="home-hero__media-row">
+        <div class="home-hero__install">
+          <p class="home-hero__install-label">Install the latest release</p>
+          <InstallCommandTabs />
+        </div>
+
+        <div class="home-hero__visual" aria-label="Crona Daily dashboard preview">
+          <div class="home-hero__frame">
+            <div class="home-hero__frame-topline">
+              <span>daily dashboard</span>
+              <span>active context attached</span>
+            </div>
+            <AppScreenshot
+              name="daily-dashboard"
+              alt="Crona Daily dashboard screenshot"
+              loading="eager"
+              sizes="(min-width: 1024px) 42vw, 100vw"
+            />
+          </div>
+
+          <div class="home-hero__note">
+            <p>Today’s loop</p>
+            <ul>
+              <li>choose context</li>
+              <li>start focus</li>
+              <li>review the day</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section home-loop">
+    <div class="home-section-heading flow">
+      <p class="eyebrow">workflow</p>
+      <h2>One loop, three surfaces.</h2>
+      <p>
+        The point is not to track everything. The point is to make planning, focus, and review feel like the same day
+        instead of three different systems.
+      </p>
+    </div>
+
+    <div class="home-loop__grid">
+      <article class="home-loop__step">
+        <span>01</span>
+        <h3>Plan the day</h3>
+        <p>Pick the repo, stream, and issues that actually matter before the first session starts.</p>
+      </article>
+
+      <article class="home-loop__step">
+        <span>02</span>
+        <h3>Run focused work</h3>
+        <p>Track real sessions, interruptions, stashes, and recovery in the same local engine.</p>
+      </article>
+
+      <article class="home-loop__step">
+        <span>03</span>
+        <h3>Read what happened</h3>
+        <p>Use check-ins, exports, and wellbeing signals to make tomorrow easier to start.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="container section home-surfaces">
+    <div class="home-section-heading flow">
+      <p class="eyebrow">product surfaces</p>
+      <h2>Built around the way work actually unfolds.</h2>
+    </div>
+
+    <div class="home-surface home-surface--issues">
+      <div class="home-surface__media">
+        <AppScreenshot
+          name="issues"
+          alt="Crona Issues workspace screenshot"
+          sizes="(min-width: 1024px) 54vw, 100vw"
+        />
+      </div>
+      <div class="home-surface__copy flow">
+        <p class="home-surface__label">Issues workspace</p>
+        <h3>Shape work before it turns into noise.</h3>
+        <p>
+          Use repos, streams, statuses, and dates to decide what is actually in play. The planning surface is there to
+          clarify the day, not to create another list you feel guilty about later.
+        </p>
+        <a href="/docs/issues-and-planning/">Read planning docs</a>
+      </div>
+    </div>
+
+    <div class="home-surface home-surface--wellbeing">
+      <div class="home-surface__copy flow">
+        <p class="home-surface__label">Wellbeing dashboard</p>
+        <h3>Keep the work log human.</h3>
+        <p>
+          Check-ins, energy, sleep, burnout signals, and rollups help you notice patterns that a finished checklist
+          would never show you on its own.
+        </p>
+        <a href="/docs/check-ins-and-wellbeing/">Read wellbeing docs</a>
+      </div>
+      <div class="home-surface__media">
+        <AppScreenshot
+          name="wellbeing-dashboard"
+          alt="Crona Wellbeing dashboard screenshot"
+          sizes="(min-width: 1024px) 54vw, 100vw"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="container section home-close">
+    <div class="home-close__panel">
+      <div class="home-close__copy flow">
+        <p class="eyebrow">next step</p>
+        <h2>Install it, then keep the manual close.</h2>
+        <p>
+          Start from the install guide, learn the workflow in docs, and use GitHub for releases and issue tracking. The
+          website stays stable even when the app keeps moving.
+        </p>
+      </div>
+
+      <div class="home-close__links">
+        <a href="/docs/install/">
+          <strong>Install and runtime guide</strong>
+          <span>Platform setup, shell completions, alerts, exports, and update basics.</span>
+        </a>
+        <a href="/docs/">
+          <strong>Documentation</strong>
+          <span>Start with getting started, then move into daily workflows and reference pages.</span>
+        </a>
+        <a class="external-card" href="https://github.com/webxsid/crona/releases" rel="noreferrer">
+          <strong>GitHub Releases</strong>
+          <span>Use GitHub as the live source of release notes and downloadable artifacts.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

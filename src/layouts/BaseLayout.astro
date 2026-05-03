@@ -1,0 +1,38 @@
+---
+import "../styles/global/global.scss";
+import SiteFooter from "../components/SiteFooter/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader/SiteHeader.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Crona is a local-first work tracker for developers.",
+} = Astro.props;
+
+const pageTitle = title === "Crona" ? title : `${title} | Crona`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <div class="site-shell__content">
+        <SiteHeader />
+        <main>
+          <slot />
+        </main>
+        <SiteFooter />
+      </div>
+    </div>
+  </body>
+</html>

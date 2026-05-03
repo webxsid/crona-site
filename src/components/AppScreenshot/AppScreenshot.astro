@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+import dailyDashboard from "../../assets/screenshots/daily-dashboard.png";
+import issues from "../../assets/screenshots/issues.png";
+import wellbeingDashboard from "../../assets/screenshots/wellbeing-dashboard.png";
+
+const screenshots = {
+  "daily-dashboard": dailyDashboard,
+  issues,
+  "wellbeing-dashboard": wellbeingDashboard,
+} as const;
+
+type ScreenshotName = keyof typeof screenshots;
+
+interface Props {
+  alt: string;
+  class?: string;
+  loading?: "eager" | "lazy";
+  name: ScreenshotName;
+  sizes?: string;
+}
+
+const {
+  alt,
+  class: className,
+  loading = "lazy",
+  name,
+  sizes = "(min-width: 1024px) 50vw, 100vw",
+} = Astro.props as Props;
+
+const src = screenshots[name];
+---
+
+<Image
+  alt={alt}
+  class={className}
+  densities={[1.5, 2]}
+  format="webp"
+  loading={loading}
+  quality={88}
+  sizes={sizes}
+  src={src}
+/>

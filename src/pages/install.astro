@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "./_install/install.scss";
+---
+
+<BaseLayout title="Install" description="Install Crona from the docs and use GitHub Releases for current downloads.">
+  <section class="container section">
+    <div class="page-header flow measure">
+      <p class="eyebrow">Install</p>
+      <h1>Install Crona</h1>
+      <p>
+        Installation now lives in the docs so the setup guide stays evergreen. Use the install guide for platform
+        steps and GitHub Releases for the latest download artifacts.
+      </p>
+    </div>
+
+    <div class="install-handoff page-body">
+      <a class="install-handoff__card" href="/docs/install/">
+        <span>Primary path</span>
+        <strong>Open the install guide</strong>
+        <p>Platform setup, runtime notes, shell completions, alerts, exports, and update channels.</p>
+      </a>
+
+      <a class="install-handoff__card external-card" href="https://github.com/webxsid/crona/releases" rel="noreferrer">
+        <span>Downloads</span>
+        <strong>Browse GitHub Releases</strong>
+        <p>Use GitHub as the source of truth for the latest release artifacts and release history.</p>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "./_changelog/changelog.scss";
+---
+
+<BaseLayout title="Updates" description="Use GitHub Releases for the latest Crona release notes and download history.">
+  <section class="container section">
+    <div class="page-header flow measure">
+      <p class="eyebrow">Updates</p>
+      <h1>Release history lives on GitHub</h1>
+      <p>
+        The website no longer mirrors release notes. GitHub Releases is the canonical place for current versions,
+        release notes, and downloadable artifacts.
+      </p>
+    </div>
+
+    <div class="timeline page-body">
+      <a class="timeline__card external-card" href="https://github.com/webxsid/crona/releases" rel="noreferrer">
+        <span>Canonical source</span>
+        <strong>Open GitHub Releases</strong>
+        <p>See the latest release notes, tags, and install artifacts without waiting for the website to be republished.</p>
+      </a>
+
+      <a class="timeline__card" href="/docs/install/">
+        <span>Setup</span>
+        <strong>Open install docs</strong>
+        <p>Use the docs for platform setup, runtime prerequisites, notifications, renderer notes, and update basics.</p>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

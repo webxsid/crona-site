@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DocsSidebar from "../../components/DocsSidebar/DocsSidebar.astro";
+import { categorizeDocs, sortDocs } from "./_shared/docs.js";
+import "./_index/index.scss";
+
+const docs = await getCollection("docs");
+const sortedDocs = sortDocs(docs);
+const docGroups = categorizeDocs(sortedDocs);
+---
+
+<BaseLayout title="Docs" description="Crona documentation.">
+  <section class="container section docs-page">
+    <div class="docs-layout">
+      <DocsSidebar groups={docGroups} activeDocId="__overview__" />
+
+      <div class="docs-main flow">
+        <header class="page-header flow measure">
+          <p class="eyebrow">Docs</p>
+          <h1>Documentation</h1>
+          <p class="docs-intro">
+            Crona’s docs are organized like a working manual: start with the runtime model, move into daily workflows,
+            then use the operational and reference sections when you need specifics.
+          </p>
+        </header>
+
+        <div class="docs-home-sections">
+          {docGroups.map((group) => (
+            <section class="docs-home-group flow" aria-labelledby={`docs-home-${group.id}`}>
+              <div class="docs-home-group__header flow">
+                <p class="docs-home-group__label">{group.title}</p>
+                <h2 id={`docs-home-${group.id}`}>{group.description}</h2>
+              </div>
+
+              <div class="link-list">
+                {group.items.map((doc) => (
+                  <a href={`/docs/${doc.id}/`}>
+                    <strong>{doc.data.title}</strong>
+                    {doc.data.description && <span>{doc.data.description}</span>}
+                  </a>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

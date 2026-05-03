@@ -1,0 +1,68 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DocsSidebar from "../../components/DocsSidebar/DocsSidebar.astro";
+import { categorizeDocs, getDocNeighbors } from "./_shared/docs.js";
+import "./_article/article.scss";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("docs");
+
+  return docs.map((doc) => ({
+    params: { slug: doc.id },
+    props: { doc },
+  }));
+}
+
+const { doc } = Astro.props;
+const docs = await getCollection("docs");
+const docGroups = categorizeDocs(docs);
+const { previousDoc, nextDoc } = getDocNeighbors(docs, doc.id);
+const { Content } = await render(doc);
+---
+
+<BaseLayout title={doc.data.title} description={doc.data.description}>
+  <div class="container section docs-page">
+    <div class="docs-layout docs-layout--article">
+      <DocsSidebar groups={docGroups} activeDocId={doc.id} />
+
+      <article class="doc-article flow">
+        <header class="doc-article__header flow">
+          <p class="eyebrow">Docs</p>
+          <h1>{doc.data.title}</h1>
+          {doc.data.description && <p class="doc-article__dek">{doc.data.description}</p>}
+        </header>
+
+        <div class="prose flow">
+          <Content />
+        </div>
+
+        {(previousDoc || nextDoc) && (
+          <nav
+            class:list={[
+              "doc-pagination",
+              { "doc-pagination--single": Boolean(previousDoc) !== Boolean(nextDoc) },
+            ]}
+            aria-label="Documentation navigation"
+          >
+            {previousDoc && (
+              <a class="doc-pagination__card doc-pagination__card--previous" href={`/docs/${previousDoc.id}/`}>
+                <span class="doc-pagination__eyebrow">Previous</span>
+                <strong>{previousDoc.data.title}</strong>
+                {previousDoc.data.description && <span>{previousDoc.data.description}</span>}
+              </a>
+            )}
+
+            {nextDoc && (
+              <a class="doc-pagination__card doc-pagination__card--next" href={`/docs/${nextDoc.id}/`}>
+                <span class="doc-pagination__eyebrow">Next</span>
+                <strong>{nextDoc.data.title}</strong>
+                {nextDoc.data.description && <span>{nextDoc.data.description}</span>}
+              </a>
+            )}
+          </nav>
+        )}
+      </article>
+    </div>
+  </div>
+</BaseLayout>

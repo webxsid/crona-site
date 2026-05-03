@@ -1,0 +1,22 @@
+.site-shell__content {
+  min-height: 100%;
+}
+
+@media (max-width: 720px) {
+  .site-shell {
+    height: 100dvh;
+    min-height: 100svh;
+    max-height: 100lvh;
+    overflow: hidden;
+  }
+
+  .site-shell__content {
+    height: 100dvh;
+    min-height: 100svh;
+    max-height: 100lvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
+  }
+}

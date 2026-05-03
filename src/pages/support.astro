@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "./_support/support.scss";
+---
+
+<BaseLayout title="Support" description="Get help with Crona through the docs, GitHub issues, and release notes.">
+  <section class="container section">
+    <div class="page-header flow measure">
+      <p class="eyebrow">Support</p>
+      <h1>Support for Crona</h1>
+      <p>
+        The fastest path to help is usually the docs first, then GitHub if you need to report a bug or check a recent
+        change. 
+      </p>
+    </div>
+
+    <div class="support-grid page-body">
+      <a class="support-card" href="/docs/">
+        <span>Docs</span>
+        <strong>Open the documentation</strong>
+        <p>Start with setup, daily workflows, exports, alerts, keymaps, and automation guides.</p>
+      </a>
+
+      <a class="support-card" href="/docs/install/">
+        <span>Setup help</span>
+        <strong>Check install and runtime docs</strong>
+        <p>Use this for platform setup, shell completions, notifications, renderer notes, and update basics.</p>
+      </a>
+
+      <a class="support-card external-card" href="https://github.com/webxsid/crona/issues" rel="noreferrer">
+        <span>Bug reports</span>
+        <strong>Open GitHub issues</strong>
+        <p>Report reproducible bugs, missing behavior, or broken docs where the core project can track them.</p>
+      </a>
+
+      <a class="support-card external-card" href="https://github.com/webxsid/crona/releases" rel="noreferrer">
+        <span>Recent changes</span>
+        <strong>Browse GitHub Releases</strong>
+        <p>Check release notes and current artifacts without waiting for the website to be republished.</p>
+      </a>
+    </div>
+  </section>
+</BaseLayout>
