@@ -26,7 +26,8 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8"
+    "@astrojs/check": "^0.9.8",
+    "wrangler": "^4.87.0"
   },
   "overrides": {
     "vite": "^7"

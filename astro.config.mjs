@@ -4,5 +4,5 @@ import mdx from "@astrojs/mdx";
 export default defineConfig({
   integrations: [mdx()],
   output: "static",
-  site: "https://crona.app",
+  site: "https://crona.work",
 });
