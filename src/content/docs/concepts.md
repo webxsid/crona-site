@@ -1,6 +1,6 @@
 ---
 title: Concepts
-description: The work model behind repos, streams, issues, sessions, stashes, scratchpads, habits, and daily check-ins.
+description: The work model behind repos, streams, issues, sessions, stashes, scratchpads, habits, habit history, and daily check-ins.
 order: 3
 ---
 
@@ -110,7 +110,9 @@ These feed the Wellbeing view and range rollups.
 
 ## Habits
 
-Habits are recurring items tracked alongside daily work. Crona supports schedule-based habits and daily completion logging. In the Daily view they appear separately from issues so you can manage routines and work items together without flattening them into the same list.
+Habits are recurring items tracked alongside daily work. Crona supports schedule-based habits, daily completion logging, habit history, and custom streak periods. In the Daily view they appear separately from issues so you can manage routines and work items together without flattening them into the same list.
+
+For the operational workflow, read [Habits](/docs/habits/). This page just defines habits as a first-class part of the work model.
 
 ## The Local Engine Ownership Model
 

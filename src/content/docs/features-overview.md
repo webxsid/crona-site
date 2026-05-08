@@ -13,9 +13,21 @@ Crona gives you structured work objects rather than a flat task list:
 - repos and streams for organization
 - issues with lifecycle status, notes, estimates, and optional to-do dates
 - context checkout across TUI and CLI
-- daily planning views that surface the current scope and due work
+- daily planning views that surface the current scope, due work, pinned issues, and overdue work
 
 Issue state changes are explicit, and the TUI exposes dedicated actions for focus, logging, status changes, due dates, edit, and delete.
+
+## Habits And History
+
+Habits are a first-class recurring object in Crona:
+
+- schedule-based routines with daily, weekdays, and weekly cadence options
+- habit completion logging
+- habit history for reviewing the completion record over time
+- custom streak periods so a streak can match the habit instead of forcing one fixed rhythm
+- daily habit visibility in the Daily view
+
+That makes habits a parallel workflow to issues rather than a second-class reminder list.
 
 ## Focus Sessions
 

@@ -7,7 +7,24 @@ import "./_home/index.scss";
 
 <BaseLayout
   title="Crona"
-  description="Terminal-native work tracking for issues, focus sessions, check-ins, and exports."
+  pageTitle="Crona | Local-first work tracking for developers"
+  description="Crona helps developers plan issues, track habits, run focus sessions, and review the day from one local-first system."
+  structuredData={[
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Crona",
+      url: "https://crona.work",
+      logo: "https://crona.work/logos/Logo Dark.png",
+      sameAs: ["https://github.com/webxsid/crona"],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Crona",
+      url: "https://crona.work",
+    },
+  ]}
 >
   <section class="container section section--hero home-hero">
     <div class="home-hero__stack">
@@ -21,41 +38,38 @@ import "./_home/index.scss";
           Crona keeps planning, timing, check-ins, and exports in one local system so the day does not disappear into
           tabs, scratch notes, and half-finished context switches.
         </p>
-
-        <div class="home-hero__actions">
-          <a class="button" href="/docs/getting-started/">See how it works</a>
-          <a class="button button--secondary" href="/docs/">Browse docs</a>
-        </div>
       </div>
 
-      <div class="home-hero__media-row">
-        <div class="home-hero__install">
-          <p class="home-hero__install-label">Install the latest release</p>
-          <InstallCommandTabs />
+      <div class="home-hero__actions">
+        <a class="button" href="/docs/getting-started/">See how it works</a>
+        <a class="button button--secondary" href="/docs/">Browse docs</a>
+      </div>
+      <div class="home-hero__install">
+        <InstallCommandTabs />
+      </div>
+
+
+      <div class="home-hero__visual" aria-label="Crona Daily dashboard preview">
+        <div class="home-hero__frame">
+          <div class="home-hero__frame-topline">
+            <span>daily dashboard</span>
+            <span>active context attached</span>
+          </div>
+          <AppScreenshot
+            name="daily-dashboard"
+            alt="Crona Daily dashboard screenshot"
+            loading="eager"
+            sizes="(min-width: 1280px) 880px, (min-width: 1024px) 72vw, 100vw"
+          />
         </div>
 
-        <div class="home-hero__visual" aria-label="Crona Daily dashboard preview">
-          <div class="home-hero__frame">
-            <div class="home-hero__frame-topline">
-              <span>daily dashboard</span>
-              <span>active context attached</span>
-            </div>
-            <AppScreenshot
-              name="daily-dashboard"
-              alt="Crona Daily dashboard screenshot"
-              loading="eager"
-              sizes="(min-width: 1024px) 42vw, 100vw"
-            />
-          </div>
-
-          <div class="home-hero__note">
-            <p>Today’s loop</p>
-            <ul>
-              <li>choose context</li>
-              <li>start focus</li>
-              <li>review the day</li>
-            </ul>
-          </div>
+        <div class="home-hero__note">
+          <p>Today’s loop</p>
+          <ul>
+            <li>choose context</li>
+            <li>start focus</li>
+            <li>review the day</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -157,9 +171,9 @@ import "./_home/index.scss";
           <strong>Documentation</strong>
           <span>Start with getting started, then move into daily workflows and reference pages.</span>
         </a>
-        <a class="external-card" href="https://github.com/webxsid/crona/releases" rel="noreferrer">
-          <strong>GitHub Releases</strong>
-          <span>Use GitHub as the live source of release notes and downloadable artifacts.</span>
+        <a href="/changelog/">
+          <strong>Releases</strong>
+          <span>Browse the latest release cards here, then jump to GitHub for the raw notes and artifacts.</span>
         </a>
       </div>
     </div>

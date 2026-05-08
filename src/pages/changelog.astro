@@ -1,31 +1,267 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "./_changelog/changelog.scss";
+
+const repoUrl = "https://github.com/webxsid/crona";
+const releasesUrl = `${repoUrl}/releases`;
+const apiUrl = "https://api.github.com/repos/webxsid/crona/releases?per_page=10";
+const dateFormatter = new Intl.DateTimeFormat("en", {
+  dateStyle: "medium",
+  timeZone: "UTC",
+});
+
+type GitHubRelease = {
+  draft: boolean;
+  prerelease: boolean;
+  tag_name?: string | null;
+  name?: string | null;
+  html_url: string;
+  published_at?: string | null;
+  body?: string | null;
+};
+
+type Semver = {
+  major: number;
+  minor: number;
+  patch: number;
+  prerelease: boolean;
+};
+
+type ReleaseBump = "major" | "minor" | "patch" | "pre-release" | "release";
+
+type ReleaseCard = {
+  tag: string;
+  title: string;
+  name: string;
+  url: string;
+  publishedAt: Date | null;
+  prerelease: boolean;
+  excerpt: string;
+  latest: boolean;
+  bump: ReleaseBump;
+};
+
+function stripMarkdown(text = "") {
+  return text
+    .replace(/\r/g, "")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/[`*_>]/g, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function excerpt(text = "", limit = 170) {
+  const lines = text.replace(/\r/g, "").split("\n");
+  let index = 0;
+
+  while (index < lines.length && !lines[index].trim()) {
+    index += 1;
+  }
+
+  if (index < lines.length && /^#{1,6}\s+/.test(lines[index])) {
+    index += 1;
+    while (index < lines.length && !lines[index].trim()) {
+      index += 1;
+    }
+  }
+
+  const cleaned = stripMarkdown(lines.slice(index).join("\n")).split(/\n\s*\n/).find(Boolean)?.replace(/\s+/g, " ").trim() ?? "";
+  if (!cleaned) return "Release notes and downloadable artifacts are available on GitHub.";
+  return cleaned.length > limit ? `${cleaned.slice(0, limit - 1).trimEnd()}…` : cleaned;
+}
+
+function parseSemver(tag = ""): Semver | null {
+  const match = tag.trim().match(/^v?(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z-.]+))?(?:\+[0-9A-Za-z-.]+)?$/);
+  if (!match) return null;
+  return {
+    major: Number(match[1]),
+    minor: Number(match[2]),
+    patch: Number(match[3]),
+    prerelease: Boolean(match[4]),
+  };
+}
+
+function inferReleaseBump(currentTag: string, previousTag?: string): ReleaseBump {
+  const current = parseSemver(currentTag);
+  const previous = previousTag ? parseSemver(previousTag) : null;
+
+  if (!current) {
+    return "release";
+  }
+
+  if (!previous) {
+    return current.prerelease ? "pre-release" : "release";
+  }
+
+  if (current.major > previous.major) return "major";
+  if (current.minor > previous.minor) return "minor";
+  if (current.patch > previous.patch) return "patch";
+
+  return current.prerelease ? "pre-release" : "release";
+}
+
+async function loadReleases() {
+  try {
+    const response = await fetch(apiUrl, {
+      headers: {
+        Accept: "application/vnd.github+json",
+        "User-Agent": "crona-site",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub releases request failed: ${response.status}`);
+    }
+
+    const data = (await response.json()) as GitHubRelease[];
+    const cards = data
+      .filter((release) => !release.draft)
+      .map(
+        (release): ReleaseCard => ({
+          tag: release.tag_name ?? release.name ?? "Release",
+          title: release.tag_name ?? release.name ?? "Release",
+          name: release.name?.trim() || release.tag_name || "Release",
+          url: release.html_url,
+          publishedAt: release.published_at ? new Date(release.published_at) : null,
+          prerelease: Boolean(release.prerelease),
+          excerpt: excerpt(release.body ?? ""),
+          latest: false,
+          bump: "release",
+        }),
+      );
+
+    return cards.map((release, index) => ({
+      ...release,
+      latest: index === 0,
+      bump: inferReleaseBump(release.tag, cards[index + 1]?.tag),
+    }));
+  } catch {
+    const local = await getCollection("changelog");
+    const cards = local.map(
+      (entry): ReleaseCard => ({
+        tag: entry.data.version ?? entry.data.title,
+        title: entry.data.version ?? entry.data.title,
+        name: entry.data.title,
+        url: releasesUrl,
+        publishedAt: entry.data.date ?? null,
+        prerelease: false,
+        excerpt: entry.data.summary ?? "Release notes and downloadable artifacts are available on GitHub.",
+        latest: false,
+        bump: "release",
+      }),
+    );
+
+    return cards.map((release, index) => ({
+      ...release,
+      latest: index === 0,
+      bump: inferReleaseBump(release.tag, cards[index + 1]?.tag),
+    }));
+  }
+}
+
+const releases = await loadReleases();
+const siteUrl = Astro.site ?? new URL("https://crona.work");
+const releasesPageUrl = new URL("/changelog/", siteUrl).href;
+const itemList = releases.map((release, index) => ({
+  "@type": "ListItem",
+  position: index + 1,
+  url: release.url,
+  name: release.title,
+}));
 ---
 
-<BaseLayout title="Updates" description="Use GitHub Releases for the latest Crona release notes and download history.">
+<BaseLayout
+  title="Releases"
+  pageTitle="Crona releases"
+  description="Browse Crona releases on the site and jump to GitHub for the canonical release notes and artifacts."
+  structuredData={[
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: "Crona Releases",
+      url: releasesPageUrl,
+      isPartOf: {
+        "@type": "WebSite",
+        "@id": "https://crona.work/",
+        name: "Crona",
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: "Crona release list",
+      itemListOrder: "https://schema.org/ItemListOrderDescending",
+      numberOfItems: itemList.length,
+      itemListElement: itemList,
+    },
+  ]}
+>
   <section class="container section">
     <div class="page-header flow measure">
-      <p class="eyebrow">Updates</p>
-      <h1>Release history lives on GitHub</h1>
+      <p class="eyebrow">Releases</p>
+      <h1>Crona release cards, with GitHub as the source of truth</h1>
       <p>
-        The website no longer mirrors release notes. GitHub Releases is the canonical place for current versions,
-        release notes, and downloadable artifacts.
+        This page mirrors the current Crona release list so you can scan versions on the site and jump to GitHub for
+        the full notes and downloadable artifacts.
       </p>
     </div>
 
-    <div class="timeline page-body">
-      <a class="timeline__card external-card" href="https://github.com/webxsid/crona/releases" rel="noreferrer">
-        <span>Canonical source</span>
-        <strong>Open GitHub Releases</strong>
-        <p>See the latest release notes, tags, and install artifacts without waiting for the website to be republished.</p>
-      </a>
+    <div class="releases-actions page-body">
+      <a class="button" href={releasesUrl} rel="noreferrer">Open GitHub Releases</a>
+      <a class="button button--secondary" href="/docs/install/">Open install docs</a>
+    </div>
 
-      <a class="timeline__card" href="/docs/install/">
-        <span>Setup</span>
-        <strong>Open install docs</strong>
-        <p>Use the docs for platform setup, runtime prerequisites, notifications, renderer notes, and update basics.</p>
-      </a>
+    <div class:list={{ "releases-timeline": true, "page-body": true, "is-empty": releases.length === 0 }}>
+      {releases.length > 0 ? (
+        releases.map((release) => (
+          <article class="release-card">
+            <div class="release-card__meta">
+              <div class="release-card__badges">
+                {release.latest && <span class="release-card__badge is-latest">Latest</span>}
+                {release.prerelease && <span class="release-card__badge is-prerelease">Pre-release</span>}
+                <span class="release-card__badge is-bump">{release.bump}</span>
+              </div>
+              {release.publishedAt && <time datetime={release.publishedAt.toISOString()}>{dateFormatter.format(release.publishedAt)}</time>}
+            </div>
+
+            <div class="release-card__body flow">
+              <h2>
+                <a href={release.url} rel="noreferrer">
+                  {release.title}
+                </a>
+              </h2>
+              {release.name && release.name !== release.title && <p class="release-card__name">{release.name}</p>}
+              <p>{release.excerpt}</p>
+            </div>
+
+            <div class="release-card__actions">
+              <a class="external-card" href={release.url} rel="noreferrer">
+                View on GitHub
+              </a>
+            </div>
+          </article>
+        ))
+      ) : (
+        <article class="release-card">
+          <div class="release-card__body flow">
+            <p class="release-card__name">GitHub releases unavailable</p>
+            <h2>Open the canonical release feed</h2>
+            <p>When the GitHub API is unavailable, use the release page directly for the latest notes and downloads.</p>
+          </div>
+          <div class="release-card__actions">
+            <a class="external-card" href={releasesUrl} rel="noreferrer">
+              Open GitHub Releases
+            </a>
+          </div>
+        </article>
+      )}
+    </div>
+
+    <div class="releases-footer page-body">
+      <a class="button" href={releasesUrl} rel="noreferrer">Open GitHub Releases</a>
     </div>
   </section>
 </BaseLayout>

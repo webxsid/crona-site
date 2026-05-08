@@ -21,6 +21,8 @@ The Daily dashboard is where Crona feels most operational. It is the page that h
 It brings together:
 
 - planned tasks for the selected scope
+- pinned issues that need attention first
+- overdue work that still needs action
 - habits due today
 - date navigation
 - summary signals for issue mix and progress
@@ -28,9 +30,12 @@ It brings together:
 
 This is the surface that turns planning into something visible and bounded. Instead of looking at all work at once, you look at the current date, current scope, and current expectations.
 
+In newer builds, the Daily dashboard also gives pinned work and overdue work their own place in the flow, which keeps the day's priorities readable without flattening everything into one list.
+
 Read more:
 
 - [Issues and Planning](/docs/issues-and-planning/)
+- [Habits](/docs/habits/)
 - [Focus Sessions](/docs/focus-sessions/)
 
 ## Issues Workspace: Shape the Work
@@ -89,5 +94,6 @@ That loop is what makes Crona feel more like a local work system than a loose co
 ## Where to Go Next
 
 - Read [Issues and Planning](/docs/issues-and-planning/) if you want the operational model behind the Daily and Issues surfaces.
+- Read [Habits](/docs/habits/) if you want the recurring routine model behind the Daily habit pane.
 - Read [Focus Sessions](/docs/focus-sessions/) if you want to understand how active work is tracked once you start.
 - Read [Check-Ins and Wellbeing](/docs/check-ins-and-wellbeing/) if you want the reflection model behind the Wellbeing dashboard.

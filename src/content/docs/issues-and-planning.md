@@ -69,6 +69,8 @@ The Daily view is where planning becomes operational.
 It shows:
 
 - planned tasks for the selected date
+- pinned issues that need attention first
+- overdue work that has not been resolved yet
 - the current repo and stream scope
 - habits due on that day
 - summary signals for the selected window
@@ -81,6 +83,8 @@ That makes it the right place to answer questions like:
 - what habits or routines are part of today’s plan as well?
 
 The Daily view is not trying to be a board. It is trying to make the current day legible.
+
+Pinned work gives you a way to keep a small set of important issues visible even when the day is crowded. Overdue work is separated from resolved work so the view stays focused on what still needs action.
 
 ## Why Planning and Focus Stay Separate
 
@@ -97,5 +101,6 @@ That separation is what makes the next step clear: once planning is shaped, you 
 ## What to Read Next
 
 - Read [Focus Sessions](/docs/focus-sessions/) for how planned work turns into tracked work.
+- Read [Habits](/docs/habits/) if you want the recurring routine side of the Daily view.
 - Read [Concepts](/docs/concepts/) if you want the deeper lifecycle and context model behind these workflows.
 - Read [TUI Keymap Reference](/docs/tui-keymap-reference/) if you want the exact bindings used in planning views.

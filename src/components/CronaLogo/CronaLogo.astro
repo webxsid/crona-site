@@ -1,0 +1,22 @@
+---
+interface Props {
+  class?: string;
+  decorative?: boolean;
+  title?: string;
+}
+
+const {
+  class: className,
+  decorative = false,
+  title = "Crona logo",
+} = Astro.props as Props;
+---
+
+<img
+  class={className}
+  src="/logos/Logo Dark.png"
+  alt={decorative ? "" : title}
+  aria-hidden={decorative ? "true" : undefined}
+  loading="eager"
+  decoding="async"
+/>

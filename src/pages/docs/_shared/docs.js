@@ -8,8 +8,8 @@ const DOC_GROUPS = [
   {
     id: "daily-workflows",
     title: "Daily Workflows",
-    description: "Plan work, run focus sessions, and track wellbeing day to day.",
-    docs: ["issues-and-planning", "focus-sessions", "check-ins-and-wellbeing"],
+    description: "Plan work, manage habits, run focus sessions, and track wellbeing day to day.",
+    docs: ["issues-and-planning", "habits", "focus-sessions", "check-ins-and-wellbeing"],
   },
   {
     id: "outputs-and-operations",

@@ -8,9 +8,46 @@ import "./_index/index.scss";
 const docs = await getCollection("docs");
 const sortedDocs = sortDocs(docs);
 const docGroups = categorizeDocs(sortedDocs);
+const siteUrl = Astro.site ?? new URL("https://crona.work");
+const docsUrl = new URL("/docs/", siteUrl).href;
 ---
 
-<BaseLayout title="Docs" description="Crona documentation.">
+<BaseLayout
+  title="Documentation"
+  pageTitle="Crona documentation"
+  description="Browse Crona docs for setup, habits, issue planning, focus sessions, check-ins, exports, alerts, automation, and reference material."
+  structuredData={[
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: "Crona Documentation",
+      url: docsUrl,
+      isPartOf: {
+        "@type": "WebSite",
+        "@id": "https://crona.work/",
+        name: "Crona",
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://crona.work/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Docs",
+          item: docsUrl,
+        },
+      ],
+    },
+  ]}
+>
   <section class="container section docs-page">
     <div class="docs-layout">
       <DocsSidebar groups={docGroups} activeDocId="__overview__" />
@@ -18,7 +55,7 @@ const docGroups = categorizeDocs(sortedDocs);
       <div class="docs-main flow">
         <header class="page-header flow measure">
           <p class="eyebrow">Docs</p>
-          <h1>Documentation</h1>
+          <h1>Crona documentation</h1>
           <p class="docs-intro">
             Crona’s docs are organized like a working manual: start with the runtime model, move into daily workflows,
             then use the operational and reference sections when you need specifics.

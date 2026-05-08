@@ -85,5 +85,6 @@ That means the reflection layer stays part of your local workflow instead of bec
 ## What to Read Next
 
 - Read [Exports and Reports](/docs/exports-and-reports/) if you want to turn work and wellbeing data into local artifacts.
+- Read [Habits](/docs/habits/) if you want the recurring routine and streak model behind the Daily habit pane.
 - Read [Screenshots and Walkthrough](/docs/screenshots-and-walkthrough/) if you want a visual tour of the Wellbeing dashboard.
 - Read [Issues and Planning](/docs/issues-and-planning/) when you are ready to bring what you learned back into the next day’s plan.

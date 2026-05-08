@@ -27,15 +27,18 @@
 }
 
 .site-header__mark {
-  align-items: center;
-  background: transparent;
-  border: 1px solid var(--color-line-strong);
-  border-radius: 0;
-  color: var(--color-accent);
-  display: inline-flex;
-  height: 32px;
-  justify-content: center;
-  width: 32px;
+  display: block;
+  height: 28px;
+  width: 28px;
+}
+
+.site-header__wordmark {
+  font-family: var(--font-logo);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-transform: none;
 }
 
 .site-header__nav {
@@ -98,8 +101,12 @@
   }
 
   .site-header__mark {
-    height: 28px;
-    width: 28px;
+    height: 25px;
+    width: 25px;
+  }
+
+  .site-header__wordmark {
+    font-size: 0.92rem;
   }
 
   .site-header__nav {

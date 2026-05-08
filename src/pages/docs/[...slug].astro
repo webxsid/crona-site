@@ -19,9 +19,55 @@ const docs = await getCollection("docs");
 const docGroups = categorizeDocs(docs);
 const { previousDoc, nextDoc } = getDocNeighbors(docs, doc.id);
 const { Content } = await render(doc);
+const siteUrl = Astro.site ?? new URL("https://crona.work");
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const docsUrl = new URL("/docs/", siteUrl).href;
 ---
 
-<BaseLayout title={doc.data.title} description={doc.data.description}>
+<BaseLayout
+  title={doc.data.title}
+  description={doc.data.description}
+  ogType="article"
+  structuredData={[
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://crona.work/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Docs",
+          item: docsUrl,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: doc.data.title,
+          item: canonicalUrl,
+        },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      headline: doc.data.title,
+      description: doc.data.description,
+      url: canonicalUrl,
+      isPartOf: {
+        "@type": "WebSite",
+        "@id": "https://crona.work/",
+        name: "Crona",
+      },
+      mainEntityOfPage: canonicalUrl,
+    },
+  ]}
+>
   <div class="container section docs-page">
     <div class="docs-layout docs-layout--article">
       <DocsSidebar groups={docGroups} activeDocId={doc.id} />

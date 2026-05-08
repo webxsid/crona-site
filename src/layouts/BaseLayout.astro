@@ -5,15 +5,46 @@ import SiteHeader from "../components/SiteHeader/SiteHeader.astro";
 
 interface Props {
   title: string;
+  pageTitle?: string;
   description?: string;
+  canonical?: string;
+  image?: string;
+  noindex?: boolean;
+  ogType?: "website" | "article";
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title,
-  description = "Crona is a local-first work tracker for developers.",
+  pageTitle,
+  description = "Crona keeps issues, habits, focus sessions, check-ins, and exports in one local-first system for developers.",
+  canonical,
+  image,
+  noindex = false,
+  ogType = "website",
+  structuredData,
 } = Astro.props;
 
-const pageTitle = title === "Crona" ? title : `${title} | Crona`;
+const documentTitle = pageTitle ?? (title === "Crona" ? "Crona | Local-first work tracking for developers" : `${title} | Crona`);
+const siteUrl = Astro.site ?? new URL("https://crona.work");
+const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : new URL(Astro.url.pathname, siteUrl).href;
+const imageUrl = new URL(image ?? "/social/crona-og.png", siteUrl).href;
+const robotsContent = noindex ? "noindex,follow" : "index,follow";
+const jsonLdEntries = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: documentTitle,
+    description,
+    url: canonicalUrl,
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": new URL("/", siteUrl).href,
+      name: "Crona",
+    },
+  },
+  ...(structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : []),
+];
 ---
 
 <!doctype html>
@@ -22,7 +53,36 @@ const pageTitle = title === "Crona" ? title : `${title} | Crona`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <title>{pageTitle}</title>
+    <meta name="robots" content={robotsContent} />
+    <meta name="application-name" content="Crona" />
+    <meta name="apple-mobile-web-app-title" content="Crona" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#080808" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#e7e7e2" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Crona" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={documentTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={`${pageTitle} preview`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={documentTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <link rel="icon" type="image/x-icon" href="/logos/Logo Dark.ico" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" href="/logos/Logo Dark.png" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/x-icon" href="/logos/Logo Light.ico" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="/logos/Logo Light.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/x-icon" href="/logos/Logo Dark.ico" />
+    <link rel="apple-touch-icon" href="/logos/Logo Dark.png" media="(prefers-color-scheme: dark)" />
+    <link rel="apple-touch-icon" href="/logos/Logo Light.png" media="(prefers-color-scheme: light)" />
+    <title>{documentTitle}</title>
+    {jsonLdEntries.map((schema) => <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />)}
   </head>
   <body>
     <div class="site-shell">

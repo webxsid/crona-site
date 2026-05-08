@@ -1,49 +1,191 @@
-.timeline {
-  display: grid;
+.releases-actions {
+  display: flex;
+  flex-wrap: wrap;
   gap: 12px;
-  max-width: 880px;
+  margin-bottom: 18px;
 }
 
-.timeline__card {
+.releases-timeline {
+  display: grid;
+  gap: 16px;
+  max-width: 900px;
+  padding-left: 22px;
+  position: relative;
+}
+
+.releases-timeline::before {
+  background: var(--color-line);
+  bottom: 6px;
+  content: "";
+  left: 10px;
+  position: absolute;
+  top: 6px;
+  width: 1px;
+}
+
+.releases-timeline.is-empty {
+  padding-left: 0;
+}
+
+.releases-timeline.is-empty::before {
+  display: none;
+}
+
+.release-card {
   background: var(--color-panel);
   border: 1px solid var(--color-line);
   border-radius: 16px;
   display: grid;
-  gap: 8px;
+  gap: 14px;
   padding: 18px;
-  transition:
-    border-color 140ms ease,
-    transform 140ms ease;
+  position: relative;
 }
 
-.timeline__card:hover,
-.timeline__card:focus-visible {
+.release-card::before {
+  background: var(--color-line-strong);
+  border: 1px solid var(--color-line-strong);
+  border-radius: 999px;
+  content: "";
+  height: 10px;
+  left: -23px;
+  position: absolute;
+  top: 22px;
+  width: 10px;
+}
+
+.release-card__meta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.release-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.release-card__badge {
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 4px 9px;
+  text-transform: uppercase;
+}
+
+.release-card__badge.is-latest {
+  border-color: var(--color-accent-strong);
+  color: var(--color-accent-strong);
+}
+
+.release-card__badge.is-prerelease {
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+
+.release-card__badge.is-bump {
   border-color: var(--color-line-strong);
+  color: var(--color-ink);
+}
+
+.release-card__meta time {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.release-card__body {
+  display: grid;
+  gap: 8px;
+}
+
+.release-card__body h2 {
+  font-size: clamp(1.1rem, 1rem + 0.45vw, 1.35rem);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.release-card__body h2 a {
+  color: var(--color-ink);
+}
+
+.release-card__body h2 a:hover {
+  color: var(--color-accent-strong);
+}
+
+.release-card__name {
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.release-card__body p {
+  margin: 0;
+}
+
+.release-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.release-card__actions a {
+  align-items: center;
+  background: var(--color-surface-elevated, var(--color-panel));
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  color: var(--color-ink);
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  gap: 6px;
+  padding: 8px 12px;
+  transition:
+    border-color 140ms ease,
+    transform 140ms ease,
+    color 140ms ease;
+}
+
+.release-card__actions a:hover,
+.release-card__actions a:focus-visible {
+  border-color: var(--color-line-strong);
+  color: var(--color-accent-strong);
   outline: none;
   transform: translateY(-1px);
 }
 
-.timeline__card span {
-  color: var(--color-warning);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.releases-footer {
+  margin-top: 18px;
+  max-width: 900px;
 }
 
-.timeline__card strong {
+.releases-footer__link {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+}
+
+.releases-footer__link strong {
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-size: 1.06rem;
-  font-weight: 650;
+  font-size: 1rem;
 }
 
-.timeline__card p {
-  margin: 0;
+.releases-footer__link span {
+  color: var(--color-muted);
 }
 
-@media (min-width: 720px) {
-  .timeline {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (min-width: 860px) {
+  .releases-timeline {
+    padding-left: 26px;
+  }
+
+  .release-card::before {
+    left: -23px;
   }
 }

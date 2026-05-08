@@ -1,6 +1,13 @@
+@font-face {
+  font-family: "Squares Bold Free";
+  src: url("/fonts/Squares Bold Free.otf") format("opentype");
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
 
+  --font-logo: "Squares Bold Free", var(--font-mono);
   --color-ink: #e7e7e2;
   --color-muted: #9a9a92;
   --color-page: #080808;
