@@ -1,7 +1,7 @@
 const scriptLinks = {
-  macos: "https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.sh",
-  linux: "https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.sh",
-  windows: "https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.ps1",
+  macos: "https://crona.work/install.sh",
+  linux: "https://crona.work/install.sh",
+  windows: "https://crona.work/install.ps1",
 };
 
 document.querySelectorAll("[data-install-tabs]").forEach((root) => {

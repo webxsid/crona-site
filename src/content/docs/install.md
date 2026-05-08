@@ -29,46 +29,45 @@ The default launcher is `crona`. `crona-tui` remains available as a compatibilit
 - `stable` is the recommended channel for general users.
 - `beta` is for pre-release testing and faster iteration.
 
-Release downloads are published on [GitHub Releases](https://github.com/webxsid/crona/releases).
+Release downloads are published on [GitHub Releases](https://github.com/webxsid/crona/releases). The stable shell entrypoints are [crona.work/install.sh](https://crona.work/install.sh) and [crona.work/install.ps1](https://crona.work/install.ps1).
 
-## Install With The Release Script
+## Install With The Website Script
 
 ### macOS and Linux
 
-Install a specific release:
+Install from the stable website entrypoint:
 
 ```bash
-curl -fsSL https://github.com/webxsid/crona/releases/download/<version>/install-crona-tui.sh | sh
+curl -fsSL https://crona.work/install.sh | sh
 ```
 
 Force a non-interactive reinstall:
 
 ```bash
-curl -fsSL https://github.com/webxsid/crona/releases/download/<version>/install-crona-tui.sh | CRONA_INSTALL_FORCE=1 sh
+curl -fsSL https://crona.work/install.sh | CRONA_INSTALL_FORCE=1 sh
 ```
 
 Run the installer from a downloaded file:
 
 ```bash
-curl -fsSL -o /tmp/install-crona-tui.sh https://github.com/webxsid/crona/releases/download/<version>/install-crona-tui.sh
-sh /tmp/install-crona-tui.sh
+curl -fsSL -o /tmp/crona-install.sh https://crona.work/install.sh
+sh /tmp/crona-install.sh
 ```
 
 ### Windows
 
-Install from PowerShell:
+Install from PowerShell using the stable website entrypoint:
 
 ```powershell
-$version = "<version>"
-Invoke-WebRequest "https://github.com/webxsid/crona/releases/download/$version/install-crona-tui.ps1" -OutFile "$env:TEMP\install-crona-tui.ps1"
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\install-crona-tui.ps1"
+Invoke-WebRequest "https://crona.work/install.ps1" -OutFile "$env:TEMP\crona-install.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\crona-install.ps1"
 ```
 
 Override the binary install location:
 
 ```powershell
 $env:CRONA_INSTALL_DIR = "D:\tools\crona\bin"
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\install-crona-tui.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\crona-install.ps1"
 ```
 
 ## Manual Install

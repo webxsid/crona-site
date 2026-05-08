@@ -13,16 +13,16 @@ import "./InstallCommandTabs.scss";
 
   <div class="install-tabs__command">
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-macos" aria-labelledby="install-tab-macos" data-install-panel="macos">
-      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.sh | sh</code></pre>
+      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://crona.work/install.sh | sh</code></pre>
     </div>
 
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-linux" aria-labelledby="install-tab-linux" data-install-panel="linux" hidden>
-      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.sh | sh</code></pre>
+      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://crona.work/install.sh | sh</code></pre>
     </div>
 
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-windows" aria-labelledby="install-tab-windows" data-install-panel="windows" hidden>
-      <pre><span aria-hidden="true">PS&gt; </span><code>Invoke-WebRequest "https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.ps1" -OutFile "$env:TEMP\install-crona-tui.ps1"
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\install-crona-tui.ps1"</code></pre>
+      <pre><span aria-hidden="true">PS&gt; </span><code>Invoke-WebRequest "https://crona.work/install.ps1" -OutFile "$env:TEMP\crona-install.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\crona-install.ps1"</code></pre>
     </div>
 
     <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
@@ -31,7 +31,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\install-crona-tui
   <div class="install-tabs__links">
     <a
       class="external-link"
-      href="https://github.com/webxsid/crona/releases/latest/download/install-crona-tui.sh"
+      href="https://crona.work/install.sh"
       rel="noreferrer"
       data-script-link
     >
