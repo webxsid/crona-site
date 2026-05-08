@@ -9,6 +9,13 @@
   padding: 24px var(--gutter);
 }
 
+.site-footer__links {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
 .site-footer a {
   color: var(--color-accent-strong);
   font-family: var(--font-mono);
@@ -18,5 +25,11 @@
   .site-footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .site-footer__links {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
   }
 }

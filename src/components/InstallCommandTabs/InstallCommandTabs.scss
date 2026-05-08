@@ -143,6 +143,28 @@
 }
 
 @media (max-width: 719px) {
+  .install-tabs__topline {
+    gap: 6px;
+  }
+
+  .install-tabs__tablist {
+    flex-wrap: nowrap;
+    gap: 4px;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .install-tabs__tablist::-webkit-scrollbar {
+    display: none;
+  }
+
+  .install-tabs__tab,
+  .install-tabs__copy {
+    font-size: 0.72rem;
+    padding: 6px 8px;
+  }
+
   .install-tabs__command {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -153,5 +175,10 @@
 
   .install-tabs code {
     font-size: 0.84rem;
+  }
+
+  .install-tabs__links {
+    font-size: 0.78rem;
+    gap: 8px;
   }
 }

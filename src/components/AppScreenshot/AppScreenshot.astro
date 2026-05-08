@@ -17,6 +17,7 @@ interface Props {
   class?: string;
   loading?: "eager" | "lazy";
   name: ScreenshotName;
+  quality?: number;
   sizes?: string;
 }
 
@@ -25,6 +26,7 @@ const {
   class: className,
   loading = "lazy",
   name,
+  quality = 88,
   sizes = "(min-width: 1024px) 50vw, 100vw",
 } = Astro.props as Props;
 
@@ -37,7 +39,7 @@ const src = screenshots[name];
   densities={[1.5, 2]}
   format="webp"
   loading={loading}
-  quality={88}
+  quality={quality}
   sizes={sizes}
   src={src}
 />
