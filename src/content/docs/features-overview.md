@@ -1,6 +1,6 @@
 ---
 title: Features Overview
-description: A map of the main Crona workflows across planning, focus, wellbeing, exports, alerts, updates, and settings.
+description: A map of the main Crona workflows across planning, focus, Momentum, exports, alerts, updates, and settings.
 order: 4
 ---
 
@@ -50,7 +50,8 @@ Crona is not only an issue tracker. It also includes a daily self-check workflow
 - mood and energy logging
 - sleep and screen-time inputs
 - burnout indicators and trend views
-- streaks and daily-window summaries
+- a 7-day Metrics Window for recent history
+- Momentum for the longer-running wellbeing history
 - accountability and plan-failure rollups
 
 This data is kept local and shown in the Wellbeing dashboard and related range summaries.

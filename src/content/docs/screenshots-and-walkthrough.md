@@ -62,7 +62,7 @@ Read more:
 
 ## Wellbeing Dashboard: Review the Pattern
 
-![Wellbeing dashboard showing accountability, check-in trends, and activity heatmap](/screenshots/wellbeing-dashboard.png)
+![Wellbeing dashboard showing the 7-day Metrics Window, Momentum history, and activity heatmap](/screenshots/wellbeing-dashboard.png)
 
 The Wellbeing dashboard shows the part of Crona that goes beyond issue state and timer history. This is the surface that helps you step back and ask how the recent work rhythm has actually been going.
 
@@ -71,6 +71,8 @@ It can surface:
 - daily self-check data
 - accountability summaries
 - burnout and recovery signals
+- the 7-day Metrics Window
+- Momentum history
 - trend windows and activity heatmaps
 
 This is where Crona stops being only a planning tool and becomes a reflection tool as well.
@@ -87,7 +89,7 @@ Taken together, these views show the basic Crona loop:
 1. use Daily to understand the shape of the day
 2. use Issues to shape and choose the work
 3. use Focus Sessions to execute that work
-4. use Wellbeing to review the pattern behind it
+4. use Wellbeing to review the pattern behind it through Metrics Window and Momentum
 
 That loop is what makes Crona feel more like a local work system than a loose collection of pages.
 

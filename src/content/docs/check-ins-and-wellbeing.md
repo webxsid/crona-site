@@ -1,6 +1,6 @@
 ---
 title: Check-Ins and Wellbeing
-description: Learn how Crona connects daily check-ins, burnout signals, streaks, and accountability with the work you plan and complete.
+description: Learn how Crona connects daily check-ins, Momentum, burnout signals, and accountability with the work you plan and complete.
 order: 7
 ---
 
@@ -25,11 +25,16 @@ The point is not to turn Crona into a journal. It is to give the rest of the sys
 
 The Wellbeing view is where those signals become useful.
 
+It splits the display into two ideas:
+
+- a 7-day Metrics Window for the recent week
+- Momentum for the longer-running history view
+
 It can combine:
 
 - the selected day’s check-in details
 - rolling trend summaries
-- streak information
+- Momentum history
 - burnout indicators
 - accountability and plan-failure summaries
 - activity windows and heatmaps
@@ -49,7 +54,7 @@ Examples of inputs include:
 
 That makes the wellbeing model more useful for pattern recognition. It is not trying to diagnose anything. It is trying to help you notice when your recent work rhythm is drifting toward unsustainable territory.
 
-## Streaks, Trends, and Accountability
+## Momentum, Trends, and Accountability
 
 The value of the Wellbeing page is not just one day’s data. It is the ability to see patterns such as:
 
@@ -58,7 +63,7 @@ The value of the Wellbeing page is not just one day’s data. It is the ability 
 - whether work is accumulating without enough recovery
 - whether daily plans are being completed, rolled forward, or abandoned
 
-This is where Crona starts to feel like more than a task tracker. It can show the relationship between planning quality, focus load, and how the recent week has actually felt.
+This is where Crona starts to feel like more than a task tracker. It can show the relationship between planning quality, focus load, and how the recent week has actually felt. Momentum is the long-view surface for that history, while the Metrics Window keeps the short-range week readable.
 
 ## How It Connects Back to Daily Work
 

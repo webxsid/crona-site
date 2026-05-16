@@ -15,7 +15,7 @@ const DOC_GROUPS = [
     id: "outputs-and-operations",
     title: "Outputs and Operations",
     description: "Handle exports, reminders, and the operational side of Crona.",
-    docs: ["exports-and-reports", "alerts-and-reminders"],
+    docs: ["exports-and-reports", "alerts-and-reminders", "usage-and-diagnostics"],
   },
   {
     id: "scripting-and-automation",

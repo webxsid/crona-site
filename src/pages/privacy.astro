@@ -1,0 +1,134 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "./_privacy/privacy.scss";
+---
+
+<BaseLayout
+  title="Privacy"
+  pageTitle="Crona privacy"
+  description="Read Crona's privacy policy for app telemetry, consent, diagnostics, and what stays local on your device."
+>
+  <section class="container section">
+    <div class="page-header flow measure">
+      <p class="eyebrow">Privacy policy</p>
+      <h1>Crona privacy policy</h1>
+      <p class="privacy-date">Effective date: May 16, 2026</p>
+      <p>
+        This page explains what Crona collects, what stays on your device, how telemetry consent works, and how to
+        change the setting in the app.
+      </p>
+    </div>
+
+    <nav class="privacy-toc page-body" aria-label="Privacy policy sections">
+      <a href="#scope">Scope</a>
+      <a href="#collected">What Crona collects</a>
+      <a href="#use">How Crona uses information</a>
+      <a href="#sharing">How Crona shares information</a>
+      <a href="#retention">Retention</a>
+      <a href="#choices">Your choices</a>
+      <a href="#children">Children's privacy</a>
+      <a href="#changes">Changes to this policy</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="privacy-body measure flow">
+      <section id="scope" class="privacy-section">
+        <h2>1. Scope</h2>
+        <p>
+          This policy covers the Crona app and the crona.work website. It explains what Crona collects, what stays
+          local, and how telemetry consent works.
+        </p>
+      </section>
+
+      <section id="collected" class="privacy-section">
+        <h2>2. What Crona collects</h2>
+        <p>
+          Crona keeps your work data on your device. Issues, habits, sessions, check-ins, exports, calendar content,
+          notes, and support bundle contents are not sent as telemetry.
+        </p>
+        <p>
+          If you turn telemetry on, Crona can send a small set of app signals: startup and shutdown events, release
+          channel details, handled errors, and panic errors. Telemetry also includes a few context fields such as the
+          app name and version, environment mode, running release channel, whether the build is beta, and basic
+          platform information like operating system and architecture.
+        </p>
+        <p>
+          Crona also stores a local anonymous identifier so telemetry can stay consistent across launches without asking
+          for your name or email.
+        </p>
+      </section>
+
+      <section id="use" class="privacy-section">
+        <h2>3. How Crona uses information</h2>
+        <p>
+          Crona uses telemetry to understand crashes, startup behavior, and release channel usage. Error reports are
+          sanitized before they are sent so they can help with debugging without including your work content or file
+          paths.
+        </p>
+        <p>
+          The app uses this information to keep the current release line healthy, separate stable and beta traffic, and
+          make support easier when something goes wrong.
+        </p>
+      </section>
+
+      <section id="sharing" class="privacy-section">
+        <h2>4. How Crona shares information</h2>
+        <p>
+          When telemetry is enabled, Crona sends analytics and error data to its telemetry provider for processing. It
+          does not use this information for advertising or sell it to third parties.
+        </p>
+        <p>
+          Bundled release installs include telemetry defaults, but they still wait for your consent before any data is
+          sent.
+        </p>
+      </section>
+
+      <section id="retention" class="privacy-section">
+        <h2>5. Retention</h2>
+        <p>
+          Your work data stays local until you remove it from your device. Telemetry data is kept only as long as needed
+          to operate and troubleshoot Crona through the telemetry provider and local logs.
+        </p>
+      </section>
+
+      <section id="choices" class="privacy-section">
+        <h2>6. Your choices</h2>
+        <p>
+          Usage telemetry and error reporting are both off until onboarding is complete and you enable them in the app.
+          You can turn one on without the other if you want crash reporting without broader usage tracking.
+        </p>
+        <p>
+          Open the in-app <strong>Privacy &amp; Diagnostics</strong> pane to review or change the setting at any time.
+        </p>
+      </section>
+
+      <section id="children" class="privacy-section">
+        <h2>7. Children's privacy</h2>
+        <p>
+          Crona is not directed to children under 13, and Crona does not knowingly collect personal information from
+          children under 13.
+        </p>
+      </section>
+
+      <section id="changes" class="privacy-section">
+        <h2>8. Changes to this policy</h2>
+        <p>
+          If Crona changes its telemetry or privacy practices, this page will be updated so the current behavior stays
+          documented here.
+        </p>
+      </section>
+
+      <section id="contact" class="privacy-section">
+        <h2>9. Contact</h2>
+        <p>
+          If you have a privacy question, use the support page or open a GitHub issue so it can be reviewed with the
+          rest of the project.
+        </p>
+      </section>
+
+      <p>
+        <a class="button" href="/support/">Open support</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

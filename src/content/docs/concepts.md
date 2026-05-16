@@ -106,7 +106,7 @@ Daily check-ins capture self-report data for a specific date. The current fields
 - optional screen time
 - optional notes
 
-These feed the Wellbeing view and range rollups.
+These feed the Wellbeing view, the 7-day Metrics Window, and Momentum history summaries.
 
 ## Habits
 
