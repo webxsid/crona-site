@@ -1,6 +1,6 @@
 ---
 title: Features Overview
-description: A map of the main Crona workflows across planning, focus, Momentum, exports, alerts, updates, and settings.
+description: A map of the main Crona workflows across planning, issue-scoped focus, Momentum, exports, alerts, updates, and settings.
 order: 4
 ---
 
@@ -8,14 +8,14 @@ This page is a product-level map of Crona's stable user-facing surface.
 
 ## Planning And Issue Lifecycle
 
-Crona gives you structured work objects rather than a flat task list:
+Crona gives you structured work objects and issue-scoped timer behavior rather than a flat task list:
 
 - repos and streams for organization
-- issues with lifecycle status, notes, estimates, and optional to-do dates
+- issues with lifecycle status, notes, estimates, timer type, and optional to-do dates
 - context checkout across TUI and CLI
 - daily planning views that surface the current scope, due work, pinned issues, and overdue work
 
-Issue state changes are explicit, and the TUI exposes dedicated actions for focus, logging, status changes, due dates, edit, and delete.
+Issue state changes are explicit, and the TUI exposes dedicated actions for focus, logging, status changes, due dates, edit, delete, and per-issue timing.
 
 ## Habits And History
 
@@ -36,8 +36,9 @@ Focus sessions are tied to issues and managed by the timer.
 Key capabilities:
 
 - start focus from a selected issue
-- structured or stopwatch timer modes
-- pause and resume
+- issue-scoped timer selection instead of a global timer mode
+- stricter pomodoro-style cadence
+- pause, resume, and extend active focus sessions
 - end with a session summary
 - stash the current work when interrupted
 - recover from existing stashes instead of losing prior context
@@ -50,11 +51,11 @@ Crona is not only an issue tracker. It also includes a daily self-check workflow
 - mood and energy logging
 - sleep and screen-time inputs
 - burnout indicators and trend views
-- a 7-day Metrics Window for recent history
+- a configurable Metrics Window for recent history
 - Momentum for the longer-running wellbeing history
 - accountability and plan-failure rollups
 
-This data is kept local and shown in the Wellbeing dashboard and related range summaries.
+This data is kept local and shown in the Wellbeing dashboard, the compact Daily momentum block, and related range summaries.
 
 ## Dashboards And Views
 
@@ -70,7 +71,6 @@ The TUI includes dedicated views for:
 - Alerts
 - Updates
 - Support
-- Scratchpads
 - Session history
 
 The view jump menu and action footer are part of the day-to-day workflow, not a hidden power-user surface.
@@ -116,8 +116,10 @@ Crona includes built-in support for:
 
 Two views handle different needs:
 
-- `Settings` for timer mode, durations, update channel, sorting, date display, prompt glyph mode, away mode, and destructive actions
+- `Settings` for week start, update channel, sorting, date display, prompt glyph mode, away mode, and destructive actions
 - `Config` for report assets, templates, renderer tooling, export directories, and active file paths
+
+Timer type selection now lives on the issue itself rather than in Settings.
 
 ## Developer And Internal Material
 

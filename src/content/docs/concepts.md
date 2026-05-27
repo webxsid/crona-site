@@ -1,6 +1,6 @@
 ---
 title: Concepts
-description: The work model behind repos, streams, issues, sessions, stashes, scratchpads, habits, habit history, and daily check-ins.
+description: The work model behind repos, streams, issues, sessions, stashes, habits, habit history, and daily check-ins.
 order: 3
 ---
 
@@ -28,20 +28,11 @@ Examples:
 
 ### Issue
 
-An issue is the smallest intentional unit of work. It can carry a title, notes, an estimate, lifecycle state, and an optional to-do date.
+An issue is the smallest intentional unit of work. It can carry a title, notes, an estimate, lifecycle state, timer type, and an optional to-do date.
 
 ### Session
 
-A session is focused work tied to an issue. Sessions are started and stopped by the timer and end with a commit-style summary message.
-
-### Session Segment
-
-A session is composed of one or more segments:
-
-- `work`
-- `short_break`
-- `long_break`
-- `rest`
+A session is focused work tied to an issue. Sessions are started and stopped by the timer and end with a summary message.
 
 ## Active Context
 
@@ -72,6 +63,8 @@ Focus can start from `planned`, `ready`, and `in_progress`. Starting focus autom
 
 Assigning a to-do date also promotes `backlog` work into `planned`.
 
+Each issue carries its own timer type, so the focus cadence comes from the issue itself instead of a separate global timer setting.
+
 ## Stashes
 
 A stash suspends the current focus context and can preserve timer state.
@@ -82,18 +75,6 @@ This is what makes interrupted work recoverable without losing the earlier sessi
 - or continue with a fresh session while keeping the stash available
 
 It does not silently replace the old stash.
-
-## Scratchpads
-
-Scratchpads are filesystem-backed notes rather than database-only metadata.
-
-The placeholder path from the TUI uses tokens like:
-
-```text
-notes/[[date]].md
-```
-
-They are useful for lightweight daily notes, running work logs, or capture files that you want outside the structured issue model.
 
 ## Daily Check-Ins
 
@@ -106,7 +87,7 @@ Daily check-ins capture self-report data for a specific date. The current fields
 - optional screen time
 - optional notes
 
-These feed the Wellbeing view, the 7-day Metrics Window, and Momentum history summaries.
+These feed the Wellbeing view, the configurable Metrics Window, the compact Daily momentum block, and Momentum history summaries.
 
 ## Habits
 
@@ -118,7 +99,7 @@ For the operational workflow, read [Habits](/docs/habits/). This page just defin
 
 The local engine owns more than storage. It is also responsible for:
 
-- timers and segment transitions
+- timers and session timing
 - reminder evaluation
 - local notifications and sounds
 - export generation

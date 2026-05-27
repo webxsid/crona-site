@@ -4,7 +4,7 @@ description: Learn what Crona is, who it fits best, and how to get from first la
 order: 1
 ---
 
-Crona is a local-first work tracker for developers. It combines planning, focus sessions, reminders, exports, and session history into one terminal-native workflow.
+Crona is a local-first work tracker for developers. It combines planning, issue-scoped focus sessions, reminders, exports, and session history into one terminal-native workflow.
 
 What makes it different is where the workflow lives. Crona keeps the core system on your machine, so your current context, timer state, reminders, exports, and history stay local instead of depending on a hosted dashboard.
 
@@ -45,7 +45,7 @@ The simplest way to get oriented is:
 
 1. create a repo for a top-level area of work
 2. create a stream inside that repo
-3. add one or more issues
+3. add one or more issues, including the timer type you want that work to use
 4. check out the context you want to work in
 5. start a focus session from an issue
 
@@ -57,7 +57,7 @@ You do not need the full data model to get started, but four terms matter early:
 
 - **Repo**: a top-level bucket like `work`, `personal`, or `research`
 - **Stream**: a long-lived subdivision inside a repo
-- **Issue**: the unit of planned work
+- **Issue**: the unit of planned work, including its timer type and estimate
 - **Session**: a focused work interval tied to an issue
 
 These same objects are shared across the TUI and CLI, so the context you choose in one place stays meaningful in the other.
@@ -71,7 +71,7 @@ The local engine is the source of truth. The TUI and CLI are clients that talk t
 That matters because the engine owns:
 
 - the runtime store
-- active timer state
+- active timer state and issue-scoped timer behavior
 - reminder scheduling
 - notification delivery decisions
 - export generation

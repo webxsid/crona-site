@@ -82,6 +82,8 @@ There is also an issue-focus start command:
 
 The CLI also supports `--from-context` flows, which let you use the current checked-out issue instead of repeating an identifier manually.
 
+Timer behavior is now issue-scoped, so the selected issue determines the timer type and pomodoro cadence that the CLI drives.
+
 ## Export Commands
 
 The export group supports:

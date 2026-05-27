@@ -51,6 +51,8 @@ These actions appear across many panes when the selection supports them:
 | `A` | abandon selected issue |
 | `D` | edit the selected issue’s to-do date |
 | `Z` | open stash list |
+| `w` | open check-in |
+| `W` | toggle away mode |
 
 Availability depends on the current pane and state.
 
@@ -80,7 +82,8 @@ Availability depends on the current pane and state.
 | `g` | jump to today |
 | `E` | export |
 | `c` | context dialog |
-| `w` | toggle away mode |
+| `w` | open check-in |
+| `W` | toggle away mode |
 
 Issues pane:
 
@@ -105,6 +108,8 @@ Habits pane:
 | `m` | log completion |
 | `d` | delete |
 
+Daily and Wellbeing share the same `w` / `W` split, so the check-in and away-mode shortcuts are consistent across the main review surfaces.
+
 ### Meta Hierarchy Views
 
 | Key | Action |
@@ -124,7 +129,7 @@ Repo and stream panes:
 | `e` | edit |
 | `d` | delete |
 
-### Reports, Config, Ops, and Scratchpads
+### Reports, Config, and Ops
 
 Reports:
 
@@ -153,27 +158,6 @@ Ops:
 | --- | --- |
 | `+` / `=` | show more rows |
 | `-` | show fewer rows |
-
-Scratchpads list mode:
-
-| Key | Action |
-| --- | --- |
-| `1` | scratchpads pane |
-| `enter` | open |
-| `a` | create |
-| `d` | delete |
-
-Scratchpad open mode:
-
-| Key | Action |
-| --- | --- |
-| `h` / `l` | switch scratchpad |
-| `j` / `k` | scroll |
-| `e` | edit |
-| `o` | open externally |
-| `esc` | close |
-
-When a timer is active, scratchpads can also expose issue actions such as `s` and `A`.
 
 ## Session Workflows
 

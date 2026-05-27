@@ -1,6 +1,6 @@
 ---
 title: Focus Sessions
-description: Learn how Crona turns planned issues into tracked work sessions, including timer behavior, stashes, recovery, and session history.
+description: Learn how Crona turns planned issues into tracked work sessions, including issue-scoped timer behavior, stashes, recovery, and session history.
 order: 6
 ---
 
@@ -20,16 +20,15 @@ In normal use, Crona allows focus to begin from:
 
 Starting focus from `planned` or `ready` automatically promotes that issue to `in_progress`. That keeps the active work state honest without forcing you to manually update the issue before every session.
 
+The selected issue also carries its own timer type, so focus follows the work item instead of a global timer setting.
+
 ## What Happens During a Session
 
 Once a session is active, Crona tracks the work interval as part of the issue history rather than treating it like a disposable timer.
 
-It supports two timer styles:
+Crona now uses a stricter pomodoro-style timer model, so the session cadence is consistent and issue-scoped instead of being driven by separate timer presets.
 
-- `structured`
-- `stopwatch`
-
-Sessions are also broken into segments such as work, short breaks, long breaks, and rest. You do not need to think about those constantly during normal use, but they are part of how Crona records the shape of work over time.
+The timer still records the shape of work over time, but the public model now centers on the pomodoro cadence rather than older timer presets.
 
 ## Staying Oriented While You Work
 
@@ -68,7 +67,7 @@ Normal recovery paths include:
 - reviewing older sessions in Session History
 - amending session details later if the original summary was incomplete
 
-This is why Crona’s session history is more than a stopwatch log. It becomes part of how you reconstruct what happened, what changed, and where work left off.
+This is why Crona’s session history is more than a timer log. It becomes part of how you reconstruct what happened, what changed, and where work left off.
 
 ## Inactivity Alerts and Runtime Ownership
 

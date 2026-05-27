@@ -8,7 +8,7 @@ import "./_home/index.scss";
 <BaseLayout
   title="Crona"
   pageTitle="Crona | Local-first work tracking for developers"
-  description="Crona helps developers plan issues, track habits, run focus sessions, and review the day from one local-first system."
+  description="Crona helps developers plan issues, run issue-scoped pomodoro sessions, track habits, and review the day from one local-first system."
   structuredData={[
     {
       "@context": "https://schema.org",
@@ -32,11 +32,12 @@ import "./_home/index.scss";
         <p class="eyebrow">terminal-native work tracking</p>
         <h1>Local-first work tracking for people who live in the terminal.</h1>
         <p class="home-hero__lede">
-          Plan issues, run focused sessions, check in, and keep a readable record of what actually happened.
+          Plan issues, run stricter pomodoro-style focus sessions, check in, and keep a readable record of what
+          actually happened.
         </p>
         <p class="home-hero__body">
-          Crona keeps planning, timing, check-ins, and exports in one local system so the day does not disappear into
-          tabs, scratch notes, and half-finished context switches.
+          Crona keeps planning, issue-scoped timer behavior, check-ins, and exports in one local system so the day
+          does not disappear into tabs, scratch notes, and half-finished context switches.
         </p>
       </div>
 
@@ -53,7 +54,7 @@ import "./_home/index.scss";
         <div class="home-hero__frame">
           <AppScreenshot
             name="daily-dashboard"
-            alt="Crona Daily dashboard screenshot"
+            alt="Crona Daily dashboard showing compact momentum signals and issue summaries"
             loading="eager"
             quality={96}
             sizes="(min-width: 1280px) 1080px, (min-width: 1024px) 72vw, 100vw"
@@ -91,8 +92,8 @@ import "./_home/index.scss";
 
       <article class="home-loop__step">
         <span>02</span>
-        <h3>Run focused work</h3>
-        <p>Track real sessions, interruptions, stashes, and recovery in the same local engine.</p>
+        <h3>Run issue-scoped focus</h3>
+        <p>Each issue carries its timer type, so the stricter pomodoro cadence follows the work instead of a global setting.</p>
       </article>
 
       <article class="home-loop__step">
@@ -113,7 +114,7 @@ import "./_home/index.scss";
       <div class="home-surface__media">
         <AppScreenshot
           name="issues"
-          alt="Crona Issues workspace screenshot"
+          alt="Crona Issues workspace showing issue-scoped timing and spent time"
           sizes="(min-width: 1024px) 54vw, 100vw"
         />
       </div>
@@ -121,8 +122,8 @@ import "./_home/index.scss";
         <p class="home-surface__label">Issues workspace</p>
         <h3>Shape work before it turns into noise.</h3>
         <p>
-          Use repos, streams, statuses, and dates to decide what is actually in play. The planning surface is there to
-          clarify the day, not to create another list you feel guilty about later.
+          Use repos, streams, issue timer types, statuses, and dates to decide what is actually in play. The planning
+          surface is there to clarify the day, not to create another list you feel guilty about later.
         </p>
         <a href="/docs/issues-and-planning/">Read planning docs</a>
       </div>
@@ -133,15 +134,15 @@ import "./_home/index.scss";
         <p class="home-surface__label">Wellbeing dashboard</p>
         <h3>Keep the work log human.</h3>
         <p>
-          Check-ins, energy, sleep, burnout signals, and rollups help you notice patterns that a finished checklist
-          would never show you on its own.
+          Check-ins, energy, sleep, compact Daily signals, burnout history, and Momentum help you notice patterns that
+          a finished checklist would never show you on its own.
         </p>
         <a href="/docs/check-ins-and-wellbeing/">Read wellbeing docs</a>
       </div>
       <div class="home-surface__media">
         <AppScreenshot
           name="wellbeing-dashboard"
-          alt="Crona Wellbeing dashboard screenshot"
+          alt="Crona Wellbeing dashboard showing the configurable Metrics Window and Momentum"
           sizes="(min-width: 1024px) 54vw, 100vw"
         />
       </div>

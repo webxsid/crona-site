@@ -21,13 +21,15 @@ The daily check-in is a lightweight self-report for a specific date. Crona curre
 
 The point is not to turn Crona into a journal. It is to give the rest of the system just enough signal to connect work output with how the day actually felt.
 
+The Daily and Wellbeing surfaces now share the same shortcut split: `w` opens check-in and `W` toggles away mode where that action applies.
+
 ## What the Wellbeing View Helps You See
 
 The Wellbeing view is where those signals become useful.
 
 It splits the display into two ideas:
 
-- a 7-day Metrics Window for the recent week
+- a configurable Metrics Window for the recent period
 - Momentum for the longer-running history view
 
 It can combine:
@@ -63,7 +65,7 @@ The value of the Wellbeing page is not just one day’s data. It is the ability 
 - whether work is accumulating without enough recovery
 - whether daily plans are being completed, rolled forward, or abandoned
 
-This is where Crona starts to feel like more than a task tracker. It can show the relationship between planning quality, focus load, and how the recent week has actually felt. Momentum is the long-view surface for that history, while the Metrics Window keeps the short-range week readable.
+This is where Crona starts to feel like more than a task tracker. It can show the relationship between planning quality, focus load, and how the recent period has actually felt. Momentum is the long-view surface for that history, while the Metrics Window keeps the short-range window readable.
 
 ## How It Connects Back to Daily Work
 
@@ -72,6 +74,7 @@ Wellbeing in Crona is deliberately tied to the rest of the workflow:
 - the Daily view shows what the day was supposed to look like
 - Focus Sessions show how work actually unfolded
 - the Wellbeing view helps you reflect on the human cost and sustainability of that pattern
+- the compact Daily momentum block keeps check-in and focus signals visible at a glance
 
 That connection is what makes the category sequence work as a loop:
 

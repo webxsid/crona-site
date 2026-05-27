@@ -14,7 +14,7 @@ Read it as a visual loop:
 
 ## Daily Dashboard: Shape the Day
 
-![Daily dashboard showing planned issues, habits, and focus summary](/screenshots/daily-dashboard.png)
+![Daily dashboard showing planned issues, habits, compact momentum signals, and focus summary](/screenshots/daily-dashboard.png)
 
 The Daily dashboard is where Crona feels most operational. It is the page that helps you answer: what am I trying to do today, and what does that day already contain?
 
@@ -25,12 +25,12 @@ It brings together:
 - overdue work that still needs action
 - habits due today
 - date navigation
-- summary signals for issue mix and progress
+- compact summary signals for issue mix, progress, and momentum
 - quick access to export and away mode
 
 This is the surface that turns planning into something visible and bounded. Instead of looking at all work at once, you look at the current date, current scope, and current expectations.
 
-In newer builds, the Daily dashboard also gives pinned work and overdue work their own place in the flow, which keeps the day's priorities readable without flattening everything into one list.
+In newer builds, the Daily dashboard also gives pinned work and overdue work their own place in the flow, which keeps the day’s priorities readable without flattening everything into one list.
 
 Read more:
 
@@ -51,6 +51,7 @@ It is built for:
 - starting focus
 - editing titles, notes, and dates
 - keeping the checked-out context aligned with the work you are about to do
+- seeing spent time next to the issue itself
 
 If the Daily dashboard helps you shape the day, the Issues workspace helps you shape the unit of work itself.
 
@@ -62,7 +63,7 @@ Read more:
 
 ## Wellbeing Dashboard: Review the Pattern
 
-![Wellbeing dashboard showing the 7-day Metrics Window, Momentum history, and activity heatmap](/screenshots/wellbeing-dashboard.png)
+![Wellbeing dashboard showing the configurable Metrics Window, Momentum history, and activity heatmap](/screenshots/wellbeing-dashboard.png)
 
 The Wellbeing dashboard shows the part of Crona that goes beyond issue state and timer history. This is the surface that helps you step back and ask how the recent work rhythm has actually been going.
 
@@ -71,7 +72,7 @@ It can surface:
 - daily self-check data
 - accountability summaries
 - burnout and recovery signals
-- the 7-day Metrics Window
+- the configurable Metrics Window
 - Momentum history
 - trend windows and activity heatmaps
 
@@ -89,7 +90,7 @@ Taken together, these views show the basic Crona loop:
 1. use Daily to understand the shape of the day
 2. use Issues to shape and choose the work
 3. use Focus Sessions to execute that work
-4. use Wellbeing to review the pattern behind it through Metrics Window and Momentum
+4. use Wellbeing to review the pattern behind it through the Metrics Window and Momentum
 
 That loop is what makes Crona feel more like a local work system than a loose collection of pages.
 

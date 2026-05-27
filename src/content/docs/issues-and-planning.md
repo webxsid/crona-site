@@ -1,6 +1,6 @@
 ---
 title: Issues and Planning
-description: Learn how Crona shapes daily work through issue states, dates, context, and the Daily planning surface.
+description: Learn how Crona shapes daily work through issue states, dates, context, issue timer type, and the Daily planning surface.
 order: 5
 ---
 
@@ -43,10 +43,13 @@ Not every transition is allowed from every state. That is deliberate. Crona trea
 
 Issues can carry an optional planning date. In practice, that date helps Crona decide what belongs in the selected day’s planning surface.
 
+Issues can also carry their own timer type, so the focus cadence is attached to the work item instead of a global timer setting.
+
 Two behaviors matter most:
 
 - assigning a to-do date promotes `backlog` work into `planned`
 - the Daily view uses those dates to surface the work expected for the selected day
+- the Daily summary keeps compact signals visible so the day stays scannable
 
 This makes dates useful without turning Crona into a calendar-first tool. The date is there to support planning, not replace issue state.
 
