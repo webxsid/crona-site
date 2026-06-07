@@ -9,6 +9,11 @@
   padding: 24px var(--gutter);
 }
 
+.site-footer__tagline {
+  color: var(--color-muted);
+  margin: 0;
+}
+
 .site-footer__links {
   align-items: center;
   display: flex;

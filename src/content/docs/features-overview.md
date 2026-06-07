@@ -1,6 +1,6 @@
 ---
 title: Features Overview
-description: A map of the main Crona workflows across planning, issue-scoped focus, Momentum, exports, alerts, updates, and settings.
+description: A map of the main Crona workflows across planning, issue-scoped focus, Rollup, Wellbeing, Momentum, checkout, exports, alerts, updates, and settings.
 order: 4
 ---
 
@@ -16,6 +16,8 @@ Crona gives you structured work objects and issue-scoped timer behavior rather t
 - daily planning views that surface the current scope, due work, pinned issues, and overdue work
 
 Issue state changes are explicit, and the TUI exposes dedicated actions for focus, logging, status changes, due dates, edit, delete, and per-issue timing.
+
+Checkout context selection also behaves like a real selector, so repo and stream prompts stay usable even when the text inputs are empty.
 
 ## Habits And History
 
@@ -44,6 +46,19 @@ Key capabilities:
 - recover from existing stashes instead of losing prior context
 - review session history and amend notes later
 
+## Rollup
+
+Rollup combines focus and worktime visualization with the calendar so the current day stays readable at a glance.
+
+Key capabilities:
+
+- focus graph beside the calendar
+- scrollable Breakdown pane
+- pane budgeting that keeps the layout usable on smaller screens
+- inline totals and score summaries that keep the current focus state visible
+
+If you want to see it in context, read the [Screenshots and Walkthrough](/docs/screenshots-and-walkthrough/) page for the current Rollup screenshot.
+
 ## Check-Ins And Wellbeing
 
 Crona is not only an issue tracker. It also includes a daily self-check workflow:
@@ -52,10 +67,33 @@ Crona is not only an issue tracker. It also includes a daily self-check workflow
 - sleep and screen-time inputs
 - burnout indicators and trend views
 - a configurable Metrics Window for recent history
-- Momentum for the longer-running wellbeing history
+- Momentum for the longer-running custom-only wellbeing history
 - accountability and plan-failure rollups
 
 This data is kept local and shown in the Wellbeing dashboard, the compact Daily momentum block, and related range summaries.
+
+## Momentum
+
+Momentum is the long-view wellbeing surface for custom momentum history.
+
+It now stays focused on:
+
+- custom momentum cards
+- descriptions on each card
+- weekly labels with the week number prefix
+- disabled-state rendering that reads as paused history
+
+The [Screenshots and Walkthrough](/docs/screenshots-and-walkthrough/) page shows the current Momentum dashboard view.
+
+## Checkout And Dialogs
+
+Checkout dialogs act like selectors rather than dead inputs.
+
+That means:
+
+- `Select a repo` and `Select a stream` prompts still appear when the fields are blank
+- arrow cycling works from the empty state
+- help opens in a proper modal instead of distorting the active screen
 
 ## Dashboards And Views
 

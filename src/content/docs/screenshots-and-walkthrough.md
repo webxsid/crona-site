@@ -61,11 +61,47 @@ Read more:
 - [Issues and Planning](/docs/issues-and-planning/)
 - [TUI Keymap Reference](/docs/tui-keymap-reference/)
 
+## Rollup Dashboard: Read the Day
+
+![Rollup dashboard showing the focus graph beside the calendar and the Breakdown pane](/screenshots/rollup-dashboard.png)
+
+Rollup is the surface that shows the day’s work rhythm at a glance. It keeps the focus graph beside the calendar so the current day stays readable, while the Breakdown pane gives you the deeper context when you need it.
+
+It can surface:
+
+- focus and worktime visualization
+- the calendar view for the selected day
+- the scrollable Breakdown pane
+- totals and score summaries tied to the current focus state
+
+Read more:
+
+- [Features Overview](/docs/features-overview/)
+- [TUI Keymap Reference](/docs/tui-keymap-reference/)
+
+## Momentum Dashboard: Read the Long View
+
+![Momentum dashboard showing custom cards, week labels, and paused history states](/screenshots/momentum-dashboard.png)
+
+Momentum is the surface for the custom history view. It keeps the longer-running pattern visible without pretending the wellbeing story is a built-in streak editor.
+
+It can surface:
+
+- custom momentum cards
+- descriptions on each card
+- week-number labels
+- disabled-state cards that read as paused history
+
+Read more:
+
+- [Check-Ins and Wellbeing](/docs/check-ins-and-wellbeing/)
+- [Features Overview](/docs/features-overview/)
+
 ## Wellbeing Dashboard: Review the Pattern
 
-![Wellbeing dashboard showing the configurable Metrics Window, Momentum history, and activity heatmap](/screenshots/wellbeing-dashboard.png)
+![Wellbeing dashboard showing the configurable Metrics Window, details pane, and custom Momentum](/screenshots/wellbeing-dashboard.png)
 
-The Wellbeing dashboard shows the part of Crona that goes beyond issue state and timer history. This is the surface that helps you step back and ask how the recent work rhythm has actually been going.
+The Wellbeing dashboard shows the part of Crona that goes beyond issue state and timer history. This is the surface that helps you step back and ask how the recent work rhythm has actually been going. In the current layout, it is split into a summary pane, a Metrics Window, and a details pane.
 
 It can surface:
 
@@ -73,7 +109,7 @@ It can surface:
 - accountability summaries
 - burnout and recovery signals
 - the configurable Metrics Window
-- Momentum history
+- custom Momentum history
 - trend windows and activity heatmaps
 
 This is where Crona stops being only a planning tool and becomes a reflection tool as well.
@@ -90,7 +126,7 @@ Taken together, these views show the basic Crona loop:
 1. use Daily to understand the shape of the day
 2. use Issues to shape and choose the work
 3. use Focus Sessions to execute that work
-4. use Wellbeing to review the pattern behind it through the Metrics Window and Momentum
+4. use Wellbeing to review the pattern behind it through the Metrics Window and custom Momentum
 
 That loop is what makes Crona feel more like a local work system than a loose collection of pages.
 

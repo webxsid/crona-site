@@ -62,6 +62,32 @@ const docsUrl = new URL("/docs/", siteUrl).href;
           </p>
         </header>
 
+        <section class="docs-home-start flow" aria-labelledby="docs-home-start">
+          <div class="docs-home-group__header flow">
+            <p class="docs-home-group__label">Start here</p>
+            <h2 id="docs-home-start">The fastest path into Crona.</h2>
+          </div>
+
+          <div class="link-list">
+            <a href="/docs/getting-started/">
+              <strong>Getting Started</strong>
+              <span>Learn what Crona is, who it fits, and how the local runtime fits together.</span>
+            </a>
+            <a href="/docs/install/">
+              <strong>Install</strong>
+              <span>See platform setup, release channels, runtime paths, completions, and alerts.</span>
+            </a>
+            <a href="/docs/features-overview/">
+              <strong>Features Overview</strong>
+              <span>Scan the main workflows across planning, focus, Rollup, Wellbeing, and Momentum.</span>
+            </a>
+            <a href="/docs/screenshots-and-walkthrough/">
+              <strong>Screenshots and Walkthrough</strong>
+              <span>Preview the public workflow with the current Daily, Rollup, Momentum, and Wellbeing surfaces.</span>
+            </a>
+          </div>
+        </section>
+
         <div class="docs-home-sections">
           {docGroups.map((group) => (
             <section class="docs-home-group flow" aria-labelledby={`docs-home-${group.id}`}>

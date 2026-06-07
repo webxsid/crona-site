@@ -29,6 +29,7 @@ const documentTitle = pageTitle ?? (title === "Crona" ? "Crona | Local-first wor
 const siteUrl = Astro.site ?? new URL("https://crona.work");
 const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : new URL(Astro.url.pathname, siteUrl).href;
 const imageUrl = new URL(image ?? "/social/crona-og.png", siteUrl).href;
+const imageAlt = `${pageTitle ?? title} preview`;
 const robotsContent = noindex ? "noindex,follow" : "index,follow";
 const jsonLdEntries = [
   {
@@ -67,7 +68,7 @@ const jsonLdEntries = [
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={imageUrl} />
-    <meta property="og:image:alt" content={`${pageTitle} preview`} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -87,7 +88,7 @@ const jsonLdEntries = [
   <body>
     <div class="site-shell">
       <div class="site-shell__content">
-        <SiteHeader />
+        <SiteHeader currentPath={Astro.url.pathname} />
         <main>
           <slot />
         </main>

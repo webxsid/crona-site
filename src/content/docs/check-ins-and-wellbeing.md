@@ -1,6 +1,6 @@
 ---
 title: Check-Ins and Wellbeing
-description: Learn how Crona connects daily check-ins, Momentum, burnout signals, and accountability with the work you plan and complete.
+description: Learn how Crona connects daily check-ins, custom Momentum history, burnout signals, and accountability with the work you plan and complete.
 order: 7
 ---
 
@@ -30,7 +30,7 @@ The Wellbeing view is where those signals become useful.
 It splits the display into two ideas:
 
 - a configurable Metrics Window for the recent period
-- Momentum for the longer-running history view
+- Momentum for the longer-running custom-only history view
 
 It can combine:
 
@@ -65,7 +65,7 @@ The value of the Wellbeing page is not just one day’s data. It is the ability 
 - whether work is accumulating without enough recovery
 - whether daily plans are being completed, rolled forward, or abandoned
 
-This is where Crona starts to feel like more than a task tracker. It can show the relationship between planning quality, focus load, and how the recent period has actually felt. Momentum is the long-view surface for that history, while the Metrics Window keeps the short-range window readable.
+This is where Crona starts to feel like more than a task tracker. It can show the relationship between planning quality, focus load, and how the recent period has actually felt. Momentum is the long-view surface for that history, while the Metrics Window keeps the short-range window readable. Disabled Momentum cards read as paused history instead of a failure state.
 
 ## How It Connects Back to Daily Work
 

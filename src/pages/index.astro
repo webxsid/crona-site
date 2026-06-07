@@ -8,7 +8,7 @@ import "./_home/index.scss";
 <BaseLayout
   title="Crona"
   pageTitle="Crona | Local-first work tracking for developers"
-  description="Crona helps developers plan issues, run issue-scoped pomodoro sessions, track habits, and review the day from one local-first system."
+  description="Crona helps developers plan issues, run issue-scoped focus sessions, review Rollup and Wellbeing, and keep checkout context local from one system."
   structuredData={[
     {
       "@context": "https://schema.org",
@@ -32,11 +32,11 @@ import "./_home/index.scss";
         <p class="eyebrow">terminal-native work tracking</p>
         <h1>Local-first work tracking for people who live in the terminal.</h1>
         <p class="home-hero__lede">
-          Plan issues, run stricter pomodoro-style focus sessions, check in, and keep a readable record of what
-          actually happened.
+          Plan issues, run issue-scoped focus sessions, review Rollup and Wellbeing, and keep a readable record of
+          what actually happened.
         </p>
         <p class="home-hero__body">
-          Crona keeps planning, issue-scoped timer behavior, check-ins, and exports in one local system so the day
+          Crona keeps planning, checkout context, modal dialogs, check-ins, and exports in one local system so the day
           does not disappear into tabs, scratch notes, and half-finished context switches.
         </p>
       </div>
@@ -93,13 +93,13 @@ import "./_home/index.scss";
       <article class="home-loop__step">
         <span>02</span>
         <h3>Run issue-scoped focus</h3>
-        <p>Each issue carries its timer type, so the stricter pomodoro cadence follows the work instead of a global setting.</p>
+        <p>Each issue carries its timer type, so the cadence follows the work instead of a global setting.</p>
       </article>
 
       <article class="home-loop__step">
         <span>03</span>
         <h3>Read what happened</h3>
-        <p>Use check-ins, exports, and wellbeing signals to make tomorrow easier to start.</p>
+        <p>Use Rollup, check-ins, exports, and Wellbeing signals to make tomorrow easier to start.</p>
       </article>
     </div>
   </section>
@@ -129,20 +129,58 @@ import "./_home/index.scss";
       </div>
     </div>
 
+    <div class="home-surface home-surface--rollup">
+      <div class="home-surface__copy flow">
+        <p class="home-surface__label">Rollup dashboard</p>
+        <h3>See focus and calendar together.</h3>
+        <p>
+          Rollup keeps the focus graph next to the calendar so the current day stays readable, with the Breakdown pane
+          ready when you want the details.
+        </p>
+        <a href="/docs/screenshots-and-walkthrough/">Read the walkthrough</a>
+      </div>
+      <div class="home-surface__media">
+        <AppScreenshot
+          name="rollup-dashboard"
+          alt="Crona Rollup dashboard showing the focus graph beside the calendar and the Breakdown pane"
+          sizes="(min-width: 1024px) 54vw, 100vw"
+        />
+      </div>
+    </div>
+
+    <div class="home-surface home-surface--momentum">
+      <div class="home-surface__media">
+        <AppScreenshot
+          name="momentum-dashboard"
+          alt="Crona Momentum dashboard showing custom cards, week labels, and paused history states"
+          sizes="(min-width: 1024px) 54vw, 100vw"
+        />
+      </div>
+      <div class="home-surface__copy flow">
+        <p class="home-surface__label">Momentum dashboard</p>
+        <h3>Keep the long view custom.</h3>
+        <p>
+          Momentum shows the custom history cards, descriptions, and week prefixes that keep the wellbeing story
+          readable without turning it back into a generic streak view.
+        </p>
+        <a href="/docs/check-ins-and-wellbeing/">Read wellbeing docs</a>
+      </div>
+    </div>
+
     <div class="home-surface home-surface--wellbeing">
       <div class="home-surface__copy flow">
         <p class="home-surface__label">Wellbeing dashboard</p>
         <h3>Keep the work log human.</h3>
         <p>
-          Check-ins, energy, sleep, compact Daily signals, burnout history, and Momentum help you notice patterns that
-          a finished checklist would never show you on its own.
+          Check-ins, energy, sleep, compact Daily signals, burnout history, and custom-only Momentum help you notice
+          patterns that a finished checklist would never show you on its own.
         </p>
         <a href="/docs/check-ins-and-wellbeing/">Read wellbeing docs</a>
       </div>
       <div class="home-surface__media">
         <AppScreenshot
           name="wellbeing-dashboard"
-          alt="Crona Wellbeing dashboard showing the configurable Metrics Window and Momentum"
+          alt="Crona Wellbeing dashboard showing the configurable Metrics Window, details pane, and custom Momentum"
           sizes="(min-width: 1024px) 54vw, 100vw"
         />
       </div>

@@ -139,7 +139,7 @@ async function loadReleases() {
       bump: inferReleaseBump(release.tag, cards[index + 1]?.tag),
     }));
   } catch {
-    const local = await getCollection("changelog");
+    const local = (await getCollection("changelog")).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     const cards = local.map(
       (entry): ReleaseCard => ({
         tag: entry.data.version ?? entry.data.title,

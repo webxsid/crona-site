@@ -64,6 +64,14 @@
   content: "./";
 }
 
+.site-header__nav a.is-active {
+  color: var(--color-ink);
+}
+
+.site-header__nav a[aria-current="page"]::before {
+  color: var(--color-accent);
+}
+
 .site-header__nav a.is-external {
   align-items: center;
   display: inline-flex;

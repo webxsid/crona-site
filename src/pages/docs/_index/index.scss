@@ -23,6 +23,12 @@
   gap: var(--space-7);
 }
 
+.docs-home-start {
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
+}
+
 .docs-home-group {
   --flow-space: var(--space-4);
 }

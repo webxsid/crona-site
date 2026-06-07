@@ -2,28 +2,44 @@
 import CronaLogo from "../CronaLogo/CronaLogo.astro";
 import "./SiteHeader.scss";
 
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = "/" } = Astro.props as Props;
+
 const links = [
   { href: "/docs/", label: "Docs" },
   { href: "/changelog/", label: "Releases" },
   { href: "/support/", label: "Support" },
 ];
+
+const normalizePath = (path: string) => path.replace(/\/+$/, "/");
+const current = normalizePath(currentPath);
 ---
 
 <header class="site-header">
-  <a class="site-header__brand" href="/" aria-label="Crona home">
-    <CronaLogo class="site-header__mark"/>
+  <a class="site-header__brand" href="/" aria-label="Crona home" aria-current={current === "/" ? "page" : undefined}>
+    <CronaLogo class="site-header__mark" />
     <span class="site-header__wordmark">Crona</span>
   </a>
   <nav class="site-header__nav" id="primary-navigation" aria-label="Primary navigation">
     {
-      links.map((link) => (
-        <a
-          href={link.href}
-          {...(link.href.startsWith("http") ? { rel: "noreferrer" } : {})}
-        >
-          {link.label}
-        </a>
-      ))
+      links.map((link) => {
+        const href = normalizePath(link.href);
+        const isActive = href === "/" ? current === "/" : current.startsWith(href);
+
+        return (
+          <a
+            class:list={{ "is-active": isActive }}
+            href={link.href}
+            aria-current={isActive ? "page" : undefined}
+            {...(link.href.startsWith("http") ? { rel: "noreferrer" } : {})}
+          >
+            {link.label}
+          </a>
+        );
+      })
     }
   </nav>
 </header>
