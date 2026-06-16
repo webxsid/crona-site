@@ -1,14 +1,7 @@
-const scriptLinks = {
-  macos: "https://crona.work/install.sh",
-  linux: "https://crona.work/install.sh",
-  windows: "https://crona.work/install.ps1",
-};
-
 document.querySelectorAll("[data-install-tabs]").forEach((root) => {
   const tabs = [...root.querySelectorAll("[data-install-tab]")];
   const panels = [...root.querySelectorAll("[data-install-panel]")];
   const copyButton = root.querySelector("[data-copy-command]");
-  const scriptLink = root.querySelector("[data-script-link]");
 
   const setActive = (target) => {
     tabs.forEach((tab) => {
@@ -21,10 +14,6 @@ document.querySelectorAll("[data-install-tabs]").forEach((root) => {
 
     if (copyButton) {
       copyButton.textContent = "[ copy ]";
-    }
-
-    if (target && scriptLink) {
-      scriptLink.href = scriptLinks[target];
     }
   };
 

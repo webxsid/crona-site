@@ -1,47 +1,60 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import InstallCommandTabs from "../components/InstallCommandTabs/InstallCommandTabs.astro";
 import "./_install/install.scss";
 ---
 
 <BaseLayout
   title="Install"
   pageTitle="Crona install guide"
-  description="Install Crona with the evergreen setup guide and use the releases page for current downloads."
+  description="Install Crona through Homebrew, Winget, or source install paths, and use the migration guides when you need to switch from a legacy script."
 >
   <section class="container section">
     <div class="page-header flow measure">
       <p class="eyebrow">Install</p>
-      <h1>Install Crona</h1>
+      <h1>Install Crona the managed way</h1>
       <p>
-        Use the stable website script for the quickest install path, then fall back to the docs for platform-specific
-        setup and the releases page for downloadable artifacts.
+        Homebrew on macOS and Linux, Winget on Windows, and `go install` for source installs are the supported paths.
+        Legacy install scripts remain available as fallback paths while the migration guides help you move existing installs across.
       </p>
     </div>
 
-    <div class="install-handoff page-body">
-      <a class="install-handoff__card external-card" href="https://crona.work/install.sh" rel="noreferrer">
-        <span>Stable path</span>
-        <strong>Open install.sh</strong>
-        <p>Use the website entrypoint for macOS and Linux installs without tracking release URLs.</p>
-      </a>
+    <div class="page-body flow">
+      <div class="install-hub">
+        <InstallCommandTabs />
+      </div>
 
-      <a class="install-handoff__card external-card" href="https://crona.work/install.ps1" rel="noreferrer">
-        <span>Stable path</span>
-        <strong>Open install.ps1</strong>
-        <p>Use the website entrypoint for Windows installs without tracking release URLs.</p>
-      </a>
+      <div class="install-handoff">
+        <a class="install-handoff__card" href="/docs/migration/">
+          <span>Migration</span>
+          <strong>Switch install methods safely</strong>
+          <p>Back up, remove the old runtime, reinstall with the package manager you want to keep, and restore.</p>
+        </a>
 
-      <a class="install-handoff__card" href="/docs/install/">
-        <span>Primary path</span>
-        <strong>Open the install guide</strong>
-        <p>Platform setup, runtime notes, shell completions, alerts, exports, and update channels.</p>
-      </a>
+        <a class="install-handoff__card" href="/docs/install/">
+          <span>Reference</span>
+          <strong>Read the full install guide</strong>
+          <p>See runtime paths, release channels, update behavior, and notification sound attribution in one place.</p>
+        </a>
 
-      <a class="install-handoff__card external-card" href="/changelog/">
-        <span>Downloads</span>
-        <strong>Browse releases</strong>
-        <p>Use the release list on the site, then jump to GitHub when you want the raw notes and artifacts.</p>
-      </a>
+        <a class="install-handoff__card" href="/docs/migration/legacy-to-brew/">
+          <span>Homebrew</span>
+          <strong>Legacy to Homebrew</strong>
+          <p>Use the macOS and Linux migration guide when you are moving off the legacy script.</p>
+        </a>
+
+        <a class="install-handoff__card" href="/docs/migration/legacy-to-go/">
+          <span>Source install</span>
+          <strong>Legacy to Go</strong>
+          <p>Keep the source-install flow with `go install` after you migrate away from the script.</p>
+        </a>
+
+        <a class="install-handoff__card" href="/docs/migration/legacy-to-winget/">
+          <span>Windows</span>
+          <strong>Legacy to Winget</strong>
+          <p>Move a Windows install from the legacy script to Winget with backup and restore preserved.</p>
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

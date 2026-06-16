@@ -8,7 +8,7 @@ Crona is a local-first work tracker. The local engine owns the canonical state, 
 
 ## Terminology
 
-The codebase still uses the term `kernel` for the internal engine process and its CLI namespace. Public docs usually call it the local engine or background engine.
+Public docs call the background process the daemon or local engine.
 
 ## The Core Hierarchy
 

@@ -176,7 +176,7 @@ const itemList = releases.map((release, index) => ({
 <BaseLayout
   title="Releases"
   pageTitle="Crona releases"
-  description="Browse Crona releases on the site and jump to GitHub for the canonical release notes and artifacts."
+  description="Browse Crona releases on the site, with GitHub as the live source of truth and a local fallback for recent release notes."
   structuredData={[
     {
       "@context": "https://schema.org",
@@ -205,7 +205,8 @@ const itemList = releases.map((release, index) => ({
       <h1>Crona release cards, with GitHub as the source of truth</h1>
       <p>
         This page mirrors the current Crona release list so you can scan versions on the site and jump to GitHub for
-        the full notes and downloadable artifacts.
+        the full notes and downloadable artifacts. When GitHub is unavailable, the site falls back to the local release
+        notes collection.
       </p>
     </div>
 

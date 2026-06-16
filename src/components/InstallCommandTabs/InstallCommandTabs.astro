@@ -4,48 +4,43 @@ import "./InstallCommandTabs.scss";
 
 <div class="install-tabs" data-install-tabs>
   <div class="install-tabs__topline">
-    <div class="install-tabs__tablist" role="tablist" aria-label="Install command by operating system">
-      <button class="install-tabs__tab" type="button" role="tab" aria-selected="true" aria-controls="install-panel-macos" id="install-tab-macos" data-install-tab="macos">[ macOS ]</button>
-      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-linux" id="install-tab-linux" data-install-tab="linux">[ Linux ]</button>
-      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-windows" id="install-tab-windows" data-install-tab="windows">[ Windows ]</button>
+    <span class="install-tabs__label">install paths</span>
+    <div class="install-tabs__tablist" role="tablist" aria-label="Install command by distribution path">
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="true" aria-controls="install-panel-homebrew" id="install-tab-homebrew" data-install-tab="homebrew">[ Homebrew ]</button>
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-winget" id="install-tab-winget" data-install-tab="winget">[ Winget ]</button>
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-source" id="install-tab-source" data-install-tab="source">[ Source ]</button>
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-legacy" id="install-tab-legacy" data-install-tab="legacy">[ Legacy ]</button>
     </div>
   </div>
 
   <div class="install-tabs__command">
-    <div class="install-tabs__panel" role="tabpanel" id="install-panel-macos" aria-labelledby="install-tab-macos" data-install-panel="macos">
-      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://crona.work/install.sh | sh</code></pre>
+    <div class="install-tabs__panel" role="tabpanel" id="install-panel-homebrew" aria-labelledby="install-tab-homebrew" data-install-panel="homebrew">
+      <pre><span aria-hidden="true">$ </span><code>brew tap webxsid/tap
+brew install crona</code></pre>
     </div>
 
-    <div class="install-tabs__panel" role="tabpanel" id="install-panel-linux" aria-labelledby="install-tab-linux" data-install-panel="linux" hidden>
-      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://crona.work/install.sh | sh</code></pre>
+    <div class="install-tabs__panel" role="tabpanel" id="install-panel-winget" aria-labelledby="install-tab-winget" data-install-panel="winget" hidden>
+      <pre><span aria-hidden="true">PS&gt; </span><code>winget install --id Webxsid.Crona -e</code></pre>
     </div>
 
-    <div class="install-tabs__panel" role="tabpanel" id="install-panel-windows" aria-labelledby="install-tab-windows" data-install-panel="windows" hidden>
-      <pre><span aria-hidden="true">PS&gt; </span><code>Invoke-WebRequest "https://crona.work/install.ps1" -OutFile "$env:TEMP\crona-install.ps1"
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\crona-install.ps1"</code></pre>
+    <div class="install-tabs__panel" role="tabpanel" id="install-panel-source" aria-labelledby="install-tab-source" data-install-panel="source" hidden>
+      <pre><span aria-hidden="true">$ </span><code>go install github.com/webxsid/crona/...@latest</code></pre>
+    </div>
+
+    <div class="install-tabs__panel" role="tabpanel" id="install-panel-legacy" aria-labelledby="install-tab-legacy" data-install-panel="legacy" hidden>
+      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://crona.work/install.sh | sh</code></pre>
+      <p class="install-tabs__panel-note">Legacy fallback only. Use the migration guide if you are moving off an older install.</p>
     </div>
 
     <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
   </div>
 
   <div class="install-tabs__links">
-    <a
-      class="external-link"
-      href="https://crona.work/install.sh"
-      rel="noreferrer"
-      data-script-link
-    >
-      <span>script</span>
-      <svg class="install-tabs__download-icon" aria-hidden="true" viewBox="0 0 16 16">
-        <path d="M8 2v8" />
-        <path d="M4.5 6.5 8 10l3.5-3.5" />
-        <path d="M3 13h10" />
-      </svg>
-    </a>
+    <a href="/docs/install/">install guide</a>
     <span aria-hidden="true">/</span>
-    <a href="/docs/install/">install docs</a>
+    <a href="/docs/migration/">migration guide</a>
     <span aria-hidden="true">/</span>
-    <a href="/changelog" >releases</a>
+    <a href="/changelog/">releases</a>
   </div>
 </div>
 

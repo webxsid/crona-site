@@ -1,6 +1,6 @@
 ---
 title: CLI and Local Engine
-description: Use Crona from the command line, inspect the local engine, and understand how user-facing language maps to the `kernel` command group.
+description: Use Crona from the command line, inspect the local engine, and understand how the daemon command group maps to user-facing language.
 order: 11
 ---
 
@@ -16,32 +16,27 @@ crona
 
 That launches the TUI and starts or attaches to the local engine as needed.
 
-## Why the Command Group Is Named `kernel`
+## Why the Command Group Is Named `daemon`
 
-The codebase and CLI still use the term `kernel` for the internal engine process and its command namespace:
+The command surface uses `daemon` for the internal engine process and its control commands:
 
 ```bash
-crona kernel ...
+crona daemon ...
 ```
 
-In public-facing docs, it is usually clearer to say **local engine** or **background engine**. Those terms refer to the same runtime owner.
-
-Use this wording rule throughout the docs:
-
-- say **local engine** when explaining behavior
-- show `kernel` when documenting the actual CLI command group
+In public-facing docs, it is usually clearer to say **local engine** or **daemon**. Those terms refer to the same runtime owner.
 
 ## Inspecting the Local Engine
 
 Useful inspection commands include:
 
 ```bash
-crona kernel attach --json
-crona kernel status --json
-crona kernel info --json
+crona daemon attach --json
+crona daemon status --json
+crona daemon info --json
 ```
 
-The broader `kernel` command group supports:
+The broader `daemon` command group supports:
 
 - `attach`
 - `detach`

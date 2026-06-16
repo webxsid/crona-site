@@ -8,7 +8,7 @@ import "./_home/index.scss";
 <BaseLayout
   title="Crona"
   pageTitle="Crona | Local-first work tracking for developers"
-  description="Crona helps developers plan issues, run issue-scoped focus sessions, review Rollup and Wellbeing, and keep checkout context local from one system."
+  description="Crona helps developers plan issues, run issue-scoped focus sessions, review Rollup and Wellbeing, and keep local work context and installs readable from one system."
   structuredData={[
     {
       "@context": "https://schema.org",
@@ -37,7 +37,8 @@ import "./_home/index.scss";
         </p>
         <p class="home-hero__body">
           Crona keeps planning, checkout context, modal dialogs, check-ins, and exports in one local system so the day
-          does not disappear into tabs, scratch notes, and half-finished context switches.
+          does not disappear into tabs, scratch notes, and half-finished context switches. Managed installs on
+          Homebrew, Winget, and source keep the distribution path just as explicit.
         </p>
       </div>
 
@@ -191,21 +192,25 @@ import "./_home/index.scss";
     <div class="home-close__panel">
       <div class="home-close__copy flow">
         <p class="eyebrow">next step</p>
-        <h2>Install it, then keep the manual close.</h2>
+        <h2>Install it, then keep the migration path close.</h2>
         <p>
-          Start from the install guide, learn the workflow in docs, and use GitHub for releases and issue tracking. The
-          website stays stable even when the app keeps moving.
+          Start from the install guide, learn the workflow in docs, and keep the migration pages handy if you are
+          moving from a legacy script or switching release channels.
         </p>
       </div>
 
       <div class="home-close__links">
-        <a href="/docs/install/">
-          <strong>Install and runtime guide</strong>
-          <span>Platform setup, shell completions, alerts, exports, and update basics.</span>
+        <a href="/install/">
+          <strong>Install hub</strong>
+          <span>Package-manager tabs, fallback scripts, and direct links to the migration flow.</span>
         </a>
         <a href="/docs/">
           <strong>Documentation</strong>
-          <span>Start with getting started, then move into daily workflows and reference pages.</span>
+          <span>Start with getting started, then move into install, migration, workflow, and reference pages.</span>
+        </a>
+        <a href="/docs/migration/">
+          <strong>Migration guide</strong>
+          <span>Move a legacy install to Homebrew, Go source installs, or Winget without losing state.</span>
         </a>
         <a href="/changelog/">
           <strong>Releases</strong>

@@ -15,7 +15,7 @@ The `crona` command is not just a launcher for the TUI. It also exposes command 
 - `context`
 - `timer`
 - `issue`
-- `kernel`
+- `daemon`
 - `export`
 - `completion`
 
@@ -46,6 +46,7 @@ crona context get
 crona context switch-repo --id <repo-id>
 crona context switch-stream --id <stream-id>
 crona context switch-issue --id <issue-id>
+crona daemon status --json
 ```
 
 This makes Crona easier to automate from shell aliases, shortcut tools, and local scripts that depend on “whatever I am working on right now.”

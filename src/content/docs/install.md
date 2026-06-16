@@ -1,6 +1,6 @@
 ---
 title: Install
-description: Platforms, installer flows, runtime prerequisites, shell completions, alerts, and PDF export notes.
+description: Install Crona with managed package paths, understand the runtime layout, and use the migration guides when you need to switch methods.
 order: 2
 ---
 
@@ -9,76 +9,109 @@ Crona ships installable binaries. You do not need Go installed to use the releas
 Installed binaries:
 
 - `crona`
+- `crona-daemon`
 - `crona-tui`
-- `crona-kernel`
 
-`crona-kernel` is the internal binary name for Crona's background local engine. In user docs, it is usually called the local engine.
+`crona-daemon` is the background local engine binary. Public docs usually call it the daemon or local engine.
 
-## Supported Platforms
+## Release Artifacts
 
-The published install docs cover:
+Release assets ship as:
 
-- macOS
-- Linux
-- Windows
+- one platform bundle zip containing all three binaries
+- one shared `crona-assets-<version>.tar.gz` archive for legacy script installers and release compatibility
+- installer scripts for Unix-like systems and Windows
 
-The default launcher is `crona`. `crona-tui` remains available as a compatibility entrypoint.
+> [!IMPORTANT]
+> Crona 1.6.x shows an install-script deprecation banner in the Updates view.
+> GitHub install scripts are fallback paths, not the preferred install method.
+> Use a managed installer when possible, and use [Migration](/docs/migration/) if you need to switch install methods or release channels.
 
-## Release Channels
+## Managed Installs
 
-- `stable` is the recommended channel for general users.
-- `beta` is for pre-release testing and faster iteration.
+### Homebrew
 
-Release downloads are published on [GitHub Releases](https://github.com/webxsid/crona/releases). The stable shell entrypoints are [crona.work/install.sh](https://crona.work/install.sh) and [crona.work/install.ps1](https://crona.work/install.ps1).
+Prefer Homebrew on macOS and Linux:
 
-## Install With The Website Script
+```bash
+brew tap webxsid/tap
+brew install crona
+```
 
-### macOS and Linux
+Or:
 
-Install from the stable website entrypoint:
+```bash
+brew install webxsid/tap/crona
+```
+
+Prerelease beta tags publish a separate opt-in formula:
+
+```bash
+brew install webxsid/tap/crona-beta
+```
+
+Update commands:
+
+```bash
+brew upgrade crona
+brew upgrade crona-beta
+```
+
+### Winget
+
+Prefer Winget on Windows:
+
+```powershell
+winget install --id Webxsid.Crona -e
+```
+
+Winget installs the Crona bundle and exposes `crona`, `crona-daemon`, and `crona-tui`.
+
+Update command:
+
+```powershell
+winget upgrade --id Webxsid.Crona -e
+```
+
+### Source Install
+
+If you want to keep installing from source, use:
+
+```bash
+go install github.com/webxsid/crona/...@latest
+```
+
+Make sure your `GOBIN` or `PATH` includes the directory where Go installs binaries.
+
+## Legacy Script Fallback
+
+If you still need the legacy installer, use the website fallback entrypoints:
 
 ```bash
 curl -fsSL https://crona.work/install.sh | sh
 ```
-
-Force a non-interactive reinstall:
-
-```bash
-curl -fsSL https://crona.work/install.sh | CRONA_INSTALL_FORCE=1 sh
-```
-
-Run the installer from a downloaded file:
-
-```bash
-curl -fsSL -o /tmp/crona-install.sh https://crona.work/install.sh
-sh /tmp/crona-install.sh
-```
-
-### Windows
-
-Install from PowerShell using the stable website entrypoint:
 
 ```powershell
 Invoke-WebRequest "https://crona.work/install.ps1" -OutFile "$env:TEMP\crona-install.ps1"
 powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\crona-install.ps1"
 ```
 
-Override the binary install location:
+These scripts remain available for compatibility, but Crona now treats them as fallback paths.
 
-```powershell
-$env:CRONA_INSTALL_DIR = "D:\tools\crona\bin"
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\crona-install.ps1"
-```
+If you are moving from a legacy install or switching channels, use the migration guide:
+
+- [Migration](/docs/migration/)
+- [Legacy to Homebrew](/docs/migration/legacy-to-brew/)
+- [Legacy to Go](/docs/migration/legacy-to-go/)
+- [Legacy to Winget](/docs/migration/legacy-to-winget/)
 
 ## Manual Install
 
-If you do not want to use the installer, download the platform bundle zip from the release page and extract:
+Download your platform bundle zip from the release page and extract `crona`, `crona-daemon`, and `crona-tui`.
 
-- `crona`
-- `crona-tui`
-- `crona-kernel`
+The embedded templates and alert assets ship inside the binaries, so the shared assets archive is only needed for the legacy script installers.
 
-Keep the matching shared assets archive if you want the bundled report templates and export assets.
+The TUI starts the local engine automatically when needed. `crona-tui` remains available as a compatibility entrypoint.
 
 ## Runtime Layout
 
@@ -86,64 +119,74 @@ Keep the matching shared assets archive if you want the bundled report templates
 
 Default runtime directories:
 
-- macOS production: `~/Library/Application Support/Crona`
-- macOS development: `~/Library/Application Support/Crona Dev`
-- Linux production: `${XDG_DATA_HOME:-~/.local/share}/crona`
-- Linux development: `${XDG_DATA_HOME:-~/.local/share}/crona-dev`
-- Windows production: `%LocalAppData%\\Crona`
-- Windows development: `%LocalAppData%\\Crona Dev`
+- macOS prod: `~/Library/Application Support/Crona`
+- macOS dev: `~/Library/Application Support/Crona Dev`
+- Linux prod: `${XDG_DATA_HOME:-~/.local/share}/crona`
+- Linux dev: `${XDG_DATA_HOME:-~/.local/share}/crona-dev`
+- Windows prod: `%LocalAppData%\Crona`
+- Windows dev: `%LocalAppData%\Crona Dev`
 
-Set `CRONA_HOME` to override the runtime home.
+Override the runtime directory with `CRONA_HOME`.
+
+On macOS and Linux, legacy `~/.crona` and `~/.crona-dev` directories migrate automatically on install or first local engine start unless `CRONA_HOME` is set.
 
 ### Binary Install Location
 
 Default binary install directories:
 
-- macOS and Linux: `~/.local/bin`
-- Windows: `%LocalAppData%\\Programs\\Crona\\bin`
+- macOS/Linux: `~/.local/bin`
+- Windows: `%LocalAppData%\Programs\Crona\bin`
 
-Set `CRONA_INSTALL_DIR` to override the binary install directory.
+Override the binary install directory with `CRONA_INSTALL_DIR`.
 
-## Shell Completions
+## Updates
 
-Generate completions with:
+Users can switch release tracks from the TUI settings.
+The default track follows normal releases, and testers can opt into upcoming builds.
 
-```bash
-crona completion zsh
-crona completion bash
-crona completion fish
-```
+Use the in-app `Updates` view to check release status, read notes, and get the right migration or package-manager command.
 
-The CLI emits the completion script to standard output, so you can wire it into your shell profile however you normally manage completions.
+- Homebrew installs never self-update from inside Crona.
+- Winget installs never self-update from inside Crona.
+- The TUI shows the source-aware update command for the current install type, but does not execute it.
+- When Crona asks you to migrate, back up with `crona backup`, uninstall with your package manager, remove runtime data if you want a clean reset, then reinstall and restore with `crona restore <path>`.
+- The migration guide at [Migration](/docs/migration/) is the canonical handoff for switching install methods or release channels.
+- Script installs rerun the install script.
+- Winget installs use `winget upgrade --id Webxsid.Crona -e`.
+- Source installs show the `go install` command.
+- Manual installs and unknown installs are directed to the GitHub release page.
 
 ## Notifications And Alerts
 
-Alerts are emitted by the local engine, not by the TUI process itself. The TUI configures them and exposes test actions, but the engine decides when to fire them.
-
-That includes:
+Alerts are emitted by the local engine. The TUI configures and tests them, but the background engine is the process that decides when to fire:
 
 - timer boundary alerts
-- focus inactivity alerts
+- focus inactivity alerts when an active work session runs too long without TUI activity
 - update-available alerts
-- support bundle and export completion alerts
+- support/export completion alerts
 - scheduled reminders such as nightly check-in reminders
 
-Scheduled reminders and inactivity alerts only fire while the local engine is running.
+Scheduled reminders and inactivity alerts are local-only and only fire while the local engine is running.
 
-### OS Helpers
+Supported notification helpers by OS:
 
-Supported helpers in the upstream install docs:
+- macOS:
+  - notifications: `terminal-notifier`, fallback `osascript`
+  - sound playback: `afplay`
+- Linux:
+  - notifications: `notify-send`
+  - sound playback: `paplay`, `aplay`, `play`, fallback `canberra-gtk-play`
+- Windows:
+  - notifications: `BurntToast` when installed, fallback PowerShell toast delivery
+  - sound playback: PowerShell `SoundPlayer`
 
-- macOS notifications: `terminal-notifier`, fallback `osascript`
-- macOS sound playback: `afplay`
-- Linux notifications: `notify-send`
-- Linux sound playback: `paplay`, `aplay`, `play`, fallback `canberra-gtk-play`
-- Windows notifications: `BurntToast` when installed, otherwise PowerShell toast delivery
-- Windows sound playback: PowerShell `SoundPlayer`
+The `Alerts` view shows the active backend and whether subtitle, urgency, icon, and bundled sound support are currently available on the running machine.
 
-The Alerts view shows which backend Crona can use on the current machine.
+Bundled alert sounds include royalty-free MP3 assets by Universfield and Pixabay:
 
-## PDF And Other Export Renderers
+- Sound effect by [Universfield](https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=494248) from [Pixabay](https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=494248)
+
+## PDF Rendering
 
 Markdown export works without extra tooling. PDF export requires local renderer support.
 
@@ -157,20 +200,6 @@ Current renderer expectations:
   - `xelatex`
   - `pdflatex`
 
-If the renderer chain is missing, markdown export still works and PDF export stays unavailable until the tools are installed.
+Renderer availability is detected at runtime and surfaced in the TUI `Config` view and through `export.assets.get`.
 
-The Config view can rescan export tools and show the active renderer status.
-
-## Updates
-
-General guidance:
-
-- use the `stable` channel unless you want prerelease builds
-- opt into `beta` from Settings if you want faster release validation
-- use the Updates view to check, read release notes, and install supported updates
-
-## Next Steps
-
-- Read [Getting Started](/docs/getting-started/) for the runtime model.
-- Read [Alerts and Reminders](/docs/alerts-and-reminders/) for day-to-day alert behavior.
-- Read [CLI and Local Engine](/docs/cli-and-local-engine/) for command-line control.
+If the required renderer chain is missing, PDF export remains unavailable but markdown export still works.
