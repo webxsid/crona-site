@@ -20,6 +20,7 @@ brew install crona</code></pre>
     </div>
 
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-winget" aria-labelledby="install-tab-winget" data-install-panel="winget" hidden>
+      <p class="install-tabs__panel-note">Winget is not ready yet. Use Homebrew, source install, or the legacy fallback for now.</p>
       <pre><span aria-hidden="true">PS&gt; </span><code>winget install --id Webxsid.Crona -e</code></pre>
     </div>
 
@@ -28,7 +29,9 @@ brew install crona</code></pre>
     </div>
 
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-legacy" aria-labelledby="install-tab-legacy" data-install-panel="legacy" hidden>
-      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://crona.work/install.sh | sh</code></pre>
+      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://github.com/webxsid/crona/releases/download/v1.6.0/install-crona-tui.sh | sh</code></pre>
+      <pre><span aria-hidden="true">PS&gt; </span><code>Invoke-WebRequest "https://github.com/webxsid/crona/releases/download/v1.6.0/install-crona-tui.ps1" -OutFile "$env:TEMP\crona-install.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\crona-install.ps1"</code></pre>
       <p class="install-tabs__panel-note">Legacy fallback only. Use the migration guide if you are moving off an older install.</p>
     </div>
 

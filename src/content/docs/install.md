@@ -59,13 +59,13 @@ brew upgrade crona-beta
 
 ### Winget
 
-Prefer Winget on Windows:
+Winget is not ready yet, but this is the Windows managed-install command the site will use when that path is published:
 
 ```powershell
 winget install --id Webxsid.Crona -e
 ```
 
-Winget installs the Crona bundle and exposes `crona`, `crona-daemon`, and `crona-tui`.
+When Winget lands, it will install the Crona bundle and expose `crona`, `crona-daemon`, and `crona-tui`.
 
 Update command:
 
@@ -85,14 +85,14 @@ Make sure your `GOBIN` or `PATH` includes the directory where Go installs binari
 
 ## Legacy Script Fallback
 
-If you still need the legacy installer, use the website fallback entrypoints:
+If you still need the legacy installer, use the pinned `v1.6.0` release assets:
 
 ```bash
-curl -fsSL https://crona.work/install.sh | sh
+curl -fsSL https://github.com/webxsid/crona/releases/download/v1.6.0/install-crona-tui.sh | sh
 ```
 
 ```powershell
-Invoke-WebRequest "https://crona.work/install.ps1" -OutFile "$env:TEMP\crona-install.ps1"
+Invoke-WebRequest "https://github.com/webxsid/crona/releases/download/v1.6.0/install-crona-tui.ps1" -OutFile "$env:TEMP\crona-install.ps1"
 powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\crona-install.ps1"
 ```
 
