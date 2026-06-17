@@ -1,5 +1,6 @@
 .install-tabs {
   font-family: var(--font-mono);
+  min-width: 0;
   max-width: none;
   width: 100%;
 }
@@ -10,6 +11,7 @@
   flex-wrap: wrap;
   gap: 10px;
   justify-content: space-between;
+  min-width: 0;
   padding: 0;
 }
 
@@ -25,7 +27,9 @@
   flex-wrap: nowrap;
   gap: 8px;
   max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   scrollbar-width: none;
   width: 100%;
 }
@@ -137,12 +141,14 @@
 .install-tabs__blocks {
   display: grid;
   gap: 12px;
+  min-width: 0;
 }
 
 .install-tabs__block {
   background: color-mix(in srgb, var(--color-panel-raised) 70%, transparent);
   border: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
   border-radius: 12px;
+  min-width: 0;
   padding: 12px;
 }
 
@@ -205,6 +211,7 @@
   border: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
   border-radius: 12px;
   margin-top: 12px;
+  min-width: 0;
   padding: 12px 12px 14px;
 }
 
@@ -242,6 +249,7 @@
   display: grid;
   gap: 10px;
   margin-top: 14px;
+  min-width: 0;
   padding-top: 14px;
 }
 
@@ -254,6 +262,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px 14px;
+  min-width: 0;
 }
 
 .install-tabs__legacy-secondary a,
@@ -274,6 +283,7 @@
   font-size: 0.84rem;
   justify-content: flex-start;
   margin-top: 14px;
+  min-width: 0;
   padding: 14px 2px 0;
 }
 
@@ -293,7 +303,17 @@
 
 @media (max-width: 719px) {
   .install-tabs__topline {
-    gap: 6px;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .install-tabs__label {
+    margin-right: 0;
+  }
+
+  .install-tabs__tablist {
+    width: 100%;
   }
 
   .install-tabs__tab,
@@ -313,6 +333,10 @@
 
   .install-tabs__copy {
     justify-self: start;
+  }
+
+  .install-tabs__block pre {
+    overflow-x: auto;
   }
 
   .install-tabs__block pre {
