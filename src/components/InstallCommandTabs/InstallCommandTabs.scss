@@ -22,8 +22,16 @@
 
 .install-tabs__tablist {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  width: 100%;
+}
+
+.install-tabs__tablist::-webkit-scrollbar {
+  display: none;
 }
 
 .install-tabs__tab,
@@ -34,6 +42,7 @@
   color: var(--color-muted);
   cursor: pointer;
   font: inherit;
+  line-height: 1;
   padding: 8px 12px;
   transition:
     border-color 140ms ease,
@@ -42,8 +51,42 @@
     transform 140ms ease;
 }
 
-.install-tabs__tab:hover,
-.install-tabs__copy:hover {
+.install-tabs__tab {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.install-tabs__tab-name {
+  display: inline-flex;
+}
+
+.install-tabs__tab-badge {
+  background: color-mix(in srgb, var(--color-panel-raised) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-line) 88%, transparent);
+  border-radius: 999px;
+  color: var(--color-muted);
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 4px 8px;
+}
+
+.install-tabs__tab[disabled] {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.install-tabs__tab[disabled]:hover {
+  border-color: transparent;
+  color: var(--color-muted);
+  transform: none;
+}
+
+.install-tabs__tab:not(:disabled):hover,
+.install-tabs__copy:hover,
+.install-tabs__advanced summary:hover {
   border-color: var(--color-line);
   color: var(--color-ink);
   transform: translateY(-1px);
@@ -63,15 +106,9 @@
 }
 
 .install-tabs__command {
-  align-items: stretch;
-  background: color-mix(in srgb, var(--color-page) 38%, var(--color-panel));
-  border: 1px solid var(--color-line);
-  border-radius: 14px;
-  display: grid;
-  gap: 16px;
-  grid-template-columns: minmax(0, 1fr) auto;
+  display: block;
   margin-top: 14px;
-  padding: 16px;
+  padding: 16px 0px;
 }
 
 .install-tabs__panel {
@@ -83,12 +120,53 @@
   display: none;
 }
 
+.install-tabs__panel-intro {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.install-tabs__panel-title {
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 650;
+  margin: 0;
+}
+
+.install-tabs__blocks {
+  display: grid;
+  gap: 12px;
+}
+
+.install-tabs__block {
+  background: color-mix(in srgb, var(--color-panel-raised) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.install-tabs__block-topline {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.install-tabs__block-label {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .install-tabs__panel-note {
   color: var(--color-muted);
   font-size: 0.86rem;
   line-height: 1.45;
-  margin: 10px 0 0;
-  max-width: 60ch;
+  margin: 0;
 }
 
 .install-tabs pre {
@@ -98,6 +176,13 @@
   margin: 0;
   min-width: 0;
   padding: 0;
+}
+
+.install-tabs__block pre {
+  background: color-mix(in srgb, var(--color-page) 50%, var(--color-panel));
+  border: 1px solid color-mix(in srgb, var(--color-line) 75%, transparent);
+  border-radius: 10px;
+  padding: 12px 14px;
 }
 
 .install-tabs code {
@@ -116,21 +201,90 @@
   white-space: nowrap;
 }
 
-.install-tabs__links {
-  color: var(--color-line-strong);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-size: 0.84rem;
-  padding: 12px 2px 0;
+.install-tabs__advanced {
+  border: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
+  border-radius: 12px;
+  margin-top: 12px;
+  padding: 12px 12px 14px;
 }
 
+.install-tabs__advanced summary {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--color-accent-strong);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.88rem;
+  gap: 8px;
+  list-style: none;
+  padding: 6px 10px;
+  transition:
+    border-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.install-tabs__advanced summary::-webkit-details-marker {
+  display: none;
+}
+
+.install-tabs__advanced .install-tabs__panel-note {
+  margin-top: 10px;
+}
+
+.install-tabs__advanced .install-tabs__blocks {
+  margin-top: 12px;
+}
+
+.install-tabs__legacy-actions {
+  border-top: 1px solid var(--color-line);
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+}
+
+.install-tabs__legacy-primary {
+  color: var(--color-accent-strong);
+  font-weight: 650;
+}
+
+.install-tabs__legacy-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+}
+
+.install-tabs__legacy-secondary a,
 .install-tabs__links a {
   color: var(--color-muted);
 }
 
+.install-tabs__legacy-secondary a:hover,
 .install-tabs__links a:hover {
   color: var(--color-accent-strong);
+}
+
+.install-tabs__links {
+  border-top: 1px solid var(--color-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  font-size: 0.84rem;
+  justify-content: flex-start;
+  margin-top: 14px;
+  padding: 14px 2px 0;
+}
+
+.install-tabs__links-label {
+  color: var(--color-line-strong);
+  font-weight: 650;
+}
+
+.install-tabs__links-primary {
+  color: var(--color-accent-strong);
+  font-weight: 650;
 }
 
 .install-tabs__links>span {
@@ -142,36 +296,38 @@
     gap: 6px;
   }
 
-  .install-tabs__tablist {
-    flex-wrap: nowrap;
-    gap: 4px;
-    max-width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .install-tabs__tablist::-webkit-scrollbar {
-    display: none;
-  }
-
   .install-tabs__tab,
   .install-tabs__copy {
     font-size: 0.72rem;
     padding: 6px 8px;
   }
 
-  .install-tabs__command {
-    grid-template-columns: minmax(0, 1fr);
+  .install-tabs__block {
+    padding: 10px;
+  }
+
+  .install-tabs__block-topline {
+    gap: 8px;
+    margin-bottom: 8px;
   }
 
   .install-tabs__copy {
     justify-self: start;
   }
 
+  .install-tabs__block pre {
+    padding: 10px 12px;
+  }
+
   .install-tabs code {
     font-size: 0.84rem;
   }
 
+  .install-tabs__advanced {
+    padding: 10px;
+  }
+
+  .install-tabs__legacy-secondary,
   .install-tabs__links {
     font-size: 0.78rem;
     gap: 8px;

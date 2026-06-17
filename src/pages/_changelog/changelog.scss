@@ -41,6 +41,16 @@
   position: relative;
 }
 
+.release-card.is-latest-stable {
+  border-color: color-mix(in srgb, var(--color-accent) 48%, var(--color-line));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 18%, transparent);
+}
+
+.release-card.is-prerelease {
+  background: color-mix(in srgb, var(--color-panel) 84%, var(--color-page));
+  opacity: 0.93;
+}
+
 .release-card::before {
   background: var(--color-line-strong);
   border: 1px solid var(--color-line-strong);
@@ -79,11 +89,6 @@
   text-transform: uppercase;
 }
 
-.release-card__badge.is-latest {
-  border-color: var(--color-accent-strong);
-  color: var(--color-accent-strong);
-}
-
 .release-card__badge.is-prerelease {
   border-color: var(--color-warning);
   color: var(--color-warning);
@@ -103,6 +108,16 @@
 .release-card__body {
   display: grid;
   gap: 8px;
+}
+
+.release-card__eyebrow {
+  color: var(--color-accent-strong);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .release-card__body h2 {
@@ -134,7 +149,7 @@
   gap: 10px;
 }
 
-.release-card__actions a {
+.release-card__action {
   align-items: center;
   background: var(--color-surface-elevated, var(--color-panel));
   border: 1px solid var(--color-line);
@@ -151,12 +166,16 @@
     color 140ms ease;
 }
 
-.release-card__actions a:hover,
-.release-card__actions a:focus-visible {
+.release-card__action:hover,
+.release-card__action:focus-visible {
   border-color: var(--color-line-strong);
   color: var(--color-accent-strong);
   outline: none;
   transform: translateY(-1px);
+}
+
+.release-card.is-prerelease .release-card__action {
+  opacity: 0.9;
 }
 
 .releases-footer {

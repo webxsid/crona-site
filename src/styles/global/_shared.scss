@@ -80,3 +80,79 @@
   inset-inline-end: 18px;
   position: absolute;
 }
+
+.callout {
+  background: color-mix(in srgb, var(--color-panel) 85%, transparent);
+  border: 1px solid var(--color-line);
+  border-left-width: 4px;
+  border-radius: 16px;
+  margin: var(--space-5) 0;
+  padding: 30px 18px 16px 54px;
+  position: relative;
+}
+
+.callout::before {
+  color: var(--color-accent-strong);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  left: 18px;
+  letter-spacing: 0.08em;
+  position: absolute;
+  text-transform: uppercase;
+  top: 14px;
+}
+
+.callout > :first-child {
+  margin-top: 0;
+}
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+.callout p {
+  color: var(--color-muted);
+}
+
+.callout--note {
+  border-left-color: var(--color-line-strong);
+}
+
+.callout--note::before {
+  content: "Note";
+  color: var(--color-line-strong);
+}
+
+.callout--tip {
+  border-left-color: var(--color-accent);
+}
+
+.callout--tip::before {
+  content: "Tip";
+  color: var(--color-accent-strong);
+}
+
+.callout--important {
+  border-left-color: var(--color-warning);
+}
+
+.callout--important::before {
+  content: "Important";
+  color: var(--color-warning);
+}
+
+.callout--warning,
+.callout--caution {
+  border-left-color: var(--color-warning);
+}
+
+.callout--warning::before {
+  content: "Warning";
+  color: var(--color-warning);
+}
+
+.callout--caution::before {
+  content: "Caution";
+  color: var(--color-warning);
+}

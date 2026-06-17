@@ -1,97 +1,151 @@
 ---
 title: Legacy to Homebrew
-description: Move a legacy Crona install to Homebrew on macOS or Linux while preserving your database backup.
+description: Move a legacy Crona install to Homebrew on macOS or Linux while keeping your local data intact.
 order: 2.2
 ---
 
-Use this guide when you are moving off the legacy install script and want to keep Crona on Homebrew afterward.
+Use this guide when you are moving off the legacy Crona installer and want to keep Crona managed by Homebrew afterward.
+
+> [!TIP]
+> You need this guide if you installed Crona with the legacy curl installer, the legacy PowerShell installer, or any pre-Homebrew release.
+> You do not need this guide if Crona is already installed through Homebrew.
+
+## What Changes?
+
+What changes:
+
+- Crona becomes managed by Homebrew.
+- Future updates happen through Homebrew.
+- The Crona binary location may change.
+
+What does not change:
+
+- Your data.
+- Your sessions.
+- Your habits.
+- Your momentum history.
+- Your settings.
+
+## What Happens To My Data?
+
+Your Crona data is not modified by this migration.
+
+The migration only changes how Crona is installed and updated.
+
+Your local database, sessions, habits, notes, momentum history, and settings remain untouched.
+
+## Migration Steps
+
+If you are moving from the legacy install script, the migration flow is intentionally the same everywhere:
+
+1. Stop every running Crona process before you touch the install.
+
+   Close any open TUI windows, CLI sessions, and background Crona processes. If a process is still running after you close the app, stop it manually with your operating system tools.
+
+2. Download the latest beta release installer script from GitHub Releases.
+
+   - macOS and Linux: `install-crona-tui.sh`
+
+3. Make the installer executable and run it, then overwrite the existing install when prompted.
+
+   ```bash
+   chmod +x install-crona-tui.sh
+   ./install-crona-tui.sh
+   ```
+
+4. Run `crona backup`.
+
+   ```bash
+   crona backup
+   ```
+
+   The command prints the backup path. Keep that path for the restore step.
+
+5. Remove the runtime directory.
+
+   - macOS prod: `~/Library/Application Support/Crona`
+   - macOS dev: `~/Library/Application Support/Crona Dev`
+   - Linux prod: `${XDG_DATA_HOME:-~/.local/share}/crona`
+   - Linux dev: `${XDG_DATA_HOME:-~/.local/share}/crona-dev`
+
+   If you only use the production install, the prod path is the one to remove.
+
+6. Remove the installed binaries.
+
+   Typical locations:
+
+   - `~/.local/bin/crona`
+   - `~/.local/bin/crona-daemon`
+   - `~/.local/bin/crona-tui`
+
+   If you installed somewhere else, remove those copies too.
+
+7. Install Homebrew.
+
+   ```bash
+   brew tap webxsid/tap
+   brew install crona
+   ```
+
+   For the beta track, use:
+
+   ```bash
+   brew install crona-beta
+   ```
+
+8. Run `crona restore <path-to-backup>`.
+
+   ```bash
+   crona restore <path-to-backup>
+   ```
+
+   If the runtime directory already contains a `crona.db`, Crona prompts before overwriting it.
 
 If you are on a beta build and want to stay on the beta track, install `crona-beta` instead of `crona`. The migration flow is the same either way.
 
-## Before You Start
-
-Stop every running Crona process before you touch the install.
-
-Close any open TUI windows, CLI sessions, and background Crona processes. If a process is still running after you close the app, stop it manually with your operating system tools.
-
-## 1. Download The Latest Beta Installer
-
-Open the latest beta release page on GitHub Releases and download the legacy installer script for your platform.
-
-- macOS and Linux: `install-crona-tui.sh`
-
-## 2. Run The Legacy Installer Once
-
-Make the script executable, then run it and allow it to replace the existing install when prompted.
+## Verify the Migration
 
 ```bash
-chmod +x install-crona-tui.sh
-./install-crona-tui.sh
+which crona
+crona --version
 ```
 
-Keep the existing install selected when the script asks whether to overwrite the current version.
+You should now be using the Homebrew-managed Crona binary.
 
-## 3. Back Up Your Database
+If the command resolves to an unexpected path, fix `PATH` before continuing.
 
-Run:
+## Updating Crona
 
 ```bash
-crona backup
+brew upgrade crona
 ```
 
-The command prints the backup path. Keep that path for the restore step.
+Once migration is complete, Crona updates are managed entirely through Homebrew.
 
-## 4. Remove The Runtime Directory
+## Troubleshooting
 
-Remove the Crona runtime directory after the backup is complete.
+### Crona command not found
 
-- macOS prod: `~/Library/Application Support/Crona`
-- macOS dev: `~/Library/Application Support/Crona Dev`
-- Linux prod: `${XDG_DATA_HOME:-~/.local/share}/crona`
-- Linux dev: `${XDG_DATA_HOME:-~/.local/share}/crona-dev`
+Check that Homebrew is installed and that its bin directory is in `PATH`.
 
-If you only use the production install, the prod path is the one to remove.
+### Homebrew reports a conflicting installation
 
-## 5. Remove The Legacy Binaries
+Remove the old Crona binary before reinstalling with Homebrew.
 
-Remove the old binaries from your `PATH`.
+### Old binary still appears first in PATH
 
-Typical locations:
+Run `which crona` and remove or reorder the earlier binary location.
 
-- `~/.local/bin/crona`
-- `~/.local/bin/crona-daemon`
-- `~/.local/bin/crona-tui`
+### Wrong version shown after migration
 
-If you installed somewhere else, remove those copies too.
+Run `brew upgrade crona`, then open a new shell and check `crona --version` again.
 
-## 6. Install Homebrew
+### Reinstalling Crona through Homebrew
 
-Install the package manager version you want to keep:
+Use `brew reinstall crona` if the package is already managed by Homebrew.
 
-```bash
-brew tap webxsid/tap
-brew install crona
-```
+## Migration Complete
 
-For the beta track, use:
-
-```bash
-brew install crona-beta
-```
-
-## 7. Restore The Backup
-
-Run:
-
-```bash
-crona restore <path-to-backup>
-```
-
-If the runtime directory already contains a `crona.db`, Crona prompts before overwriting it.
-
-## After Migration
-
-- Homebrew now owns install, update, and uninstall.
-- Stable updates use `brew upgrade crona`.
-- Beta updates use `brew upgrade crona-beta`.
-- `crona backup` and `crona restore` only move `crona.db`.
+> [!NOTE]
+> Migration complete.
+> Your installation is now managed by Homebrew and future updates can be installed with `brew upgrade crona`.

@@ -7,16 +7,17 @@ import "./_install/install.scss";
 <BaseLayout
   title="Install"
   pageTitle="Crona install guide"
-  description="Install Crona through Homebrew, Winget, or source install paths, and use the migration guides when you need to switch from a legacy script."
+  description="Install Crona with Homebrew, source builds, or legacy migration paths while Winget is still coming soon."
 >
   <section class="container section">
     <div class="page-header flow measure">
       <p class="eyebrow">Install</p>
       <h1>Install Crona the managed way</h1>
       <p>
-        Homebrew on macOS and Linux and `go install` for source installs are the live paths.
-        Winget is shown for reference but is not ready yet.
-        Legacy install scripts remain available as pinned `v1.6.0` fallback assets while the migration guides help you move existing installs across.
+        Homebrew is the recommended path.
+        `go install` is the advanced source path.
+        Winget is coming soon and is disabled here for now.
+        Legacy install scripts remain pinned at `v1.6.0` for migration from older installs.
       </p>
     </div>
 
@@ -50,10 +51,10 @@ import "./_install/install.scss";
           <p>Keep the source-install flow with `go install` after you migrate away from the script.</p>
         </a>
 
-        <a class="install-handoff__card" href="/docs/migration/legacy-to-winget/">
+        <a class="install-handoff__card" href="/docs/install/#winget">
           <span>Windows</span>
-          <strong>Legacy to Winget</strong>
-          <p>Move a Windows install from the legacy script to Winget with backup and restore preserved.</p>
+          <strong>Winget coming soon</strong>
+          <p>Track the Windows package-manager path while it is still being prepared.</p>
         </a>
       </div>
     </div>

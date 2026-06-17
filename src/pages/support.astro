@@ -3,59 +3,86 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import "./_support/support.scss";
 ---
 
-<BaseLayout title="Support" pageTitle="Crona support" description="Get help with Crona through the docs, GitHub issues, and release list.">
+<BaseLayout
+  title="Support"
+  pageTitle="Crona support"
+  description="Need help with Crona? Installation issues, bugs, questions, and contribution paths."
+>
   <section class="container section">
     <div class="page-header flow measure">
       <p class="eyebrow">Support</p>
-      <h1>Support for Crona</h1>
-      <p>
-        The fastest path to help is usually the docs first, then GitHub if you need to report a bug or check a recent
-        change.
-      </p>
+      <h1>Need help with Crona?</h1>
+      <p>Installation issues, bugs, questions, and contribution paths.</p>
+      <p class="support-lede">Crona is maintained in the open. The fastest way to get help is usually through GitHub.</p>
     </div>
 
     <div class="support-grid page-body">
-      <a class="support-card" href="/docs/">
-        <span>Docs</span>
-        <strong>Open the documentation</strong>
-        <p>Start with setup, daily workflows, exports, alerts, keymaps, and automation guides.</p>
-      </a>
+      <article class="support-card support-card--primary">
+        <span>Install or Update</span>
+        <strong>Set up Crona, update it, or fix installation problems.</strong>
+        <p>Set up Crona, update to the latest release, or check platform-specific install notes.</p>
+        <ul class="support-card__links">
+          <li><a href="/docs/install/">Install guide</a></li>
+          <li><a href="/changelog/">Changelog</a></li>
+          <li><a href="https://github.com/webxsid/crona/releases" rel="noreferrer">GitHub releases</a></li>
+        </ul>
+      </article>
 
-      <a class="support-card" href="/docs/install/">
-        <span>Setup help</span>
-        <strong>Check install and runtime docs</strong>
-        <p>Use this for managed installs, runtime paths, shell completions, notifications, renderer notes, and update basics.</p>
-      </a>
+      <article class="support-card support-card--primary">
+        <span>Report a Bug</span>
+        <strong>Found broken behavior or an incorrect result?</strong>
+        <p>Found a bug or broken workflow? Open an issue with your OS, Crona version, install method, and reproduction steps.</p>
+        <ul class="support-card__links">
+          <li><a href="https://github.com/webxsid/crona/issues" rel="noreferrer">GitHub Issues</a></li>
+        </ul>
+      </article>
 
-      <a class="support-card" href="/docs/migration/">
-        <span>Migration</span>
-        <strong>Switch install methods safely</strong>
-        <p>Use the migration guide when you are moving off the legacy installer or changing release channels.</p>
-      </a>
+      <article class="support-card support-card--primary">
+        <span>Ask a Question</span>
+        <strong>Need help understanding a workflow or feature?</strong>
+        <p>Ask how something works, discuss workflows, or check whether a feature already exists.</p>
+        <ul class="support-card__links">
+          <li><a href="https://github.com/webxsid/crona/discussions" rel="noreferrer">GitHub Discussions</a></li>
+        </ul>
+      </article>
 
-      <a class="support-card external-card" href="https://github.com/webxsid/crona/issues" rel="noreferrer">
-        <span>Bug reports</span>
-        <strong>Open GitHub issues</strong>
-        <p>Report reproducible bugs, missing behavior, or broken docs where the core project can track them.</p>
-      </a>
-
-      <a class="support-card" href="/privacy/">
-        <span>Privacy</span>
-        <strong>Read privacy and diagnostics</strong>
-        <p>See what telemetry Crona uses, what stays local, and how consent controls usage and error reporting.</p>
-      </a>
-
-      <a class="support-card" href="/docs/usage-and-diagnostics/">
-        <span>Diagnostics</span>
-        <strong>Open the usage & diagnostics doc</strong>
-        <p>Read the product guide for the Privacy &amp; Diagnostics pane, telemetry toggles, and support artifacts.</p>
-      </a>
-
-      <a class="support-card" href="/changelog/">
-        <span>Recent changes</span>
-        <strong>Browse releases</strong>
-        <p>Check the on-site release cards first, then jump to GitHub for the raw notes and artifacts.</p>
-      </a>
+      <article class="support-card support-card--primary">
+        <span>Contribute</span>
+        <strong>Browse the code, file improvements, or help shape the workflow.</strong>
+        <p>Crona is open source. Browse the code, file improvements, or help shape the workflow.</p>
+        <ul class="support-card__links">
+          <li><a href="https://github.com/webxsid/crona" rel="noreferrer">GitHub repository</a></li>
+          <li><a href="https://github.com/webxsid/crona/blob/main/docs/contributing.md" rel="noreferrer">Contribution guide</a></li>
+          <li><a href="https://github.com/webxsid/crona/blob/main/docs/development.md" rel="noreferrer">Development docs</a></li>
+        </ul>
+      </article>
     </div>
+
+    <section class="support-section page-body">
+      <div class="page-header flow support-section__header">
+        <p class="eyebrow">Common places to start</p>
+        <h2>Common places to start</h2>
+      </div>
+
+      <ul class="support-topics">
+        <li><a href="/docs/install/">Installation problems</a></li>
+        <li><a href="/docs/install/#updates">Updating Crona</a></li>
+        <li><a href="/docs/install/#homebrew">Homebrew installs</a></li>
+        <li><a href="/docs/install/#winget">Windows package status</a></li>
+        <li><a href="/docs/install/#source-install">Building from source</a></li>
+        <li><a href="/docs/install/#runtime-layout">Data and local files</a></li>
+      </ul>
+    </section>
+
+    <section class="support-section page-body">
+      <div class="page-header flow support-section__header">
+        <p class="eyebrow">Support expectations</p>
+        <h2>Support expectations</h2>
+      </div>
+
+      <p class="support-copy">
+        Crona is an open-source project maintained in public. Community support happens through GitHub Issues and Discussions. Response times may vary.
+      </p>
+    </section>
   </section>
 </BaseLayout>

@@ -1,7 +1,7 @@
 document.querySelectorAll("[data-install-tabs]").forEach((root) => {
   const tabs = [...root.querySelectorAll("[data-install-tab]")];
   const panels = [...root.querySelectorAll("[data-install-panel]")];
-  const copyButton = root.querySelector("[data-copy-command]");
+  const copyButtons = [...root.querySelectorAll("[data-copy-command]")];
 
   const setActive = (target) => {
     tabs.forEach((tab) => {
@@ -12,31 +12,34 @@ document.querySelectorAll("[data-install-tabs]").forEach((root) => {
       panel.hidden = panel.dataset.installPanel !== target;
     });
 
-    if (copyButton) {
-      copyButton.textContent = "[ copy ]";
-    }
+    copyButtons.forEach((button) => {
+      button.textContent = "[ copy ]";
+    });
   };
 
-  tabs.forEach((tab) => {
+  tabs.filter((tab) => !tab.disabled).forEach((tab) => {
     tab.addEventListener("click", () => setActive(tab.dataset.installTab));
   });
 
-  copyButton?.addEventListener("click", async () => {
-    const activePanel = panels.find((panel) => !panel.hidden);
-    const command = activePanel?.querySelector("code")?.textContent?.trim();
+  copyButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      const block = button.closest("[data-copy-block]") ?? button.closest(".install-tabs__block");
+      const code = block?.querySelector("code");
+      const command = code?.textContent?.trim() ?? "";
 
-    if (!command || !navigator.clipboard) {
-      return;
-    }
+      if (!command || !navigator.clipboard) {
+        return;
+      }
 
-    try {
-      await navigator.clipboard.writeText(command);
-      copyButton.textContent = "[ copied ]";
-      window.setTimeout(() => {
-        copyButton.textContent = "[ copy ]";
-      }, 1600);
-    } catch {
-      copyButton.textContent = "[ copy ]";
-    }
+      try {
+        await navigator.clipboard.writeText(command);
+        button.textContent = "[ copied ]";
+        window.setTimeout(() => {
+          button.textContent = "[ copy ]";
+        }, 1600);
+      } catch {
+        button.textContent = "[ copy ]";
+      }
+    });
   });
 });

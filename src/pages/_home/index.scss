@@ -128,6 +128,18 @@
   max-width: 64ch;
 }
 
+.home-why {
+  padding-top: var(--space-2);
+}
+
+.home-why__copy {
+  max-width: 760px;
+}
+
+.home-why__copy p {
+  max-width: 62ch;
+}
+
 .home-loop {
   padding-top: var(--space-5);
 }

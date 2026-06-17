@@ -6,44 +6,140 @@ import "./InstallCommandTabs.scss";
   <div class="install-tabs__topline">
     <span class="install-tabs__label">install paths</span>
     <div class="install-tabs__tablist" role="tablist" aria-label="Install command by distribution path">
-      <button class="install-tabs__tab" type="button" role="tab" aria-selected="true" aria-controls="install-panel-homebrew" id="install-tab-homebrew" data-install-tab="homebrew">[ Homebrew ]</button>
-      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-winget" id="install-tab-winget" data-install-tab="winget">[ Winget ]</button>
-      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-source" id="install-tab-source" data-install-tab="source">[ Source ]</button>
-      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-legacy" id="install-tab-legacy" data-install-tab="legacy">[ Legacy ]</button>
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="true" aria-controls="install-panel-homebrew" id="install-tab-homebrew" data-install-tab="homebrew">
+        <span class="install-tabs__tab-name">Homebrew</span>
+        <span class="install-tabs__tab-badge">Recommended</span>
+      </button>
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-winget" id="install-tab-winget" data-install-tab="winget" disabled aria-disabled="true">
+        <span class="install-tabs__tab-name">Winget</span>
+        <span class="install-tabs__tab-badge">Coming Soon</span>
+      </button>
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-source" id="install-tab-source" data-install-tab="source">
+        <span class="install-tabs__tab-name">Source</span>
+        <span class="install-tabs__tab-badge">Advanced</span>
+      </button>
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-legacy" id="install-tab-legacy" data-install-tab="legacy">
+        <span class="install-tabs__tab-name">Legacy</span>
+        <span class="install-tabs__tab-badge">Migration</span>
+      </button>
     </div>
   </div>
 
   <div class="install-tabs__command">
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-homebrew" aria-labelledby="install-tab-homebrew" data-install-panel="homebrew">
-      <pre><span aria-hidden="true">$ </span><code>brew tap webxsid/tap
-brew install crona</code></pre>
+      <div class="install-tabs__panel-intro">
+        <p class="install-tabs__panel-title">Recommended install</p>
+        <p class="install-tabs__panel-note">Recommended for most macOS and Linux users.</p>
+      </div>
+
+      <div class="install-tabs__blocks">
+        <div class="install-tabs__block">
+          <div class="install-tabs__block-topline">
+            <span class="install-tabs__block-label">Install</span>
+            <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
+          </div>
+          <pre><span aria-hidden="true">$ </span><code>brew install webxsid/tap/crona</code></pre>
+        </div>
+
+        <div class="install-tabs__block">
+          <div class="install-tabs__block-topline">
+            <span class="install-tabs__block-label">Update</span>
+            <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
+          </div>
+          <pre><span aria-hidden="true">$ </span><code>brew upgrade crona</code></pre>
+        </div>
+      </div>
+
+      <details class="install-tabs__advanced">
+        <summary>Advanced Homebrew Options</summary>
+        <p class="install-tabs__panel-note">Use the tap route if you want to add the Crona formula separately.</p>
+
+        <div class="install-tabs__blocks">
+          <div class="install-tabs__block">
+            <div class="install-tabs__block-topline">
+              <span class="install-tabs__block-label">Tap</span>
+              <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
+            </div>
+            <pre><span aria-hidden="true">$ </span><code>brew tap webxsid/tap</code></pre>
+          </div>
+
+          <div class="install-tabs__block">
+            <div class="install-tabs__block-topline">
+              <span class="install-tabs__block-label">Install from tap</span>
+              <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
+            </div>
+            <pre><span aria-hidden="true">$ </span><code>brew install crona</code></pre>
+          </div>
+        </div>
+      </details>
     </div>
 
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-winget" aria-labelledby="install-tab-winget" data-install-panel="winget" hidden>
-      <p class="install-tabs__panel-note">Winget is not ready yet. Use Homebrew, source install, or the legacy fallback for now.</p>
-      <pre><span aria-hidden="true">PS&gt; </span><code>winget install --id Webxsid.Crona -e</code></pre>
+      <div class="install-tabs__panel-intro">
+        <p class="install-tabs__panel-title">Winget coming soon</p>
+        <p class="install-tabs__panel-note">Winget support is still being prepared. Use Homebrew, source install, or the legacy migration path for now.</p>
+      </div>
     </div>
 
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-source" aria-labelledby="install-tab-source" data-install-panel="source" hidden>
-      <pre><span aria-hidden="true">$ </span><code>go install github.com/webxsid/crona/...@latest</code></pre>
+      <div class="install-tabs__panel-intro">
+        <p class="install-tabs__panel-title">Advanced install</p>
+        <p class="install-tabs__panel-note">For developers, contributors, and users who prefer building Crona from source.</p>
+      </div>
+
+      <div class="install-tabs__blocks">
+        <div class="install-tabs__block">
+          <div class="install-tabs__block-topline">
+            <span class="install-tabs__block-label">Install</span>
+            <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
+          </div>
+          <pre><span aria-hidden="true">$ </span><code>go install github.com/webxsid/crona/...@latest</code></pre>
+        </div>
+      </div>
+
+      <p class="install-tabs__panel-note" style="padding-top: 1ch;">Update by rerunning the same `go install` command.</p>
     </div>
 
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-legacy" aria-labelledby="install-tab-legacy" data-install-panel="legacy" hidden>
-      <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://github.com/webxsid/crona/releases/download/v1.6.0/install-crona-tui.sh | sh</code></pre>
-      <pre><span aria-hidden="true">PS&gt; </span><code>Invoke-WebRequest "https://github.com/webxsid/crona/releases/download/v1.6.0/install-crona-tui.ps1" -OutFile "$env:TEMP\crona-install.ps1"
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\crona-install.ps1"</code></pre>
-      <p class="install-tabs__panel-note">Legacy fallback only. Use the migration guide if you are moving off an older install.</p>
-    </div>
+      <div class="install-tabs__panel-intro">
+        <p class="install-tabs__panel-title">Legacy installer</p>
+        <p class="install-tabs__panel-note">This installer exists for Crona 1.6.x and earlier. If you previously installed Crona with the curl or PowerShell installer, use the migration guide before upgrading. New installs should use Homebrew instead.</p>
+      </div>
 
-    <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
+      <div class="install-tabs__blocks">
+        <div class="install-tabs__block">
+          <div class="install-tabs__block-topline">
+            <span class="install-tabs__block-label">macOS and Linux</span>
+            <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
+          </div>
+          <pre><span aria-hidden="true">$ </span><code>curl -fsSL https://github.com/webxsid/crona/releases/download/v1.6.0/install-crona-tui.sh | sh</code></pre>
+        </div>
+
+        <div class="install-tabs__block">
+          <div class="install-tabs__block-topline">
+            <span class="install-tabs__block-label">Windows</span>
+            <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
+          </div>
+          <pre><span aria-hidden="true">PS&gt; </span><code>Invoke-WebRequest "https://github.com/webxsid/crona/releases/download/v1.6.0/install-crona-tui.ps1" -OutFile "$env:TEMP\crona-install.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:TEMP\crona-install.ps1"</code></pre>
+        </div>
+      </div>
+
+      <div class="install-tabs__legacy-actions">
+        <a class="install-tabs__legacy-primary" href="/docs/migration/">Migration Guide →</a>
+        <div class="install-tabs__legacy-secondary">
+          <a href="/docs/install/">Install Guide</a>
+          <a href="/changelog/">Release Notes</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="install-tabs__links">
-    <a href="/docs/install/">install guide</a>
-    <span aria-hidden="true">/</span>
-    <a href="/docs/migration/">migration guide</a>
-    <span aria-hidden="true">/</span>
-    <a href="/changelog/">releases</a>
+  <div class="install-tabs__links" aria-label="Need help with installs">
+    <span class="install-tabs__links-label">Need help?</span>
+    <a class="install-tabs__links-primary" href="/docs/migration/">Migration Guide</a>
+    <a href="/docs/install/">Install Guide</a>
+    <a href="/changelog/">Release Notes</a>
   </div>
 </div>
 

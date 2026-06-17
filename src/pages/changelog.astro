@@ -28,17 +28,19 @@ type Semver = {
   prerelease: boolean;
 };
 
+type ReleaseStatus = "stable" | "pre-release";
 type ReleaseBump = "major" | "minor" | "patch" | "pre-release" | "release";
 
 type ReleaseCard = {
-  tag: string;
+  version: string;
   title: string;
-  name: string;
+  headline: string;
   url: string;
   publishedAt: Date | null;
-  prerelease: boolean;
-  excerpt: string;
+  status: ReleaseStatus;
+  summary: string;
   latest: boolean;
+  latestStable: boolean;
   bump: ReleaseBump;
 };
 
@@ -53,24 +55,61 @@ function stripMarkdown(text = "") {
     .trim();
 }
 
-function excerpt(text = "", limit = 170) {
-  const lines = text.replace(/\r/g, "").split("\n");
-  let index = 0;
+function normalizeSummary(text = "") {
+  return stripMarkdown(text).replace(/\s+/g, " ").trim();
+}
 
-  while (index < lines.length && !lines[index].trim()) {
-    index += 1;
-  }
+function clampSummary(text = "", limit = 170) {
+  const normalized = normalizeSummary(text);
+  if (!normalized) return "View release notes on GitHub.";
+  return normalized.length > limit ? `${normalized.slice(0, limit - 1).trimEnd()}…` : normalized;
+}
 
-  if (index < lines.length && /^#{1,6}\s+/.test(lines[index])) {
-    index += 1;
-    while (index < lines.length && !lines[index].trim()) {
-      index += 1;
+function isLowValueSummary(text = "") {
+  const normalized = normalizeSummary(text);
+
+  if (!normalized) return true;
+  if (normalized.length < 18) return true;
+  if (/^(added|changed|fixed|removed|updated)$/i.test(normalized)) return true;
+  if (/^(crona|prepare|release|version)\b/i.test(normalized)) return true;
+  if (/^v?\d+\.\d+\.\d+(?:-[0-9A-Za-z-.]+)?$/i.test(normalized)) return true;
+
+  return false;
+}
+
+function summaryFromReleaseBody(text = "") {
+  const blocks = text.replace(/\r/g, "").split(/\n{2,}/).map((block) => block.trim()).filter(Boolean);
+
+  for (const block of blocks) {
+    const lines = block.split("\n").map((line) => line.trim()).filter(Boolean);
+    const hasOnlyHeading = lines.length === 1 && /^#{1,6}\s+/.test(lines[0]);
+
+    if (hasOnlyHeading) {
+      continue;
+    }
+
+    const bullets = lines.filter((line) => /^[-*+]\s+/.test(line));
+
+    if (bullets.length > 0) {
+      for (const bullet of bullets) {
+        const candidate = normalizeSummary(bullet.replace(/^[-*+]\s+/, ""));
+
+        if (!isLowValueSummary(candidate)) {
+          return clampSummary(candidate);
+        }
+      }
+
+      continue;
+    }
+
+    const candidate = normalizeSummary(block);
+
+    if (!isLowValueSummary(candidate)) {
+      return clampSummary(candidate);
     }
   }
 
-  const cleaned = stripMarkdown(lines.slice(index).join("\n")).split(/\n\s*\n/).find(Boolean)?.replace(/\s+/g, " ").trim() ?? "";
-  if (!cleaned) return "Release notes and downloadable artifacts are available on GitHub.";
-  return cleaned.length > limit ? `${cleaned.slice(0, limit - 1).trimEnd()}…` : cleaned;
+  return "View release notes on GitHub.";
 }
 
 function parseSemver(tag = ""): Semver | null {
@@ -121,14 +160,15 @@ async function loadReleases() {
       .filter((release) => !release.draft)
       .map(
         (release): ReleaseCard => ({
-          tag: release.tag_name ?? release.name ?? "Release",
+          version: release.tag_name ?? release.name ?? "Release",
           title: release.tag_name ?? release.name ?? "Release",
-          name: release.name?.trim() || release.tag_name || "Release",
+          headline: release.name?.trim() || release.tag_name || "Release",
           url: release.html_url,
           publishedAt: release.published_at ? new Date(release.published_at) : null,
-          prerelease: Boolean(release.prerelease),
-          excerpt: excerpt(release.body ?? ""),
+          status: release.prerelease ? "pre-release" : "stable",
+          summary: summaryFromReleaseBody(release.body ?? ""),
           latest: false,
+          latestStable: false,
           bump: "release",
         }),
       );
@@ -136,20 +176,22 @@ async function loadReleases() {
     return cards.map((release, index) => ({
       ...release,
       latest: index === 0,
-      bump: inferReleaseBump(release.tag, cards[index + 1]?.tag),
+      bump: inferReleaseBump(release.version, cards[index + 1]?.version),
     }));
   } catch {
     const local = (await getCollection("changelog")).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+    // Keep GitHub as the public source of truth; the local collection only keeps the page usable when the API is down.
     const cards = local.map(
       (entry): ReleaseCard => ({
-        tag: entry.data.version ?? entry.data.title,
+        version: entry.data.version ?? entry.data.title,
         title: entry.data.version ?? entry.data.title,
-        name: entry.data.title,
+        headline: entry.data.title,
         url: releasesUrl,
         publishedAt: entry.data.date ?? null,
-        prerelease: false,
-        excerpt: entry.data.summary ?? "Release notes and downloadable artifacts are available on GitHub.",
+        status: "stable",
+        summary: entry.data.summary ?? "View release notes on GitHub.",
         latest: false,
+        latestStable: false,
         bump: "release",
       }),
     );
@@ -157,15 +199,22 @@ async function loadReleases() {
     return cards.map((release, index) => ({
       ...release,
       latest: index === 0,
-      bump: inferReleaseBump(release.tag, cards[index + 1]?.tag),
+      bump: inferReleaseBump(release.version, cards[index + 1]?.version),
     }));
   }
 }
 
 const releases = await loadReleases();
+const latestRelease = releases[0] ?? null;
+const latestStableRelease = releases.find((release) => release.status === "stable") ?? null;
+const visibleReleases = latestRelease?.status === "pre-release" ? releases : releases.filter((release) => release.status === "stable");
+const releasesToRender = visibleReleases.map((release) => ({
+  ...release,
+  latestStable: latestStableRelease?.version === release.version,
+}));
 const siteUrl = Astro.site ?? new URL("https://crona.work");
 const releasesPageUrl = new URL("/changelog/", siteUrl).href;
-const itemList = releases.map((release, index) => ({
+const itemList = releasesToRender.map((release, index) => ({
   "@type": "ListItem",
   position: index + 1,
   url: release.url,
@@ -176,7 +225,7 @@ const itemList = releases.map((release, index) => ({
 <BaseLayout
   title="Releases"
   pageTitle="Crona releases"
-  description="Browse Crona releases on the site, with GitHub as the live source of truth and a local fallback for recent release notes."
+  description="See what changed, what shipped, and where to download the latest version."
   structuredData={[
     {
       "@context": "https://schema.org",
@@ -202,58 +251,60 @@ const itemList = releases.map((release, index) => ({
   <section class="container section">
     <div class="page-header flow measure">
       <p class="eyebrow">Releases</p>
-      <h1>Crona release cards, with GitHub as the source of truth</h1>
-      <p>
-        This page mirrors the current Crona release list so you can scan versions on the site and jump to GitHub for
-        the full notes and downloadable artifacts. When GitHub is unavailable, the site falls back to the local release
-        notes collection.
-      </p>
+      <h1>Crona releases</h1>
+      <p>See what changed, what shipped, and where to download the latest version.</p>
     </div>
 
     <div class="releases-actions page-body">
       <a class="button" href={releasesUrl} rel="noreferrer">Open GitHub Releases</a>
-      <a class="button button--secondary" href="/docs/install/">Open install docs</a>
+      <a class="button button--secondary" href="/docs/install/">Install or update Crona</a>
     </div>
 
-    <div class:list={{ "releases-timeline": true, "page-body": true, "is-empty": releases.length === 0 }}>
-      {releases.length > 0 ? (
-        releases.map((release) => (
-          <article class="release-card">
+    <div class:list={{ "releases-timeline": true, "page-body": true, "is-empty": releasesToRender.length === 0 }}>
+      {releasesToRender.length > 0 ? (
+        releasesToRender.map((release) => (
+          <article class:list={[
+            "release-card",
+            {
+              "is-latest-stable": release.latestStable,
+              "is-prerelease": release.status === "pre-release",
+            },
+          ]}>
             <div class="release-card__meta">
               <div class="release-card__badges">
-                {release.latest && <span class="release-card__badge is-latest">Latest</span>}
-                {release.prerelease && <span class="release-card__badge is-prerelease">Pre-release</span>}
-                <span class="release-card__badge is-bump">{release.bump}</span>
+                <span class:list={["release-card__badge", { "is-prerelease": release.status === "pre-release" }]}>{release.status === "pre-release" ? "Pre-release" : "Stable"}</span>
+                {["major", "minor", "patch"].includes(release.bump) && <span class="release-card__badge is-bump">{release.bump.charAt(0).toUpperCase() + release.bump.slice(1)}</span>}
               </div>
               {release.publishedAt && <time datetime={release.publishedAt.toISOString()}>{dateFormatter.format(release.publishedAt)}</time>}
             </div>
 
             <div class="release-card__body flow">
+              {release.latestStable && <p class="release-card__eyebrow">Latest stable release</p>}
               <h2>
                 <a href={release.url} rel="noreferrer">
                   {release.title}
                 </a>
               </h2>
-              {release.name && release.name !== release.title && <p class="release-card__name">{release.name}</p>}
-              <p>{release.excerpt}</p>
+              {release.headline && release.headline !== release.title && <p class="release-card__name">{release.headline}</p>}
+              <p>{release.summary}</p>
             </div>
 
             <div class="release-card__actions">
-              <a class="external-card" href={release.url} rel="noreferrer">
+              <a class="release-card__action" href={release.url} rel="noreferrer">
                 View on GitHub
               </a>
+              {release.latestStable && <a class="release-card__action" href="/docs/install/">Install or update Crona</a>}
             </div>
           </article>
         ))
       ) : (
         <article class="release-card">
           <div class="release-card__body flow">
-            <p class="release-card__name">GitHub releases unavailable</p>
-            <h2>Open the canonical release feed</h2>
-            <p>When the GitHub API is unavailable, use the release page directly for the latest notes and downloads.</p>
+            <h2>Release notes are temporarily unavailable</h2>
+            <p>You can still check GitHub for the latest builds.</p>
           </div>
           <div class="release-card__actions">
-            <a class="external-card" href={releasesUrl} rel="noreferrer">
+            <a class="release-card__action" href={releasesUrl} rel="noreferrer">
               Open GitHub Releases
             </a>
           </div>
