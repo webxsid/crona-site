@@ -35,6 +35,18 @@ const DOC_GROUPS = [
     description: "Use detailed references for keymaps, CLI usage, and visual walkthroughs.",
     docs: ["tui-keymap-reference", "cli-and-local-engine", "screenshots-and-walkthrough"],
   },
+  {
+    id: "development-and-contributing",
+    title: "Development & Contributing",
+    description: "Build from source, contribute code, and understand the release process.",
+    docs: ["development", "contributing", "release"],
+  },
+  {
+    id: "architecture-and-api",
+    title: "Architecture & API",
+    description: "Deep dive into feature design and the socket IPC layer.",
+    docs: ["feature-design", "api/socket"],
+  },
 ];
 
 export function sortDocs(docs) {

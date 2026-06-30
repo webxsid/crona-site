@@ -1,10 +1,15 @@
 ---
-title: Legacy to Go
-description: Move a legacy Crona install to a source install managed by `go install`.
+title: "Legacy to Go"
+description: "Move a legacy Crona install to Go source install."
 order: 2.3
 ---
 
 Use this guide when you are moving off the legacy install script and want to keep Crona installed from source with `go install`.
+Stop Crona, run the beta installer once, back up the database, clear the old runtime, remove the old binaries, install from Go, and restore the backup.
+
+Estimated time: 15-25 minutes, depending on whether Go dependencies are already cached locally.
+
+Keep the backup path handy before you remove anything.
 
 ## Before You Start
 
@@ -14,13 +19,14 @@ Close any open TUI windows, CLI sessions, and background Crona processes. If a p
 
 ## 1. Download The Latest Beta Installer
 
-Open the latest beta release page on GitHub Releases and download the legacy installer script for your platform.
+Download the legacy installer script for your platform from the latest beta release page on GitHub Releases.
 
 - macOS and Linux: `install-crona-tui.sh`
+- Windows: `install-crona-tui.ps1`
 
 ## 2. Run The Legacy Installer Once
 
-Make the script executable, then run it and allow it to replace the existing install when prompted.
+Make the script executable, run it, and allow it to replace the existing install when prompted.
 
 ```bash
 chmod +x install-crona-tui.sh
@@ -83,3 +89,10 @@ If the runtime directory already contains a `crona.db`, Crona prompts before ove
 - Source installs now own their update path through `go install github.com/webxsid/crona/...@latest`.
 - `crona backup` and `crona restore` only move `crona.db`.
 - Keep the same `go install` command handy for future reinstalls or upgrades.
+
+## Contact
+
+If the source-install path gets confusing, contact me directly:
+
+- Email: `me@webxsid.com`
+- WhatsApp: `+91-6375728437`

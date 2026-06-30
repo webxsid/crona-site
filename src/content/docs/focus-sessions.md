@@ -1,94 +1,34 @@
 ---
 title: Focus Sessions
-description: Learn how Crona turns planned issues into tracked work sessions, including issue-scoped timer behavior, stashes, recovery, and session history.
-order: 6
+description: Timed work blocks, Pomodoro profiles, stash management, and session logs.
+order: 5.2
 ---
 
-Focus sessions are the center of Crona’s execution model. Planning shapes the work, but sessions are where that work becomes real, timed, and recoverable.
+Focus sessions are timed intervals tied directly to specific issues. The daemon manages active timers, ensuring that tracking continues even if clients disconnect.
 
-This page explains what it feels like to move from “I should do this” to “I am actively doing this now.”
+## Starting a Session
 
-## Starting Focus
+Focus sessions can be initiated for issues in the **Planned**, **Ready**, or **In Progress** states:
+- Starting a timer on a **Planned** or **Ready** issue automatically promotes its status to **In Progress**.
+- The timer configuration (Pomodoro cadence or continuous count-up) is loaded directly from the issue profile.
+- The interactive client owns the terminal tab/window title, updating it with elapsed time and task context.
 
-You start focus from a selected issue.
+## Interruptions & Stashes
 
-In normal use, Crona allows focus to begin from:
+If interrupted during a session, you can create a **Stash** to suspend the current work state:
+- The stash preserves elapsed timer segments, cycle counts, and task context.
+- Resuming a task with an existing stash prompts the user to either resume the stashed session or start a fresh timer while keeping the stash intact.
+- Stashes prevent incomplete or fragmented logs when switching tasks mid-session.
 
-- `planned`
-- `ready`
-- `in_progress`
+## Completing and Amending Sessions
 
-Starting focus from `planned` or `ready` automatically promotes that issue to `in_progress`. That keeps the active work state honest without forcing you to manually update the issue before every session.
+Stopping a session triggers the completion flow:
+- **Session Summaries**: Users write a commit-style summary detailing what was accomplished.
+- **Session History**: Completed sessions are written to the database. You can browse history or amend logs (such as editing descriptions or correcting durations) retroactively.
+- **Manual Logging**: Work completed offline or away from the terminal can be logged manually.
 
-The selected issue also carries its own timer type, so focus follows the work item instead of a global timer setting.
+## Focus Inactivity Alerts
 
-## What Happens During a Session
-
-Once a session is active, Crona tracks the work interval as part of the issue history rather than treating it like a disposable timer.
-
-Crona now uses a stricter pomodoro-style timer model, so the session cadence is consistent and issue-scoped instead of being driven by separate timer presets.
-
-The timer still records the shape of work over time, but the public model now centers on the pomodoro cadence rather than older timer presets.
-
-## Staying Oriented While You Work
-
-During focus, Crona keeps the active issue and session context visible through the session view and related overlays. That helps when you pause, switch attention briefly, or come back after an interruption and need to remember what the current session is actually for.
-
-The important mental model is simple: a session is tied to a specific issue, and Crona keeps that relationship visible while the timer is running.
-
-## Handling Interruptions With Stashes
-
-Stashes are Crona’s interruption model.
-
-Use a stash when you need to suspend the current issue without pretending the work is finished. A stash preserves that work context so you can return to it later instead of losing the thread.
-
-This matters most when the day changes unexpectedly. You might need to switch issues, move to a different stream, or stop one task without ending it cleanly. Stashes let you do that without flattening everything into incomplete timer history.
-
-## What Happens If a Stash Already Exists
-
-If you try to start focus on an issue that already has one or more stashes, Crona does not silently start another fresh session.
-
-Instead, it asks you to choose between:
-
-- resuming the existing stash
-- continuing fresh while leaving the stash in place
-
-That behavior is one of the clearest examples of Crona treating work continuity seriously. The app assumes interrupted work still matters unless you explicitly decide otherwise.
-
-## Ending and Recovering Work
-
-Sessions do not just disappear when you stop the timer.
-
-Normal recovery paths include:
-
-- pausing and resuming an active session
-- ending a session with a summary
-- reopening session context while working
-- reviewing older sessions in Session History
-- amending session details later if the original summary was incomplete
-
-This is why Crona’s session history is more than a timer log. It becomes part of how you reconstruct what happened, what changed, and where work left off.
-
-## Inactivity Alerts and Runtime Ownership
-
-Focus inactivity alerts are owned by the local engine. If a session keeps running without recent TUI activity, Crona can remind you to review what is happening.
-
-This is useful when the timer no longer matches reality, such as:
-
-- stepping away unexpectedly
-- getting pulled into another task
-- leaving a session running longer than intended
-
-The practical limitation is that these alerts only fire while the local engine is running.
-
-## Manual Sessions and Amend Flows
-
-Not every useful work block starts and ends in a perfect live timer session. Crona also supports manual session entry and amend-style edits so you can keep the record accurate when work happened outside the normal loop.
-
-That makes the session model more forgiving without making it less structured.
-
-## What to Read Next
-
-- Read [Check-Ins and Wellbeing](/docs/check-ins-and-wellbeing/) for how Crona helps you review patterns around energy, burnout, and accountability.
-- Read [Alerts and Reminders](/docs/alerts-and-reminders/) for the notification side of focus behavior.
-- Read [Issues and Planning](/docs/issues-and-planning/) if you want to revisit how work gets shaped before focus starts.
+The local daemon runs focus inactivity checks:
+- The TUI client periodically reports keyboard activity to the daemon.
+- If no client activity is reported for a configured duration, the daemon triggers an OS-level notification asking the user to review, pause, or end the active session.

@@ -1,138 +1,44 @@
 ---
 title: Screenshots and Walkthrough
-description: Take a guided visual tour through the Daily, Issues, and Wellbeing surfaces and see how they connect into one Crona workflow.
-order: 12
+description: A visual guide to Crona's terminal dashboards and workflows.
+order: 6.5
 ---
 
-This page is a guided tour of the three Crona surfaces that best explain how the product feels in real use.
+Crona combines tracking, analytics, and wellbeing metrics into native Terminal User Interfaces. This guide walkthrough illustrates the core views.
 
-Read it as a visual loop:
-
-1. shape the day
-2. work through the issue
-3. review the pattern
-
-## Daily Dashboard: Shape the Day
+## 1. Daily Dashboard (Planning & Logging)
 
 ![Daily dashboard showing planned issues, habits, compact momentum signals, and focus summary](/screenshots/daily-dashboard.png)
 
-The Daily dashboard is where Crona feels most operational. It is the page that helps you answer: what am I trying to do today, and what does that day already contain?
+The Daily dashboard displays active contexts and tasks scheduled for the selected day:
+- **Navigation**: Move back and forth across calendar dates.
+- **Sectioning**: Segregates planned issues, pinned issues, overdue issues, and due habits.
+- **Summary Header**: Visual progress indicators displaying active context, total daily focus time, completed issue ratios, and current momentum signals.
 
-It brings together:
-
-- planned tasks for the selected scope
-- pinned issues that need attention first
-- overdue work that still needs action
-- habits due today
-- date navigation
-- compact summary signals for issue mix, progress, and momentum
-- quick access to export and away mode
-
-This is the surface that turns planning into something visible and bounded. Instead of looking at all work at once, you look at the current date, current scope, and current expectations.
-
-In newer builds, the Daily dashboard also gives pinned work and overdue work their own place in the flow, which keeps the day’s priorities readable without flattening everything into one list.
-
-Read more:
-
-- [Issues and Planning](/docs/issues-and-planning/)
-- [Habits](/docs/habits/)
-- [Focus Sessions](/docs/focus-sessions/)
-
-## Issues Workspace: Shape the Work
+## 2. Issues View (Backlog & Status)
 
 ![Issues view showing scoped work and lifecycle status](/screenshots/issues.png)
 
-The Issues workspace is where Crona’s structure is easiest to see. This is the page that helps you decide what state the work is in and what should happen next.
+The Issues workspace manages the task list:
+- **Tabs**: Quick toggle between Active (`1`) and Completed (`2`) tasks.
+- **Table Data**: Visualizes issue state, estimated vs. actual worked time, planning dates, and context path.
+- **Control**: Allows changing state, editing task notes, editing estimates, checking out issues, or triggering focus sessions directly.
 
-It is built for:
-
-- reviewing active versus completed work
-- changing issue status
-- starting focus
-- editing titles, notes, and dates
-- keeping the checked-out context aligned with the work you are about to do
-- seeing spent time next to the issue itself
-
-If the Daily dashboard helps you shape the day, the Issues workspace helps you shape the unit of work itself.
-
-Read more:
-
-- [Concepts](/docs/concepts/)
-- [Issues and Planning](/docs/issues-and-planning/)
-- [TUI Keymap Reference](/docs/tui-keymap-reference/)
-
-## Rollup Dashboard: Read the Day
+## 3. Rollup Dashboard (Daily/Weekly Retrospective)
 
 ![Rollup dashboard showing the focus graph beside the calendar and the Breakdown pane](/screenshots/rollup-dashboard.png)
 
-Rollup is the surface that shows the day’s work rhythm at a glance. It keeps the focus graph beside the calendar so the current day stays readable, while the Breakdown pane gives you the deeper context when you need it.
+The Rollup dashboard acts as a visual timeline:
+- **Focus Chart**: A character-based graph representing focus session intervals.
+- **Breakdown**: Scrollable lists detailing exact session boundaries, metadata, and task-specific durations.
+- **Ratios**: Tracks estimate-bias ratios and productivity metrics to aid future planning.
 
-It can surface:
-
-- focus and worktime visualization
-- the calendar view for the selected day
-- the scrollable Breakdown pane
-- totals and score summaries tied to the current focus state
-
-Read more:
-
-- [Features Overview](/docs/features-overview/)
-- [TUI Keymap Reference](/docs/tui-keymap-reference/)
-
-## Momentum Dashboard: Read the Long View
-
-![Momentum dashboard showing custom cards, week labels, and paused history states](/screenshots/momentum-dashboard.png)
-
-Momentum is the surface for the custom history view. It keeps the longer-running pattern visible without pretending the wellbeing story is a built-in streak editor.
-
-It can surface:
-
-- custom momentum cards
-- descriptions on each card
-- week-number labels
-- disabled-state cards that read as paused history
-
-Read more:
-
-- [Check-Ins and Wellbeing](/docs/check-ins-and-wellbeing/)
-- [Features Overview](/docs/features-overview/)
-
-## Wellbeing Dashboard: Review the Pattern
+## 4. Wellbeing & Momentum Dashboard
 
 ![Wellbeing dashboard showing the configurable Metrics Window, details pane, and custom Momentum](/screenshots/wellbeing-dashboard.png)
 
-The Wellbeing dashboard shows the part of Crona that goes beyond issue state and timer history. This is the surface that helps you step back and ask how the recent work rhythm has actually been going. In the current layout, it is split into a summary pane, a Metrics Window, and a details pane.
-
-It can surface:
-
-- daily self-check data
-- accountability summaries
-- burnout and recovery signals
-- the configurable Metrics Window
-- custom Momentum history
-- trend windows and activity heatmaps
-
-This is where Crona stops being only a planning tool and becomes a reflection tool as well.
-
-Read more:
-
-- [Check-Ins and Wellbeing](/docs/check-ins-and-wellbeing/)
-- [Exports and Reports](/docs/exports-and-reports/)
-
-## How These Three Surfaces Fit Together
-
-Taken together, these views show the basic Crona loop:
-
-1. use Daily to understand the shape of the day
-2. use Issues to shape and choose the work
-3. use Focus Sessions to execute that work
-4. use Wellbeing to review the pattern behind it through the Metrics Window and custom Momentum
-
-That loop is what makes Crona feel more like a local work system than a loose collection of pages.
-
-## Where to Go Next
-
-- Read [Issues and Planning](/docs/issues-and-planning/) if you want the operational model behind the Daily and Issues surfaces.
-- Read [Habits](/docs/habits/) if you want the recurring routine model behind the Daily habit pane.
-- Read [Focus Sessions](/docs/focus-sessions/) if you want to understand how active work is tracked once you start.
-- Read [Check-Ins and Wellbeing](/docs/check-ins-and-wellbeing/) if you want the reflection model behind the Wellbeing dashboard.
+The Wellbeing panel handles human metrics:
+- **Check-ins**: Displays daily mood, energy, sleep hours, sleep scores, and screen time metrics.
+- **Metrics Grid**: Visualizes a 7-day rolling window of activity.
+- **Momentum Ladders**: Displays milestone blocks for active daily, weekly, or monthly streaks.
+- **Burnout Predictor**: Local algorithms compile rest-to-focus ratios to suggest workload adjustments.

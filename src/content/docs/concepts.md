@@ -1,125 +1,161 @@
 ---
-title: Concepts
-description: The work model behind repos, streams, issues, sessions, stashes, habits, habit history, and daily check-ins.
-order: 3
+title: "Concepts"
+description: "The work model behind repos, streams, issues, sessions, stashes, habits, and daily check-ins."
+order: 1.1
 ---
 
-Crona is a local-first work tracker. The local engine owns the canonical state, and the TUI and CLI act as clients.
+Crona is a local-first work tracker for developers. A background local daemon owns state, and the TUI and CLI act as clients over local IPC.
 
 ## Terminology
 
-Public docs call the background process the daemon or local engine.
+The codebase and socket API still use the term `kernel` for the internal daemon process and IPC method names. In user-facing docs, this is usually called the daemon or local daemon because it is the small local service that owns storage, timers, reminders, update checks, and IPC.
 
-## The Core Hierarchy
+## Core Ideas
 
-### Repo
+- Local-first state, with the background daemon as the source of truth.
+- Terminal-native interaction through the TUI and CLI.
+- Structured work objects instead of loose notes.
+- Deterministic exports and local automation hooks instead of cloud coupling.
+- UIs are clients, not controllers.
 
-A repo is the top-level bucket for work. Common examples are `work`, `personal`, or `research`.
+## Runtime Model
+
+Crona has three main runtime pieces:
+
+- `crona-daemon`: the background local daemon that owns storage, timers, updates, and IPC.
+- `crona-tui`: the interactive terminal UI.
+- `crona`: the scriptable CLI and default launcher.
+
+All clients talk to the local daemon over the shared IPC surface documented in [api/socket.md](api/socket.md).
+
+The TUI owns the terminal tab/window title while it is running. Idle titles show Crona plus the active repo/stream and current view when available; active focus sessions show Crona plus the issue/session context and elapsed timer state. The title is reset on exit on a best-effort basis.
+
+## Core Entities
+
+### Repository
+
+A top-level bucket for work.
+
+Examples:
+- Office
+- Personal
+- Research
 
 ### Stream
 
-A stream is a long-lived subdivision inside a repo. It lets you separate work without creating a brand new repo.
+A long-lived subdivision inside a repository.
 
 Examples:
-
-- `main`
-- `backend`
-- `experiments`
+- main
+- backend
+- experiments
 
 ### Issue
 
-An issue is the smallest intentional unit of work. It can carry a title, notes, an estimate, lifecycle state, timer type, and an optional to-do date.
+The smallest intentional unit of work. An issue can carry a title, estimate, notes, and lifecycle state.
 
 ### Session
 
-A session is focused work tied to an issue. Sessions are started and stopped by the timer and end with a summary message.
+A focused work interval tied to an issue.
 
-## Active Context
+Sessions:
+- are started and stopped via the timer
+- contain one or more segments
+- end with a commit-style summary message
 
-The active context is the shared `{ repo -> stream -> issue }` path across local clients.
+### Session Segments
 
-That means:
+A session is composed of:
+- `work`
+- `short_break`
+- `long_break`
+- `rest`
 
-- checking out a repo or issue in the TUI affects the shared working context
-- CLI commands can read or reuse the same active context
-- focus and export commands can target the current context instead of forcing you to re-enter identifiers
+### Timer
 
-## Issue Lifecycle
+The timer is derived state, not stored state.
 
-Crona's stable issue statuses are:
+It:
+- starts and stops sessions
+- transitions segments
+- enforces structured boundaries
+- emits events for subscribed clients
 
-| Status | Meaning |
-| --- | --- |
-| `backlog` | captured but not yet scheduled |
-| `planned` | intended work, often tied to the day or near-term queue |
-| `ready` | prepared and unblocked |
-| `in_progress` | actively being worked |
-| `blocked` | waiting on something external or unresolved |
-| `in_review` | work is done locally but still under review |
-| `done` | completed |
-| `abandoned` | intentionally dropped |
+### Active Context
 
-Focus can start from `planned`, `ready`, and `in_progress`. Starting focus automatically promotes `planned` or `ready` work to `in_progress`.
+The shared `{ repo -> stream -> issue }` selection across local clients.
 
-Assigning a to-do date also promotes `backlog` work into `planned`.
+## Wellbeing Metrics
 
-Each issue carries its own timer type, so the focus cadence comes from the issue itself instead of a separate global timer setting.
+The Wellbeing view combines a selected-day check-in with a rolling metrics window. Mood, energy, sleep, screen time, burnout, focus, and habit rollups are still shown for the recent 7-day window ending on the selected wellbeing date.
 
-## Stashes
+Momentum is separate from that 7-day window. It uses all stored local history up to the selected wellbeing date, so focus, check-in, and habit streaks can exceed the visible metrics window. The range-based streak API is available for reports and callers that need date-window streak calculations.
 
-A stash suspends the current focus context and can preserve timer state.
+Custom momentum follows the streak definitions configured in Settings:
 
-This is what makes interrupted work recoverable without losing the earlier session intent. If you try to start focus on an issue that already has a stash, the local engine returns a structured stash conflict. Crona then asks you to:
+- daily definitions count matching completed days
+- weekly definitions count weeks that meet their configured completion threshold
+- monthly definitions count months that meet their configured completion threshold
 
-- resume the existing stash
-- or continue with a fresh session while keeping the stash available
+Momentum definitions can now target either habits or contexts. Habit targets use the selected habit IDs, while context targets use repo and stream selections from the workspace. The matching mode controls how selected targets contribute:
 
-It does not silently replace the old stash.
+- `any` treats the selected targets as alternatives and counts whichever selected target contributes
+- `all` requires the selected targets to contribute together before the threshold is met
 
-## Daily Check-Ins
+For weekly and monthly custom momentum, the current in-progress bucket does not break an existing streak just because it has not reached its threshold yet. It only extends the streak once the threshold is met.
 
-Daily check-ins capture self-report data for a specific date. The current fields surfaced by Crona are:
+The Momentum pane visualizes current streak length with a cadence-specific ladder and the corresponding target summary. Filled blocks are milestones reached by the current streak; empty blocks are future milestones. The detail view expands the selected card with current-bucket metadata, the resolved target summary, and contributor rows so you can see exactly which completions or sessions produced the active streak.
 
-- mood from 1 to 5
-- energy from 1 to 5
-- optional sleep hours
-- optional sleep score
-- optional screen time
-- optional notes
+```text
+Daily/check-in/focus: 1d, 3d, 7d, 14d, 30d, 60d, 100d
+Weekly customs:       1w, 2w, 4w, 8w, 13w, 26w, 52w
+Monthly customs:      1mo, 2mo, 3mo, 6mo, 12mo, 24mo
+```
 
-These feed the Wellbeing view, the configurable Metrics Window, the compact Daily momentum block, and custom Momentum history summaries.
+The exact current and best values are shown next to the ladder, for example `14d current · 30d best`.
 
-## Habits
+## Terminal UI Surfaces
 
-Habits are recurring items tracked alongside daily work. Crona supports schedule-based habits, daily completion logging, habit history, and custom streak periods. In the Daily view they appear separately from issues so you can manage routines and work items together without flattening them into the same list.
+On wider terminals, the Wellbeing dashboard splits its lower region into a 7-day Metrics Window pane and a separate Momentum pane. The Momentum pane is focusable and scrollable independently so custom habit momentum can grow without clipping the metrics content.
 
-For the operational workflow, read [Habits](/docs/habits/). This page just defines habits as a first-class part of the work model.
+The Daily view also adapts to terminal width. Wider layouts keep the denser multi-pane presentation. Narrower terminals collapse the issue area into a compact list that keeps title, due date, context, effort, and status readable. On smaller widths, pane action hints shorten their labels before they wrap.
 
-## The Local Engine Ownership Model
+Calendar surfaces use terminal background styling for selected dates, date ranges, today, and the current week rather than bracket markers. This keeps date cells fixed-width while relying on color and background state to distinguish selection and today.
 
-The local engine owns more than storage. It is also responsible for:
+## Notifications And Automation
 
-- timers and session timing
-- reminder evaluation
-- local notifications and sounds
-- export generation
-- update checks
-- local IPC
+### Notifications
 
-That ownership is why Crona can behave consistently whether you are driving it from the TUI or the CLI.
+Crona can trigger local OS notifications and bundled alert sounds from the local daemon itself. The TUI configures and tests alerts, but notification timing, scheduled reminder evaluation, and delivery decisions remain local-daemon-owned. Today this uses platform-specific local helpers rather than a separate native companion layer.
+
+Focus inactivity alerts are also local-daemon-owned. If a focus session keeps running without recent TUI activity for the configured threshold, Crona can notify the user to review, pause, or end the session.
+
+### Calendar Export
+
+Crona can generate deterministic local `.ics` files for external automations.
+
+Typical workflow:
+- Crona writes `.ics` files into the configured export directory.
+- Local automations watch that directory.
+- External tools import or react to those files.
+
+Crona does not require direct Google Calendar or iCloud API integration for this flow.
 
 ## Design Principles
 
-The upstream project docs call out these core ideas:
-
-- local-first state
-- authoritative stored data over derived UI state
+- local-first
+- authoritative data over derived state
 - replayable operations
+- no hidden background jobs
 - deterministic local artifacts
 - a git-like mental model for work state
 
-## Next Steps
+## Project Status
 
-- Read [Features Overview](/docs/features-overview/) for the product surface.
-- Read [Issues and Planning](/docs/issues-and-planning/) for planning flows.
-- Read [Focus Sessions](/docs/focus-sessions/) for timer and stash behavior.
+The core workflow is usable for general users, while validation builds remain available for faster feedback on upcoming changes.
+
+Current mainline focus:
+- stable-channel maintenance
+- installer/updater/support polish
+- documentation and contributor-facing references
+- tester feedback for upcoming releases

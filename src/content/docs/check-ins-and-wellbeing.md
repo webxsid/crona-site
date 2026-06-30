@@ -1,98 +1,38 @@
 ---
 title: Check-Ins and Wellbeing
-description: Learn how Crona connects daily check-ins, custom Momentum history, burnout signals, and accountability with the work you plan and complete.
-order: 7
+description: Log wellbeing metrics, inspect rolling trends, track accountability, and monitor burnout signals.
+order: 5.6
 ---
 
-Crona does not treat work as only a list of issues and sessions. It also gives you a way to review how the day felt, how sustainable the recent workload has been, and whether your work patterns are trending in a healthy direction.
-
-This page is the reflection step in the Daily Workflows sequence.
+Crona includes a local wellbeing reflection loop that tracks daily self-reported health signals alongside task execution statistics to help you monitor workload sustainability.
 
 ## Daily Check-Ins
 
-The daily check-in is a lightweight self-report for a specific date. Crona currently records:
+A check-in is a daily self-report entry containing:
+- **Mood**: Rating from `1` to `5`.
+- **Energy**: Rating from `1` to `5`.
+- **Sleep**: Total sleep hours and an optional sleep quality score.
+- **Screen Time**: Optional tracking of daily computer screen time.
+- **Notes**: Narrative logging for context on the day's performance.
 
-- mood from `1` to `5`
-- energy from `1` to `5`
-- optional sleep hours
-- optional sleep score
-- optional screen time
-- optional notes
+To trigger the check-in dialog in either the **Daily** or **Wellbeing** views, press `w`.
 
-The point is not to turn Crona into a journal. It is to give the rest of the system just enough signal to connect work output with how the day actually felt.
+## The Wellbeing Dashboard
 
-The Daily and Wellbeing surfaces now share the same shortcut split: `w` opens check-in and `W` toggles away mode where that action applies.
+The Wellbeing dashboard splits data display into two primary panes:
+1. **Metrics Window**: A 7-day rolling window showing trends in mood, energy, sleep hours, screen time, focus duration, and habit completions.
+2. **Momentum Pane**: A pane displaying custom habit and context streaks, current versus best streak scores, and completion milestones. On wide terminals, this pane becomes independently scrollable.
 
-## What the Wellbeing View Helps You See
+## Burnout & Recovery Signals
 
-The Wellbeing view is where those signals become useful.
+Crona calculates burnout indicators using a localized heuristics engine. It processes:
+- **Focus vs. Rest Ratio**: Compares active focus session durations against scheduled breaks and rest days.
+- **Velocity Trends**: Evaluates issue completion volume over a rolling 7-day period.
+- **Self-Reported Health**: Correlates mood and energy scores against work volumes.
+- **Planning Accountability**: Tracks the ratio of completed plans to overdue, rolled-over, or abandoned issues.
 
-It splits the display into two ideas:
+These signals are computed locally and visualized on the Wellbeing dashboard as trend indicators, helping you notice when workload patterns become unsustainable.
 
-- a configurable Metrics Window for the recent period
-- Momentum for the longer-running custom-only history view
+## Local & Private Storage
 
-It can combine:
-
-- the selected day’s check-in details
-- rolling trend summaries
-- Momentum history
-- burnout indicators
-- accountability and plan-failure summaries
-- activity windows and heatmaps
-
-In other words, it helps you look at the day from a different angle than the Daily or Session views. Those pages answer “what did I plan?” and “what did I do?” This one helps answer “how has this been going lately?”
-
-## Burnout and Recovery Signals
-
-The burnout signals in Crona are derived from rolling local data, not from a single self-reported toggle.
-
-Examples of inputs include:
-
-- workload pressure
-- break compliance and recovery signals
-- mood and energy drag
-- work and rest ratios over time
-
-That makes the wellbeing model more useful for pattern recognition. It is not trying to diagnose anything. It is trying to help you notice when your recent work rhythm is drifting toward unsustainable territory.
-
-## Momentum, Trends, and Accountability
-
-The value of the Wellbeing page is not just one day’s data. It is the ability to see patterns such as:
-
-- whether you are checking in consistently
-- whether mood or energy has been stable
-- whether work is accumulating without enough recovery
-- whether daily plans are being completed, rolled forward, or abandoned
-
-This is where Crona starts to feel like more than a task tracker. It can show the relationship between planning quality, focus load, and how the recent period has actually felt. Momentum is the long-view surface for that history, while the Metrics Window keeps the short-range window readable. Disabled Momentum cards read as paused history instead of a failure state.
-
-## How It Connects Back to Daily Work
-
-Wellbeing in Crona is deliberately tied to the rest of the workflow:
-
-- the Daily view shows what the day was supposed to look like
-- Focus Sessions show how work actually unfolded
-- the Wellbeing view helps you reflect on the human cost and sustainability of that pattern
-- the compact Daily momentum block keeps check-in and focus signals visible at a glance
-
-That connection is what makes the category sequence work as a loop:
-
-1. plan the work
-2. do the work
-3. review the pattern
-
-Then use what you learned to shape the next day better.
-
-## Privacy and Local Ownership
-
-Like the rest of Crona, check-ins and wellbeing data live in the local runtime store. They are part of the same local-first model as issues, sessions, reminders, and exports.
-
-That means the reflection layer stays part of your local workflow instead of becoming a separate hosted system.
-
-## What to Read Next
-
-- Read [Exports and Reports](/docs/exports-and-reports/) if you want to turn work and wellbeing data into local artifacts.
-- Read [Habits](/docs/habits/) if you want the recurring routine and streak model behind the Daily habit pane.
-- Read [Screenshots and Walkthrough](/docs/screenshots-and-walkthrough/) if you want a visual tour of the Wellbeing dashboard.
-- Read [Issues and Planning](/docs/issues-and-planning/) when you are ready to bring what you learned back into the next day’s plan.
+All check-in notes, ratings, and metrics are written directly to your local SQLite database. None of this data is sent to external services, maintaining complete privacy for your health and work logs.

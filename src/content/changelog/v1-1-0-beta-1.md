@@ -1,0 +1,23 @@
+---
+title: "Beta release"
+version: "v1.1.0-beta.1"
+date: 2026-04-30
+summary: "Crona v1.1.0-beta.1 rolls up the early post-1.0.2 improvements that were ready for broader validation."
+---
+
+Crona v1.1.0-beta.1 rolls up the early post-`1.0.2` improvements that were ready for broader validation.
+
+## Added
+- Configurable date display formats for the TUI and Crona-generated reports.
+- Prompt glyph modes for dialogs, with `emoji`, `unicode`, and `ascii` options.
+- A Daily calendar summary surface that appears when there is enough terminal width.
+
+## Changed
+- Daily summary progress bars use more of the available wide-screen space.
+- Human-facing report dates follow the selected display format.
+- Accountability numbers are rounded for readability.
+
+## Fixed
+- Due-date calendar shortcuts now work reliably across terminals.
+- Daily reporting no longer counts resolved or abandoned delayed work as active risk.
+- Prompt glyph settings respond correctly in the Settings view.

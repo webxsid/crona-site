@@ -1,10 +1,15 @@
 ---
-title: Legacy to Winget
-description: Move a legacy Crona install to Winget on Windows while preserving your database backup.
+title: "Legacy to Winget"
+description: "Move a legacy Crona install to Winget on Windows."
 order: 2.4
 ---
 
-Use this guide when you are moving off the legacy install script and want to keep Crona managed by Winget on Windows.
+Use this guide when you are moving off the legacy install script and want to keep Crona managed by winget on Windows.
+Stop Crona, run the beta installer once, back up the database, clear the old runtime, remove the old binaries, install Winget, and restore the backup.
+
+Estimated time: 20-30 minutes, mainly because the Windows install and restore steps can take a little longer to complete.
+
+Use this guide when the final install should be managed by Winget rather than the legacy script.
 
 ## Before You Start
 
@@ -14,9 +19,7 @@ Close any open TUI windows, CLI sessions, and background Crona processes. If a p
 
 ## 1. Download The Latest Beta Installer
 
-Open the latest beta release page on GitHub Releases and download the legacy installer script for Windows.
-
-Download `install-crona-tui.ps1` from the release assets.
+Download `install-crona-tui.ps1` from the latest beta release page on GitHub Releases.
 
 ## 2. Run The Legacy Installer Once
 
@@ -49,7 +52,7 @@ Remove the Crona runtime directory after the backup is complete.
 
 ## 5. Remove The Legacy Binaries
 
-Remove the old binaries from the Winget user install directory if they are still present.
+Remove the old binaries from the winget user install directory if they are still present.
 
 Typical location:
 
@@ -78,3 +81,10 @@ If the runtime directory already contains a `crona.db`, Crona prompts before ove
 - Winget owns install, update, and uninstall.
 - Updates use `winget upgrade --id Webxsid.Crona -e`.
 - `crona backup` and `crona restore` only move `crona.db`.
+
+## Contact
+
+If you hit a Windows-specific install problem, contact me directly:
+
+- Email: `me@webxsid.com`
+- WhatsApp: `+91-6375728437`

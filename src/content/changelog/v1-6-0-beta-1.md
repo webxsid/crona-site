@@ -1,0 +1,21 @@
+---
+title: "Beta release"
+version: "v1.6.0-beta.1"
+date: 2026-06-15
+summary: "Crona v1.6.0-beta.1 tightens how Crona presents and manages managed installs. This beta makes Homebrew channel handling explicit, keeps beta and stable tracks separate i…"
+---
+
+Crona v1.6.0-beta.1 tightens how Crona presents and manages managed installs. This beta makes Homebrew channel handling explicit, keeps beta and stable tracks separate in the release workflow, and gives the update view enough context to guide users toward the right command instead of a generic fallback.
+
+## Added
+- Homebrew installs now carry enough identity for Crona to distinguish `crona` from `crona-beta`.
+- The update view now shows the Homebrew formula, the install-unavailable reason, and the correct migration command when the installed channel does not match the running release.
+- The CLI update status output and support diagnostics now surface the Homebrew formula and migration state.
+
+## Changed
+- The release workflow now branches on tag shape again, so `-beta` tags publish prereleases and stable tags publish latest releases.
+- Homebrew publish automation now follows the same beta/stable split.
+
+## Fixed
+- Homebrew installs no longer fall back to GitHub release update behavior when the installed formula and running release channel differ.
+- The update action now copies a migration command for beta/stable channel switches instead of a generic update command.

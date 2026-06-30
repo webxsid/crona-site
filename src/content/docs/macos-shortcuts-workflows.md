@@ -1,120 +1,65 @@
 ---
 title: macOS Shortcuts Workflows
-description: Build practical macOS Shortcuts around Crona for repo launchers, start-focus flows, and calendar refresh tasks.
-order: 15
+description: Integrate Crona with macOS Shortcuts for TUI launchers, fast context switching, and automated exports.
+order: 5.12
 ---
 
-If you use Crona on macOS, the Shortcuts app is the easiest way to turn common CLI actions into repeatable one-click workflows.
+On macOS, you can use the native **Shortcuts** app to execute Crona CLI commands, linking them to global hotkeys, menu bar items, or automated triggers.
 
-This page focuses on three useful setups: opening the right repo or stream, starting work on the current issue, and refreshing repo-specific calendar exports. Each one uses Crona's existing CLI surface, so you are building on supported commands rather than a separate automation layer.
+## General Shortcut Setup
 
-## Before You Build a Shortcut
-
-All of the workflows on this page use the same setup:
-
-1. Open the **Shortcuts** app and create a new Shortcut.
+Every workflow below utilizes the same Shortcuts action sequence:
+1. Open the macOS **Shortcuts** app and create a new Shortcut.
 2. Add a **Run Shell Script** action.
-3. Paste the Crona command sequence into that action.
+3. Configure the shell (e.g., `/bin/zsh` or `/bin/bash`).
+4. Ensure the `crona` binary is accessible on the script's `PATH`. If needed, prepend the path override:
+   ```bash
+   export PATH="$HOME/.local/bin:$PATH"
+   crona <command>
+   ```
 
-You can keep these as menu bar shortcuts, pin them for quick access, attach your own keyboard shortcut in macOS, or run them from Siri. The important part is that the Shortcut becomes a stable entry point for a repeated Crona action.
+## Workflow 1: Quick Workspace Launchers
 
-One constraint is worth keeping in mind: Crona does not currently document a native integration with Apple's system Focus modes. The practical macOS pattern today is to use Shortcuts to switch Crona context, launch Crona, or refresh local outputs.
+Create quick launchers that switch repositories or streams and then open the TUI immediately:
 
-## Workflow 1: Open the Right Work Area
-
-The most useful first Shortcut is usually a launcher for a specific repo or stream.
-
-This is a good fit when you regularly bounce between a few working areas and want each one to feel like its own entry point. Instead of opening Crona and navigating into the right context every time, the Shortcut does that setup first.
-
-### Example: Open Work Repo
-
-Create a Shortcut called `Open Work Repo` and use:
-
+### Open Work Repository
 ```bash
-crona context switch-repo --id <repo-id> --json
-crona
+export PATH="$HOME/.local/bin:$PATH"
+crona context switch-repo --id 1 --json
+# Launches the TUI in the terminal
+open -a Terminal "$(which crona)"
 ```
 
-When you run it, Crona switches to that repo and then opens the TUI in the updated context.
-
-### Example: Open Personal Stream
-
-Create a Shortcut called `Open Personal Stream` and use:
-
+### Open Personal Stream
 ```bash
-crona context switch-stream --id <stream-id> --json
-crona
+export PATH="$HOME/.local/bin:$PATH"
+crona context switch-stream --id 3 --json
+open -a Terminal "$(which crona)"
 ```
 
-This works well when the stream is the real unit of context for your day. It gives you a cleaner mental model than a generic launcher because each Shortcut represents a known working area.
+## Workflow 2: Hotkey-Triggered Focus Sessions
 
-## Workflow 2: Start the Current Issue Faster
+Set up global keyboard shortcuts to start or stop focus timers on the currently checked-out issue:
 
-The next good Shortcut is one that starts work instead of just opening Crona.
-
-Crona's checked-out context is what makes this useful. If you already keep the right issue checked out, a Shortcut can turn that context into an active work session without asking you to navigate back through the TUI first.
-
-### Example: Start Current Issue
-
-Create a Shortcut called `Start Current Issue` and use:
-
+### Start Active Focus
 ```bash
-crona issue start --from-context --json
+export PATH="$HOME/.local/bin:$PATH"
+crona timer start --from-context --json
 ```
 
-This is the simplest daily-use Shortcut on the page. It assumes the checked-out issue is already correct and starts from there.
-
-### Example: Start a Specific Recurring Issue
-
-If you want a Shortcut for a known piece of work, switch the issue first and then start from context:
-
+### Stop Focus and Log Session
+Create a Shortcut that prompts for input (the commit message), then ends the session:
 ```bash
-crona context switch-issue --id <issue-id> --json
-crona issue start --from-context --json
+export PATH="$HOME/.local/bin:$PATH"
+# Reads the text input from the previous Shortcut action
+crona timer end --message "$1" --json
 ```
 
-This is useful for recurring workflows such as triage, review, or a regular maintenance task where the Shortcut itself represents the work you want to begin.
+## Workflow 3: Automated iCalendar Updates
 
-The difference between the two approaches is simple:
-
-- use `Start Current Issue` when Crona's current context is already part of your routine
-- use an issue-specific Shortcut when you want the Shortcut to choose the work for you
-
-## Workflow 3: Refresh a Repo Calendar Export
-
-Shortcuts are also useful for review and sync-adjacent tasks, especially when you want Crona to refresh a local file that another tool consumes.
-
-Calendar export is the clearest example. Crona can generate repo-specific `.ics` files, and a Shortcut gives you a clean manual trigger for that workflow.
-
-### Example: Refresh Backend Calendar
-
-Create a Shortcut called `Refresh Backend Calendar` and use:
-
+Create an automated calendar sync Shortcut that exports your records and triggers a folder action:
 ```bash
-crona export calendar --repo-id <repo-id> --json
+export PATH="$HOME/.local/bin:$PATH"
+crona export calendar --json
 ```
-
-This updates the calendar artifacts for that repo in your configured ICS export directory. From there, you can attach the rest of the workflow to macOS tools that already understand local files:
-
-- a Folder Action watching the export directory
-- a local import step into another calendar surface
-- a second Shortcut that opens the folder after export
-
-This is often a better automation target than trying to wire Crona directly into another service. Crona produces the file, and the rest of your local macOS setup decides what to do with it.
-
-## A Good First Setup
-
-If you want a clean starting point, build these four Shortcuts first:
-
-- `Open Work Repo`
-- `Open Personal Stream`
-- `Start Current Issue`
-- `Refresh Backend Calendar`
-
-That gives you one launcher for your main repo, one launcher for a secondary stream, one execution Shortcut for daily focus, and one export Shortcut for calendar-based workflows. It is enough to make Crona feel integrated into macOS without inventing a larger automation system than you need.
-
-## What to Read Next
-
-- Read [CLI Automation Patterns](/docs/cli-automation-patterns/) for the broader command surface behind these workflows.
-- Read [Calendar and File Automation](/docs/calendar-and-file-automation/) if you want to build on `.ics` files, report directories, or watched folders.
-- Read [CLI and Local Engine](/docs/cli-and-local-engine/) for the underlying command groups and terminology.
+Pin this Shortcut to run hourly via a launchd daemon, or trigger it automatically when opening your email client.
