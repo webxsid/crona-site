@@ -7,17 +7,17 @@ import "./_install/install.scss";
 <BaseLayout
   title="Install"
   pageTitle="Crona install guide"
-  description="Install Crona with Homebrew, source builds, or legacy migration paths while Winget is still coming soon."
+  description="Install Crona with Homebrew on macOS and Linux, Scoop on Windows, or source builds for advanced local setups."
 >
   <section class="container section">
     <div class="page-header flow measure">
       <p class="eyebrow">Install</p>
       <h1>Install Crona the managed way</h1>
       <p>
-        Homebrew is the recommended path.
-        `go install` is the advanced source path.
-        Winget is coming soon and is disabled here for now.
-        Legacy install scripts remain pinned at `v1.6.0` for migration from older installs.
+        Homebrew is the managed path on macOS and Linux.
+        Scoop is the managed path on Windows.
+        `go install` remains the advanced source path.
+        GitHub Releases are the canonical binary source, and the legacy install scripts stay pinned at `v1.6.0` for migration off older installs.
       </p>
     </div>
 
@@ -30,7 +30,7 @@ import "./_install/install.scss";
         <a class="install-handoff__card" href="/docs/migration/">
           <span>Migration</span>
           <strong>Switch install methods safely</strong>
-          <p>Back up, remove the old runtime, reinstall with the package manager you want to keep, and restore.</p>
+          <p>Back up, clear the old runtime, reinstall with the package manager you want to keep, and restore.</p>
         </a>
 
         <a class="install-handoff__card" href="/docs/install/">
@@ -51,10 +51,10 @@ import "./_install/install.scss";
           <p>Keep the source-install flow with `go install` after you migrate away from the script.</p>
         </a>
 
-        <a class="install-handoff__card" href="/docs/install/#winget">
+        <a class="install-handoff__card" href="/docs/migration/legacy-to-scoop/">
           <span>Windows</span>
-          <strong>Winget coming soon</strong>
-          <p>Track the Windows package-manager path while it is still being prepared.</p>
+          <strong>Legacy to Scoop</strong>
+          <p>Move a script-based Windows install onto the managed Scoop path without losing local state.</p>
         </a>
       </div>
     </div>

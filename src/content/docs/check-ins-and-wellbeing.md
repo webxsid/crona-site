@@ -21,7 +21,7 @@ To trigger the check-in dialog in either the **Daily** or **Wellbeing** views, p
 
 The Wellbeing dashboard splits data display into two primary panes:
 1. **Metrics Window**: A 7-day rolling window showing trends in mood, energy, sleep hours, screen time, focus duration, and habit completions.
-2. **Momentum Pane**: A pane displaying custom habit and context streaks, current versus best streak scores, and completion milestones. On wide terminals, this pane becomes independently scrollable.
+2. **Momentum Pane**: A pane displaying custom habit and context Momentum, current versus best streak scores, protected days, adjusted targets, skipped buckets, and completion milestones. On wide terminals, this pane becomes independently scrollable.
 
 ## Burnout & Recovery Signals
 
@@ -30,6 +30,8 @@ Crona calculates burnout indicators using a localized heuristics engine. It proc
 - **Velocity Trends**: Evaluates issue completion volume over a rolling 7-day period.
 - **Self-Reported Health**: Correlates mood and energy scores against work volumes.
 - **Planning Accountability**: Tracks the ratio of completed plans to overdue, rolled-over, or abandoned issues.
+
+Custom Momentum is rest-aware. Protected rest and away days can skip daily buckets, reduce weekly or monthly targets when real availability shrinks, and preserve continuity when a protected bucket should not count against the story.
 
 These signals are computed locally and visualized on the Wellbeing dashboard as trend indicators, helping you notice when workload patterns become unsustainable.
 

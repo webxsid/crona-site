@@ -8,7 +8,7 @@ import "./_home/index.scss";
 <BaseLayout
   title="Crona"
   pageTitle="Crona | Local-first work tracking for developers"
-  description="Crona is a local-first work tracker for developers who live in the terminal."
+  description="Crona is a local-first work tracker for developers with issue-aware focus sessions, rest-aware Momentum, and a real background engine."
   structuredData={[
     {
       "@context": "https://schema.org",
@@ -29,12 +29,12 @@ import "./_home/index.scss";
   <section class="container section section--hero home-hero">
     <div class="home-hero__stack">
       <div class="home-hero__copy flow">
-        <p class="eyebrow">terminal-native work tracking</p>
-        <h1>Local-first work tracking for developers who live in the terminal.</h1>
-        <p class="home-hero__lede">Plan work, run focused sessions, and review what actually got done.</p>
+        <p class="eyebrow">local-first developer workflow</p>
+        <h1>Local-first work tracking for developers.</h1>
+        <p class="home-hero__lede">Plan work, run issue-aware focus sessions, review rest-aware Momentum, and keep the workflow local.</p>
         <p class="home-hero__body">
-          Crona keeps planning, focus sessions, and daily review in one place so you do not bounce between browser
-          tabs, dashboards, and note-taking apps just to understand your day.
+          Crona keeps planning, focus sessions, alerts, exports, updates, and daily review tied to one local engine so
+          the desktop workflow stays coherent from first task selection through end-of-day review.
         </p>
       </div>
 
@@ -73,14 +73,14 @@ import "./_home/index.scss";
   <section class="container section home-why">
     <div class="home-why__copy flow">
       <p class="eyebrow">why crona exists</p>
-      <h2>My day starts and ends in the terminal.</h2>
+      <h2>Planning, focus, and review belong in one local system.</h2>
       <p>
         I got tired of splitting my work across browser tabs, timers, task boards, and notes just to keep track of
         what I planned and what actually happened.
       </p>
       <p>
-        I wanted planning, focus, and review to live where I already work. So I built Crona: a local-first work
-        tracker that feels like part of the development workflow instead of another system to maintain.
+        Crona keeps issue tracking, focused work, Momentum, wellbeing, and operational tooling in the same local-first
+        workflow instead of turning the day into a handoff between unrelated apps.
       </p>
     </div>
   </section>
@@ -105,13 +105,13 @@ import "./_home/index.scss";
       <article class="home-loop__step">
         <span>02</span>
         <h3>Keep focus tied to real work</h3>
-        <p>Sessions attach to the issue itself, so the timer follows the work instead of floating free.</p>
+        <p>Sessions attach to the issue itself, seed from the remaining estimate, and show worked time before the timer starts.</p>
       </article>
 
       <article class="home-loop__step">
         <span>03</span>
-        <h3>See what actually happened</h3>
-        <p>Review the day without guessing: what you planned, what you finished, and where the time went.</p>
+        <h3>Review what should count</h3>
+        <p>Momentum and review surfaces keep planned work, completed work, protected rest, and elapsed time in the same story.</p>
       </article>
     </div>
   </section>
@@ -133,10 +133,9 @@ import "./_home/index.scss";
       </div>
       <div class="home-surface__copy flow">
         <p class="home-surface__label">Issues workspace</p>
-        <h3>Know what is in play before the session starts.</h3>
+        <h3>Start focus from the issue, not from a generic timer.</h3>
         <p>
-          Repos, streams, statuses, dates, and timer types help you see the real shape of the day instead of another
-          oversized list.
+          Repos, streams, statuses, dates, estimates, worked time, and timer types make the start of a session concrete before the countdown begins.
         </p>
         <a href="/docs/issues-and-planning/">Read about issue planning</a>
       </div>
@@ -145,8 +144,8 @@ import "./_home/index.scss";
     <div class="home-surface home-surface--rollup">
       <div class="home-surface__copy flow">
         <p class="home-surface__label">Rollup dashboard</p>
-        <h3>Review workload without losing the calendar.</h3>
-        <p>See focus patterns, calendar context, and the Breakdown pane together when you want the full picture.</p>
+        <h3>Review workload without losing the operational context.</h3>
+        <p>See focus patterns, estimate bias, calendar context, and the session breakdown together when the day needs a real retrospective.</p>
         <a href="/docs/screenshots-and-walkthrough/">Read the walkthrough</a>
       </div>
       <div class="home-surface__media">
@@ -168,9 +167,9 @@ import "./_home/index.scss";
       </div>
       <div class="home-surface__copy flow">
         <p class="home-surface__label">Momentum dashboard</p>
-        <h3>See whether you are showing up consistently.</h3>
+        <h3>See whether a day should count before it breaks the story.</h3>
         <p>
-          Momentum keeps your longer-running history readable without turning it into a generic streak counter.
+          Momentum tracks protected rest, skipped buckets, adjusted targets, and effective availability instead of flattening everything into a simple streak counter.
         </p>
         <a href="/docs/check-ins-and-wellbeing/">Read about Momentum</a>
       </div>
@@ -180,7 +179,7 @@ import "./_home/index.scss";
       <div class="home-surface__copy flow">
         <p class="home-surface__label">Wellbeing dashboard</p>
         <h3>Notice patterns a checklist would miss.</h3>
-        <p>Check-ins, energy, sleep, and burnout signals give you a human read on the work you have been doing.</p>
+        <p>Check-ins, energy, sleep, burnout signals, and Momentum detail keep the human side of the workload visible beside the work itself.</p>
         <a href="/docs/check-ins-and-wellbeing/">Read about wellbeing</a>
       </div>
       <div class="home-surface__media">
@@ -198,13 +197,13 @@ import "./_home/index.scss";
       <div class="home-close__copy flow">
         <p class="eyebrow">next step</p>
         <h2>Install it, then keep the docs close.</h2>
-        <p>Use the install guide first, then read the migration pages if you are moving from an older install.</p>
+        <p>Start with Homebrew on macOS or Linux, Scoop on Windows, then use the migration pages if you are moving off an older script install.</p>
       </div>
 
       <div class="home-close__links">
         <a href="/install/">
           <strong>Install hub</strong>
-          <span>Package-manager tabs, fallback scripts, and pinned release assets.</span>
+          <span>Homebrew and Scoop commands, fallback scripts, and links back to GitHub Releases.</span>
         </a>
         <a href="/docs/">
           <strong>Documentation</strong>
@@ -212,7 +211,7 @@ import "./_home/index.scss";
         </a>
         <a href="/docs/migration/">
           <strong>Migration guide</strong>
-          <span>Move a legacy install to Homebrew, Go source installs, or Winget without losing state.</span>
+          <span>Move a legacy install to Homebrew, Scoop, or Go source installs without losing state.</span>
         </a>
         <a href="/changelog/">
           <strong>Releases</strong>

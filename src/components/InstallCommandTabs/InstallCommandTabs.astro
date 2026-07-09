@@ -4,15 +4,14 @@ import "./InstallCommandTabs.scss";
 
 <div class="install-tabs" data-install-tabs>
   <div class="install-tabs__topline">
-    <span class="install-tabs__label">install paths</span>
     <div class="install-tabs__tablist" role="tablist" aria-label="Install command by distribution path">
       <button class="install-tabs__tab" type="button" role="tab" aria-selected="true" aria-controls="install-panel-homebrew" id="install-tab-homebrew" data-install-tab="homebrew">
         <span class="install-tabs__tab-name">Homebrew</span>
-        <span class="install-tabs__tab-badge">Recommended</span>
+        <span class="install-tabs__tab-badge">Mac / Linux</span>
       </button>
-      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-winget" id="install-tab-winget" data-install-tab="winget" disabled aria-disabled="true">
-        <span class="install-tabs__tab-name">Winget</span>
-        <span class="install-tabs__tab-badge">Coming Soon</span>
+      <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-scoop" id="install-tab-scoop" data-install-tab="scoop">
+        <span class="install-tabs__tab-name">Scoop</span>
+        <span class="install-tabs__tab-badge">Windows</span>
       </button>
       <button class="install-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="install-panel-source" id="install-tab-source" data-install-tab="source">
         <span class="install-tabs__tab-name">Source</span>
@@ -41,44 +40,27 @@ import "./InstallCommandTabs.scss";
           <pre><span aria-hidden="true">$ </span><code>brew install webxsid/tap/crona</code></pre>
         </div>
 
-        <div class="install-tabs__block">
-          <div class="install-tabs__block-topline">
-            <span class="install-tabs__block-label">Update</span>
-            <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
-          </div>
-          <pre><span aria-hidden="true">$ </span><code>brew upgrade crona</code></pre>
-        </div>
       </div>
-
-      <details class="install-tabs__advanced">
-        <summary>Advanced Homebrew Options</summary>
-        <p class="install-tabs__panel-note">Use the tap route if you want to add the Crona formula separately.</p>
-
-        <div class="install-tabs__blocks">
-          <div class="install-tabs__block">
-            <div class="install-tabs__block-topline">
-              <span class="install-tabs__block-label">Tap</span>
-              <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
-            </div>
-            <pre><span aria-hidden="true">$ </span><code>brew tap webxsid/tap</code></pre>
-          </div>
-
-          <div class="install-tabs__block">
-            <div class="install-tabs__block-topline">
-              <span class="install-tabs__block-label">Install from tap</span>
-              <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
-            </div>
-            <pre><span aria-hidden="true">$ </span><code>brew install crona</code></pre>
-          </div>
-        </div>
-      </details>
     </div>
 
-    <div class="install-tabs__panel" role="tabpanel" id="install-panel-winget" aria-labelledby="install-tab-winget" data-install-panel="winget" hidden>
+    <div class="install-tabs__panel" role="tabpanel" id="install-panel-scoop" aria-labelledby="install-tab-scoop" data-install-panel="scoop" hidden>
       <div class="install-tabs__panel-intro">
-        <p class="install-tabs__panel-title">Winget coming soon</p>
-        <p class="install-tabs__panel-note">Winget support is still being prepared. Use Homebrew, source install, or the legacy migration path for now.</p>
+        <p class="install-tabs__panel-title">Windows managed install</p>
+        <p class="install-tabs__panel-note">Use Scoop on Windows. GitHub Releases remain the canonical binary source.</p>
       </div>
+
+      <div class="install-tabs__blocks">
+        <div class="install-tabs__block" data-copy-block>
+          <div class="install-tabs__block-topline">
+            <span class="install-tabs__block-label">Stable install</span>
+            <button class="install-tabs__copy" type="button" data-copy-command>[ copy ]</button>
+          </div>
+          <pre><code>scoop bucket add webxsid https://github.com/webxsid/scoop-bucket
+scoop install crona</code></pre>
+        </div>
+
+      </div>
+
     </div>
 
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-source" aria-labelledby="install-tab-source" data-install-panel="source" hidden>
@@ -103,7 +85,7 @@ import "./InstallCommandTabs.scss";
     <div class="install-tabs__panel" role="tabpanel" id="install-panel-legacy" aria-labelledby="install-tab-legacy" data-install-panel="legacy" hidden>
       <div class="install-tabs__panel-intro">
         <p class="install-tabs__panel-title">Legacy installer</p>
-        <p class="install-tabs__panel-note">This installer exists for Crona 1.6.x and earlier. If you previously installed Crona with the curl or PowerShell installer, use the migration guide before upgrading. New installs should use Homebrew instead.</p>
+        <p class="install-tabs__panel-note">This installer remains available for migration off older script installs. New installs should use Homebrew on macOS/Linux or Scoop on Windows.</p>
       </div>
 
       <div class="install-tabs__blocks">

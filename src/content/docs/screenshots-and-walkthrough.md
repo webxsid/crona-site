@@ -4,16 +4,16 @@ description: A visual guide to Crona's terminal dashboards and workflows.
 order: 6.5
 ---
 
-Crona combines tracking, analytics, and wellbeing metrics into native Terminal User Interfaces. This guide walkthrough illustrates the core views.
+Crona combines planning, focus tracking, Momentum, and wellbeing metrics into native terminal interfaces. This walkthrough illustrates the core views.
 
 ## 1. Daily Dashboard (Planning & Logging)
 
-![Daily dashboard showing planned issues, habits, compact momentum signals, and focus summary](/screenshots/daily-dashboard.png)
+![Daily dashboard showing planned issues, habits, compact Momentum signals, and focus summary](/screenshots/daily-dashboard.png)
 
 The Daily dashboard displays active contexts and tasks scheduled for the selected day:
 - **Navigation**: Move back and forth across calendar dates.
 - **Sectioning**: Segregates planned issues, pinned issues, overdue issues, and due habits.
-- **Summary Header**: Visual progress indicators displaying active context, total daily focus time, completed issue ratios, and current momentum signals.
+- **Summary Header**: Visual progress indicators displaying active context, total daily focus time, completed issue ratios, and current Momentum signals.
 
 ## 2. Issues View (Backlog & Status)
 
@@ -22,7 +22,7 @@ The Daily dashboard displays active contexts and tasks scheduled for the selecte
 The Issues workspace manages the task list:
 - **Tabs**: Quick toggle between Active (`1`) and Completed (`2`) tasks.
 - **Table Data**: Visualizes issue state, estimated vs. actual worked time, planning dates, and context path.
-- **Control**: Allows changing state, editing task notes, editing estimates, checking out issues, or triggering focus sessions directly.
+- **Control**: Allows changing state, editing task notes, editing estimates, checking out issues, or triggering issue-aware focus sessions directly.
 
 ## 3. Rollup Dashboard (Daily/Weekly Retrospective)
 
@@ -40,5 +40,5 @@ The Rollup dashboard acts as a visual timeline:
 The Wellbeing panel handles human metrics:
 - **Check-ins**: Displays daily mood, energy, sleep hours, sleep scores, and screen time metrics.
 - **Metrics Grid**: Visualizes a 7-day rolling window of activity.
-- **Momentum Ladders**: Displays milestone blocks for active daily, weekly, or monthly streaks.
+- **Momentum Ladders**: Displays milestone blocks for active daily, weekly, or monthly Momentum along with protected-day and adjusted-target context.
 - **Burnout Predictor**: Local algorithms compile rest-to-focus ratios to suggest workload adjustments.

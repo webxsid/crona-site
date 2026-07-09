@@ -205,9 +205,8 @@ async function loadReleases() {
 }
 
 const releases = await loadReleases();
-const latestRelease = releases[0] ?? null;
 const latestStableRelease = releases.find((release) => release.status === "stable") ?? null;
-const visibleReleases = latestRelease?.status === "pre-release" ? releases : releases.filter((release) => release.status === "stable");
+const visibleReleases = latestStableRelease ? releases : releases.filter((release) => release.status === "stable");
 const releasesToRender = visibleReleases.map((release) => ({
   ...release,
   latestStable: latestStableRelease?.version === release.version,

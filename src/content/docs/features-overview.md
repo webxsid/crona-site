@@ -4,7 +4,7 @@ description: A high-level map of Crona's core workflows, views, and surfaces.
 order: 4
 ---
 
-Crona is a command-line work hub designed to run completely off local IPC state. The core surfaces are described below.
+Crona is a local-first work hub built around a daemon, terminal clients, and deterministic local state. The core surfaces are described below.
 
 ## Planning & Issue Lifecycle
 
@@ -17,17 +17,18 @@ The active context `{ repo -> stream -> issue }` remains synchronized across TUI
 
 ## Focus Sessions & Stashes
 
-Focused work intervals are executed via the session timer:
-- **Profiles**: Timers are configured per-issue (Pomodoro or continuous).
+Focused work intervals are executed from the issue itself:
+- **Profiles**: Timers are configured per-issue as Pomodoro or no-break `Timer` sessions.
+- **Estimate Context**: Session start flows show worked time, estimate context, total duration, and an `Ends At` preview before focus begins.
 - **Stashes**: If interrupted, you can stash active timer metadata and resume it later, preventing context loss.
 - **Commit Summaries**: Focus sessions end with a commit message summarizing the work done.
 
-## Habits & Streak Tracking
+## Habits & Momentum
 
 Routines are tracked in parallel to issues:
 - **Schedules**: Set daily, weekday, or weekly cadences.
 - **History**: Completion logs are visualised on a calendar timeline.
-- **Custom Momentum**: Configure naming, cadences, and target lists to track custom streaks.
+- **Custom Momentum**: Configure naming, cadences, and target lists to track custom Momentum with protected rest, skipped buckets, and adjusted targets.
 
 ## Wellbeing & Heatmaps
 
