@@ -10,8 +10,8 @@ html {
 
 body {
   background:
-    radial-gradient(circle at 80% -12%, rgba(74, 132, 90, 0.18), transparent 32rem),
-    radial-gradient(circle at 3% 38%, rgba(214, 177, 92, 0.09), transparent 28rem),
+    radial-gradient(circle at 80% -12%, rgba(128, 99, 50, 0.16), transparent 32rem),
+    radial-gradient(circle at 3% 38%, rgba(214, 177, 92, 0.08), transparent 28rem),
     var(--color-page);
   margin: 0;
   min-width: 320px;
@@ -19,8 +19,8 @@ body {
 
 body::before {
   background-image:
-    linear-gradient(rgba(121, 200, 145, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(121, 200, 145, 0.025) 1px, transparent 1px);
+    linear-gradient(rgba(214, 177, 92, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(214, 177, 92, 0.018) 1px, transparent 1px);
   background-size: 32px 32px;
   content: "";
   inset: 0;
@@ -73,7 +73,7 @@ h3 {
 
 ::selection {
   background: var(--color-accent);
-  color: #071007;
+  color: #171209;
 }
 
 img {
