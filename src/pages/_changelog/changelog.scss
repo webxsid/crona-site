@@ -32,13 +32,14 @@
 }
 
 .release-card {
-  background: var(--color-panel);
-  border: 1px solid var(--color-line);
-  border-radius: 16px;
+  background: linear-gradient(135deg, var(--color-panel-raised), var(--color-panel));
+  border: 1px solid color-mix(in srgb, var(--color-line-strong) 65%, var(--color-line));
+  border-radius: 12px;
   display: grid;
   gap: 14px;
   padding: 18px;
   position: relative;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.15);
 }
 
 .release-card.is-latest-stable {
@@ -52,8 +53,8 @@
 }
 
 .release-card::before {
-  background: var(--color-line-strong);
-  border: 1px solid var(--color-line-strong);
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
   border-radius: 999px;
   content: "";
   height: 10px;
@@ -151,9 +152,9 @@
 
 .release-card__action {
   align-items: center;
-  background: var(--color-surface-elevated, var(--color-panel));
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
+  background: var(--color-panel-raised);
+  border: 1px solid var(--color-line-strong);
+  border-radius: 8px;
   color: var(--color-ink);
   display: inline-flex;
   font-family: var(--font-mono);
@@ -168,7 +169,7 @@
 
 .release-card__action:hover,
 .release-card__action:focus-visible {
-  border-color: var(--color-line-strong);
+  border-color: var(--color-accent);
   color: var(--color-accent-strong);
   outline: none;
   transform: translateY(-1px);

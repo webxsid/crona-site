@@ -14,7 +14,7 @@
 
 .doc-article__header {
   --flow-space: var(--space-4);
-  border-bottom: 1px solid var(--color-line);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-line-strong) 70%, var(--color-line));
   padding-bottom: var(--space-6);
 }
 
@@ -73,12 +73,13 @@
 
 .prose :where(img) {
   background: var(--color-panel);
-  border: 1px solid var(--color-line);
-  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--color-line-strong) 70%, var(--color-line));
+  border-radius: 12px;
   display: block;
   height: auto;
   margin: 24px 0;
   width: 100%;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.22);
 }
 
 .prose :where(h2, h3) {
@@ -100,8 +101,9 @@
 }
 
 .prose :where(pre) {
-  background: var(--color-panel);
-  border: 1px solid var(--color-line);
+  background: linear-gradient(135deg, var(--color-panel-raised), var(--color-panel));
+  border: 1px solid color-mix(in srgb, var(--color-line-strong) 65%, var(--color-line));
+  border-radius: 10px;
   overflow-x: auto;
   padding: 16px;
 }
@@ -149,14 +151,15 @@
 }
 
 .doc-pagination__card {
-  background: var(--color-panel);
-  border: 1px solid var(--color-line);
-  border-radius: 16px;
+  background: linear-gradient(135deg, var(--color-panel-raised), var(--color-panel));
+  border: 1px solid color-mix(in srgb, var(--color-line-strong) 65%, var(--color-line));
+  border-radius: 12px;
   display: grid;
   gap: var(--space-2);
   min-width: 0;
   padding: var(--space-5);
   position: relative;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.16);
   transition:
     border-color 140ms ease,
     background-color 140ms ease,
@@ -183,7 +186,7 @@
 
 .doc-pagination__card:hover,
 .doc-pagination__card:focus-visible {
-  border-color: var(--color-line-strong);
+  border-color: var(--color-accent);
   transform: translateY(-1px);
 }
 

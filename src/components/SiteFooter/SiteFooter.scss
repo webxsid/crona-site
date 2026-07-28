@@ -1,6 +1,6 @@
 .site-footer {
   align-items: center;
-  border-top: 1px solid var(--color-line);
+  border-top: 1px solid color-mix(in srgb, var(--color-line-strong) 70%, var(--color-line));
   display: flex;
   gap: 16px;
   justify-content: space-between;
@@ -12,6 +12,12 @@
 .site-footer__tagline {
   color: var(--color-muted);
   margin: 0;
+}
+
+.site-footer__tagline::before {
+  color: var(--color-accent);
+  content: "> ";
+  font-family: var(--font-mono);
 }
 
 .site-footer__links {

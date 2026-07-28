@@ -9,9 +9,24 @@ html {
 }
 
 body {
-  background: var(--color-page);
+  background:
+    radial-gradient(circle at 80% -12%, rgba(74, 132, 90, 0.18), transparent 32rem),
+    radial-gradient(circle at 3% 38%, rgba(214, 177, 92, 0.09), transparent 28rem),
+    var(--color-page);
   margin: 0;
   min-width: 320px;
+}
+
+body::before {
+  background-image:
+    linear-gradient(rgba(121, 200, 145, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(121, 200, 145, 0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: -1;
 }
 
 @media (max-width: 720px) {
@@ -34,25 +49,25 @@ p {
 
 h1,
 h2 {
-  letter-spacing: 0;
-  line-height: 1.12;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: clamp(2.4rem, 5.4vw, 4.9rem);
   font-weight: 700;
   margin: 0;
   max-width: 20ch;
 }
 
 h2 {
-  font-size: 1.32rem;
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
   font-weight: 650;
 }
 
 h3 {
-  font-size: 1.08rem;
-  font-weight: 650;
+  font-size: 1.12rem;
+  font-weight: 700;
   line-height: 1.25;
 }
 
@@ -65,22 +80,11 @@ img {
   max-width: 100%;
 }
 
-@media (min-width: 720px) {
-  h1 {
-    font-size: 2.8rem;
-  }
-
-  h2 {
-    font-size: 1.42rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  h1 {
-    font-size: 3.45rem;
-  }
-
-  h2 {
-    font-size: 1.52rem;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

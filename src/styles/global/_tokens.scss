@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
 @font-face {
   font-family: "Squares Bold Free";
   src: url("/fonts/Squares Bold Free.otf") format("opentype");
@@ -8,27 +10,27 @@
   color-scheme: dark;
 
   --font-logo: "Squares Bold Free", var(--font-mono);
-  --color-ink: #e7e7e2;
-  --color-muted: #9a9a92;
-  --color-page: #080808;
-  --color-panel: #101010;
-  --color-panel-raised: #151515;
-  --color-line: #2b2b29;
-  --color-line-strong: #4a4a45;
-  --color-accent: #d6b15c;
-  --color-accent-strong: #f0d78a;
+  --color-ink: #eef3ed;
+  --color-muted: #9ba89f;
+  --color-page: #090c0a;
+  --color-panel: #101612;
+  --color-panel-raised: #172019;
+  --color-line: #2a3730;
+  --color-line-strong: #536459;
+  --color-accent: #79c891;
+  --color-accent-strong: #a7e6b6;
   --color-warning: #d6b15c;
   --color-error: #d17365;
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-  --max-width: 1120px;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  --max-width: 1180px;
   --measure: 720px;
   --gutter: 20px;
   --site-header-block: 96px;
   --section-space-xs: 8px;
   --section-space-sm: 16px;
   --section-space-md: 32px;
-  --section-space: 64px;
+  --section-space: 80px;
   --section-space-lg: 96px;
   --section-space-xl: 128px;
   --space-1: 4px;
