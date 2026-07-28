@@ -31,6 +31,7 @@ const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : new URL(Astr
 const imageUrl = new URL(image ?? "/social/crona-og.png", siteUrl).href;
 const imageAlt = `${pageTitle ?? title} preview`;
 const robotsContent = noindex ? "noindex,follow" : "index,follow";
+const ambientHeatmapCells = Array.from({ length: 28 }, (_, index) => index);
 const jsonLdEntries = [
   {
     "@context": "https://schema.org",
@@ -89,18 +90,35 @@ const jsonLdEntries = [
     <div class="site-shell">
       <div class="site-shell__ambient" aria-hidden="true">
         <div class="site-shell__ambient-header">
-          <span>CRONA</span>
+          <span>CRONA / TODAY</span>
           <span>LOCAL</span>
         </div>
-        <div class="site-shell__ambient-row">
-          <span>FOCUS</span>
-          <strong>42:18</strong>
+        <div class="site-shell__ambient-body">
+          <div class="site-shell__ambient-timeline">
+            <div class="site-shell__ambient-heading">
+              <span>FOCUS</span>
+              <strong>42:18</strong>
+            </div>
+            <div class="site-shell__ambient-event">
+              <time>09:00</time>
+              <span>PLAN</span>
+            </div>
+            <div class="site-shell__ambient-event site-shell__ambient-event--active">
+              <time>10:30</time>
+              <span>DEEP WORK</span>
+            </div>
+            <div class="site-shell__ambient-event">
+              <time>12:00</time>
+              <span>REVIEW</span>
+            </div>
+          </div>
+          <div class="site-shell__ambient-heatmap">
+            <span class="site-shell__ambient-heatmap-label">MOMENTUM</span>
+            <div class="site-shell__ambient-cells">
+              {ambientHeatmapCells.map((index) => <span class:list={{ "is-active": [1, 4, 7, 8, 10, 13, 15, 16, 18, 21, 22, 24, 27].includes(index), "is-strong": [8, 16, 22].includes(index) }}></span>)}
+            </div>
+          </div>
         </div>
-        <div class="site-shell__ambient-row">
-          <span>MOMENTUM</span>
-          <strong>+3</strong>
-        </div>
-        <div class="site-shell__ambient-track"><span></span></div>
       </div>
       <div class="site-shell__content">
         <SiteHeader currentPath={Astro.url.pathname} />
