@@ -10,10 +10,12 @@ Focus sessions are timed intervals tied directly to specific issues. The daemon 
 
 Focus sessions can be initiated for issues in the **Planned**, **Ready**, or **In Progress** states:
 - Starting a timer on a **Planned** or **Ready** issue automatically promotes its status to **In Progress**.
-- The timer configuration (`Pomodoro` cadence or no-break `Timer` mode) is loaded directly from the issue profile.
+- The timer configuration (`Pomodoro` cadence or no-break `Timer` countdown mode) is loaded directly from the issue profile.
 - Start dialogs show worked time, estimate context, total duration, and an `Ends At` preview before the session begins.
 - Timer defaults use the remaining estimate instead of ignoring already logged work.
 - The interactive client owns the terminal tab/window title, updating it with elapsed time and task context.
+
+When a countdown expires, you can commit the session or add more time. Extending a countdown adds duration only; it does not add Pomodoro breaks or cycles.
 
 ## Interruptions & Stashes
 

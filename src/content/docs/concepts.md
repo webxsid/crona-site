@@ -122,11 +122,19 @@ The Daily view also adapts to terminal width. Wider layouts keep the denser mult
 
 Calendar surfaces use terminal background styling for selected dates, date ranges, today, and the current week rather than bracket markers. This keeps date cells fixed-width while relying on color and background state to distinguish selection and today.
 
+The main dashboard surfaces serve different jobs:
+
+- **Summary** is a read-only view for checking the selected day at a glance: focus, issues, habits, planning, check-in signals, and Momentum.
+- **Daily** is the working view for planning, updating issues, and making changes as the day moves.
+- **Rollup** and **Wellbeing** help interpret longer-term patterns, distribution, and risk.
+
+The CLI follows the same split. `crona summary` prints a read-only day or range snapshot; use an export when you want to save or share the same kind of information.
+
 ## Notifications And Automation
 
 ### Notifications
 
-Crona can trigger local OS notifications and bundled alert sounds from the local daemon itself. The TUI configures and tests alerts, but notification timing, scheduled reminder evaluation, and delivery decisions remain local-daemon-owned. Today this uses platform-specific local helpers rather than a separate native companion layer.
+Crona can trigger local OS notifications and bundled alert sounds from the local daemon itself. The TUI configures and tests alerts, while notification timing and scheduled reminder evaluation run in the daemon.
 
 Focus inactivity alerts are also local-daemon-owned. If a focus session keeps running without recent TUI activity for the configured threshold, Crona can notify the user to review, pause, or end the session.
 
@@ -157,5 +165,6 @@ The core workflow is usable for general users, while validation builds remain av
 Current mainline focus:
 - stable-channel maintenance
 - installer/updater/support polish
+- future native-client integration work
 - documentation and contributor-facing references
 - tester feedback for upcoming releases

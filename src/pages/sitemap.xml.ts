@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
-const staticPaths = ["/", "/docs/", "/install/", "/support/", "/privacy/", "/changelog/"];
+const staticPaths = ["/", "/docs/", "/install/", "/companions/", "/support/", "/privacy/", "/changelog/"];
 
 function escapeXml(value: string) {
   return value

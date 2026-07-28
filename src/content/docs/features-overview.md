@@ -15,10 +15,16 @@ Crona models work using repositories, streams, and issues:
 
 The active context `{ repo -> stream -> issue }` remains synchronized across TUI and CLI clients.
 
+## Summary and Daily Work
+
+- **Summary**: A read-only TUI and CLI snapshot for a selected day or date range.
+- **Daily**: The interactive planning and execution view for changing issues, habits, and check-ins.
+
 ## Focus Sessions & Stashes
 
 Focused work intervals are executed from the issue itself:
 - **Profiles**: Timers are configured per-issue as Pomodoro or no-break `Timer` sessions.
+- **Countdown Timers**: No-break timers count down to a hard limit. Extending a countdown adds time without adding Pomodoro breaks or cycles.
 - **Estimate Context**: Session start flows show worked time, estimate context, total duration, and an `Ends At` preview before focus begins.
 - **Stashes**: If interrupted, you can stash active timer metadata and resume it later, preventing context loss.
 - **Commit Summaries**: Focus sessions end with a commit message summarizing the work done.
@@ -40,6 +46,7 @@ Self-reported tracking helps prevent burnout:
 
 Crona enforces local ownership of your metrics:
 - **Narrative Reports**: Generate daily or weekly summaries using Handlebars templates.
+- **Summary Dashboards**: Generate day or range summary exports as Markdown, PDF, or clipboard-ready Markdown.
 - **PDF/CSV exports**: Compile structured sheets or PDFs (requires local renderers like `pandoc` or `weasyprint`).
 - **Calendar (.ics) exports**: Generate deterministic files for native calendars.
-- **Daemon Alerts**: Background alerts deliver scheduled notifications, focus inactivity warnings, and update indicators.
+- **Daemon Alerts**: Background alerts deliver scheduled notifications, focus inactivity warnings, update indicators, and export/support completion signals through local OS helpers.

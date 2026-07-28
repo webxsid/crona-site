@@ -6,7 +6,11 @@ order: 6.5
 
 Crona combines planning, focus tracking, Momentum, and wellbeing metrics into native terminal interfaces. This walkthrough illustrates the core views.
 
-## 1. Daily Dashboard (Planning & Logging)
+## 1. Summary (Read-Only Snapshot)
+
+The Summary view is the quick read-only entry point for a selected day. It combines focus time, issue and habit progress, daily-plan signals, check-in information, and Momentum without opening editing controls. Use `,` and `.` to move between dates, or `g` to return to today.
+
+## 2. Daily Dashboard (Planning & Logging)
 
 ![Daily dashboard showing planned issues, habits, compact Momentum signals, and focus summary](/screenshots/daily-dashboard.png)
 
@@ -15,7 +19,7 @@ The Daily dashboard displays active contexts and tasks scheduled for the selecte
 - **Sectioning**: Segregates planned issues, pinned issues, overdue issues, and due habits.
 - **Summary Header**: Visual progress indicators displaying active context, total daily focus time, completed issue ratios, and current Momentum signals.
 
-## 2. Issues View (Backlog & Status)
+## 3. Issues View (Backlog & Status)
 
 ![Issues view showing scoped work and lifecycle status](/screenshots/issues.png)
 
@@ -24,7 +28,7 @@ The Issues workspace manages the task list:
 - **Table Data**: Visualizes issue state, estimated vs. actual worked time, planning dates, and context path.
 - **Control**: Allows changing state, editing task notes, editing estimates, checking out issues, or triggering issue-aware focus sessions directly.
 
-## 3. Rollup Dashboard (Daily/Weekly Retrospective)
+## 4. Rollup Dashboard (Daily/Weekly Retrospective)
 
 ![Rollup dashboard showing the focus graph beside the calendar and the Breakdown pane](/screenshots/rollup-dashboard.png)
 
@@ -33,7 +37,7 @@ The Rollup dashboard acts as a visual timeline:
 - **Breakdown**: Scrollable lists detailing exact session boundaries, metadata, and task-specific durations.
 - **Ratios**: Tracks estimate-bias ratios and productivity metrics to aid future planning.
 
-## 4. Wellbeing & Momentum Dashboard
+## 5. Wellbeing & Momentum Dashboard
 
 ![Wellbeing dashboard showing the configurable Metrics Window, details pane, and custom Momentum](/screenshots/wellbeing-dashboard.png)
 

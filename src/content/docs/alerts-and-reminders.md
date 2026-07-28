@@ -4,21 +4,24 @@ description: System notifications, sound profiles, inactivity tracking, and sche
 order: 5.8
 ---
 
-Crona processes alerts locally through the background daemon. While the TUI exposes configuration inputs, the daemon is the sole engine responsible for timing and delivering alerts.
+Crona processes alerts locally through the background daemon. The TUI lets you configure and test alerts; the daemon evaluates timers and reminders, then delivers them through the available local OS helper.
 
 ## Trigger Scopes
 
 The local alert layer fires on these events:
 - **Timer Boundaries**: Transitions between work segments, short breaks, and long breaks.
+- **Hard-Limit Expiry**: Expired Pomodoro and countdown timers prompt you to commit the session or extend it.
 - **Inactivity Warning**: Triggered if a focus session continues running without keypress activity from the TUI.
 - **System Events**: Completion of exports, diagnostic support bundles, or update detections.
-- **Scheduled Reminders**: Recurring alarms (such as check-in reminders).
+- **Scheduled Reminders**: Recurring alarms for check-ins or planning the day.
 
 ## Scheduled Reminders
 
-Check-in reminders can be configured via the **Alerts** view in the TUI:
+Reminder rules can be configured via the **Alerts** view in the TUI:
 - **Schedules**: Daily or weekly reminder alarms.
+- **Kinds**: `checkin_reminder` and `daily_plan_reminder`.
 - **Action Group**: Create, edit, toggle, or delete rules directly from the interface.
+- **Suppression**: Check-in reminders stop firing once today's check-in exists. Daily-plan reminders stop firing once today's plan contains an item.
 - **Prerequisite**: Scheduled reminders only trigger while `crona-daemon` is running.
 
 ## Alert Customization & Presets
@@ -29,12 +32,13 @@ You can adjust how notifications behave per alert type:
 - **Audible Alerts**: Choose from bundled royalty-free sound effects:
   - `chime`
   - `soft_bell`
+  - `notification_ping`
   - `focus_gong`
   - `minimal_click`
 
-## Platform Notifications Backend
+## Platform Notification Backends
 
-Alert delivery depends on platform-specific utilities:
+Alert delivery depends on platform-specific helpers:
 
 | OS | Notification Helper | Audio Player |
 | --- | --- | --- |

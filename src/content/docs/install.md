@@ -208,10 +208,11 @@ Use the in-app `Updates` view to check release status, read notes, and get the r
 Alerts are emitted by the local engine. The TUI configures and tests them, but the background engine is the process that decides when to fire:
 
 - timer boundary alerts
+- timer hard-limit expiry alerts for Pomodoro and countdown sessions
 - focus inactivity alerts when an active work session runs too long without TUI activity
 - update-available alerts
 - support/export completion alerts
-- scheduled reminders such as nightly check-in reminders
+- scheduled reminders such as check-in and daily-plan reminders
 
 Scheduled reminders and inactivity alerts are local-only and only fire while the local engine is running.
 
@@ -239,7 +240,7 @@ Markdown export works without extra tooling. PDF export requires local renderer 
 
 Current renderer expectations:
 
-- Daily and weekly narrative PDF exports require `weasyprint`
+- Summary dashboards and daily or weekly report PDFs require `weasyprint`
 - Repo, stream, and issue-rollup PDF exports require `pandoc` plus one supported PDF engine:
   - `tectonic`
   - `weasyprint`

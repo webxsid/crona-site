@@ -44,11 +44,28 @@ You can automate narrative report generation and data syncing via shell scripts 
 # Generate a daily markdown report
 crona export daily
 
+# Generate a summary dashboard for today or a range
+crona export summary
+crona export summary --week
+
 # Export database entries as structured CSV sheets
 crona export csv
 
 # Rebuild the deterministic iCalendar feeds
 crona export calendar
+```
+
+## Reading a Summary
+
+Use `crona summary` when you want a terminal snapshot instead of a saved export:
+```bash
+# Inspect today, a calendar week, or a rolling period
+crona summary
+crona summary --week
+crona summary --last-x-days 7
+
+# Inspect an explicit inclusive range
+crona summary --start 2026-07-01 --end 2026-07-07
 ```
 
 ## Integration Patterns

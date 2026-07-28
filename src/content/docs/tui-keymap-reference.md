@@ -45,6 +45,11 @@ These apply to items in most planning tables or lists:
 
 ## View-Specific Shortcuts
 
+### Summary
+- `,` / `.`: Move the summary date backward / forward.
+- `g`: Reset the summary date to today.
+- `up` / `down`: Scroll a long summary.
+
 ### Daily Dashboard
 - `,` / `.`: Page calendar date backward / forward.
 - `g`: Reset view date to today.

@@ -50,6 +50,19 @@ Interact with active focus sessions:
 - `crona timer resume`: Resumes the suspended timer.
 - `crona timer end`: Terminates the session and prompts for the commit summary.
 
+## Read-Only Summary
+
+`crona summary` prints a compact snapshot without changing any workspace data. It accepts a date, a date range, or convenience periods:
+```bash
+crona summary
+crona summary --yesterday
+crona summary --week
+crona summary --month
+crona summary --last-x-days 7
+```
+
+Use `crona export summary` when you need a Markdown, PDF, or clipboard artifact instead.
+
 ## Shell Completions
 
 Generate native shell tab-completion definitions:

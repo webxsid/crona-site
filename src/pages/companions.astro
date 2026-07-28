@@ -1,0 +1,203 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "./_companions/companions.scss";
+
+const repoUrl = "https://github.com/webxsid/crona-macos";
+const releasesUrl = `${repoUrl}/releases`;
+const apiUrl = "https://api.github.com/repos/webxsid/crona-macos/releases?per_page=20";
+const dateFormatter = new Intl.DateTimeFormat("en", {
+  dateStyle: "medium",
+  timeZone: "UTC",
+});
+
+type GitHubAsset = {
+  name: string;
+  browser_download_url: string;
+};
+
+type GitHubRelease = {
+  draft: boolean;
+  prerelease: boolean;
+  tag_name?: string | null;
+  html_url: string;
+  published_at?: string | null;
+  assets?: GitHubAsset[];
+};
+
+type CompanionRelease = {
+  version: string;
+  releaseUrl: string;
+  downloadUrl: string;
+  publishedAt: Date | null;
+};
+
+async function loadLatestBeta(): Promise<CompanionRelease | null> {
+  try {
+    const response = await fetch(apiUrl, {
+      headers: {
+        Accept: "application/vnd.github+json",
+        "User-Agent": "crona-site",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub releases request failed: ${response.status}`);
+    }
+
+    const releases = (await response.json()) as GitHubRelease[];
+    const release = releases.find((candidate) => {
+      if (candidate.draft || !candidate.prerelease) return false;
+      return candidate.assets?.some((asset) => /-macOS\.dmg$/i.test(asset.name));
+    });
+    const dmg = release?.assets?.find((asset) => /-macOS\.dmg$/i.test(asset.name));
+
+    if (!release || !dmg) return null;
+
+    return {
+      version: release.tag_name ?? "Current beta",
+      releaseUrl: release.html_url,
+      downloadUrl: dmg.browser_download_url,
+      publishedAt: release.published_at ? new Date(release.published_at) : null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+const latestBeta = await loadLatestBeta();
+const betaLabel = latestBeta?.version ?? "Latest beta";
+const releaseLink = latestBeta?.releaseUrl ?? releasesUrl;
+const releaseDate = latestBeta?.publishedAt ? dateFormatter.format(latestBeta.publishedAt) : null;
+const structuredData = latestBeta
+  ? {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "Crona for macOS",
+      applicationCategory: "ProductivityApplication",
+      operatingSystem: "macOS 14.0 or later",
+      softwareVersion: latestBeta.version,
+      downloadUrl: latestBeta.downloadUrl,
+      url: "https://crona.work/companions/",
+    }
+  : undefined;
+---
+
+<BaseLayout
+  title="Companions"
+  pageTitle="Crona companions"
+  description="Download the beta native macOS client for Crona. It connects to the local Crona daemon for focus, notifications, break screens, and quick actions."
+  structuredData={structuredData}
+>
+  <section class="container section companions-hero">
+    <div class="companions-hero__grid">
+      <div class="companions-hero__copy flow">
+        <p class="eyebrow">Companions / macOS beta</p>
+        <h1>Crona on your Mac, without living in the terminal.</h1>
+        <p class="companions-hero__lede">
+          The macOS beta puts your current timer, break prompts, notifications, and quick actions in a native app and menu bar.
+        </p>
+        <p>
+          It uses the same local Crona data as the CLI and terminal app. There is no account to create and no second place to keep your work in sync.
+        </p>
+
+        <div class="companions-hero__actions">
+          {
+            latestBeta ? (
+              <a class="button" href={latestBeta.downloadUrl} rel="noreferrer">
+                Download {betaLabel} DMG
+              </a>
+            ) : (
+              <a class="button" href={releasesUrl} rel="noreferrer">
+                Find the latest beta on GitHub
+              </a>
+            )
+          }
+          <a class="button button--secondary" href={releaseLink} rel="noreferrer">View release notes</a>
+        </div>
+      </div>
+
+      <aside class="companions-release" aria-label="macOS beta release details">
+        <div class="companions-release__status">
+          <span>Channel</span>
+          <strong>Beta</strong>
+        </div>
+        <div class="companions-release__detail">
+          <span>Current build</span>
+          <strong>{betaLabel}</strong>
+        </div>
+        {releaseDate && (
+          <div class="companions-release__detail">
+            <span>Published</span>
+            <strong>{releaseDate}</strong>
+          </div>
+        )}
+        <div class="companions-release__detail">
+          <span>Installer</span>
+          <strong>Universal DMG</strong>
+        </div>
+        <p>Requires macOS 14 or later.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="container section companions-workflow">
+    <div class="companions-heading companions-frame flow">
+      <p class="eyebrow">Native workflow</p>
+      <h2>The desktop bits, where they help.</h2>
+      <p>Use the terminal when you want depth. Use the Mac app when you want the timer, a quick action, or a break reminder close at hand.</p>
+    </div>
+
+    <div class="companions-workflow__grid companions-frame">
+      <article>
+        <span>01</span>
+        <h3>Focus and breaks</h3>
+        <p>Start or check a focus session, then let native break and time-limit prompts pull you back at the right moment.</p>
+      </article>
+      <article>
+        <span>02</span>
+        <h3>Menu bar actions</h3>
+        <p>See what you are working on and reach the actions you use most without reopening the full app.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <h3>Local diagnostics</h3>
+        <p>When something is off, check the connection, app setup, and notification support in one place.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="container section companions-install">
+    <div class="companions-install__panel companions-frame">
+      <div class="companions-heading flow">
+        <p class="eyebrow">First install</p>
+        <h2>Install the core once, then add the Mac app.</h2>
+      </div>
+
+      <ol class="companions-install__steps">
+        <li>
+          <strong>Install Crona.</strong>
+          <span>The Mac app needs the local Crona daemon, so set up the core CLI and daemon first.</span>
+          <a href="/install/">Open the core install guide</a>
+        </li>
+        <li>
+          <strong>Open the DMG.</strong>
+          <span>Drag Crona to Applications, then start it from there.</span>
+        </li>
+        <li>
+          <strong>Get back to work.</strong>
+          <span>The app finds the local runtime and can restart its connection when the daemon is already installed.</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="container section companions-beta">
+    <div class="companions-beta__note companions-frame">
+      <p class="eyebrow">Beta expectations</p>
+      <h2>It is useful now, but it is still a beta.</h2>
+      <p>Expect rough edges and changing workflows. Beta installs receive beta and stable updates. Release notes live on GitHub, and the macOS project is the right place to report problems.</p>
+      <a href={releaseLink} rel="noreferrer">Open macOS releases</a>
+      <a href={repoUrl} rel="noreferrer">Open the macOS project</a>
+    </div>
+  </section>
+</BaseLayout>
