@@ -132,6 +132,7 @@
   min-height: 0;
   display: grid;
   gap: var(--space-2);
+  width: 100%;
 }
 
 .docs-sidebar__search-label {
@@ -153,6 +154,7 @@
   grid-template-columns: auto 1fr auto;
   min-height: 52px;
   padding: 0 var(--space-4);
+  width: 100%;
 }
 
 .docs-sidebar__search-icon {
@@ -296,7 +298,6 @@
 .docs-sidebar__group a.is-active {
   background: color-mix(in srgb, var(--color-accent) 10%, var(--color-panel-raised));
   border-color: color-mix(in srgb, var(--color-accent) 48%, var(--color-line));
-  box-shadow: inset 3px 0 0 var(--color-accent);
 }
 
 .docs-sidebar__overview-label,
@@ -360,11 +361,14 @@
   }
 
   .docs-sidebar__search {
-    background: var(--color-panel);
-    padding-bottom: var(--space-2);
+    background: var(--color-panel-raised);
+    box-shadow: 0 12px 20px var(--color-panel-raised);
+    margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) 0;
+    padding: var(--space-5) var(--space-5) var(--space-4);
     position: sticky;
-    top: 0;
-    z-index: 1;
+    top: calc(-1 * var(--space-5));
+    width: calc(100% + (2 * var(--space-5)));
+    z-index: 2;
   }
 
   .docs-sidebar__results,
