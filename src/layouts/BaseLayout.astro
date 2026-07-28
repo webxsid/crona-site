@@ -87,6 +87,21 @@ const jsonLdEntries = [
   </head>
   <body>
     <div class="site-shell">
+      <div class="site-shell__ambient" aria-hidden="true">
+        <div class="site-shell__ambient-header">
+          <span>CRONA</span>
+          <span>LOCAL</span>
+        </div>
+        <div class="site-shell__ambient-row">
+          <span>FOCUS</span>
+          <strong>42:18</strong>
+        </div>
+        <div class="site-shell__ambient-row">
+          <span>MOMENTUM</span>
+          <strong>+3</strong>
+        </div>
+        <div class="site-shell__ambient-track"><span></span></div>
+      </div>
       <div class="site-shell__content">
         <SiteHeader currentPath={Astro.url.pathname} />
         <main>
