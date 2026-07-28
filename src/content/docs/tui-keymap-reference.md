@@ -15,12 +15,12 @@ These shortcuts remain active across most standard views:
 | `v` | Open the view selection jump menu |
 | `[` / `]` | Cycle through views (restricted when timer is active) |
 | `tab` / `shift+tab` | Cycle pane focus in the active view |
-| `j` / `k` (or arrows) | Navigate selection list down / up |
-| `/` | Initiate filter query in filterable lists |
+| `up` / `down` | Navigate the current selection up / down |
 | `?` | Toggle help overlay modal |
-| `u` | Jump directly to the Updates dashboard |
-| `q` / `ctrl+c` | Quit TUI |
+| `ctrl+c` | Quit TUI |
 | `K` | Request local daemon shutdown |
+
+After opening view jump with `v`, press a view mnemonic directly. For example, `g` opens **Summary** and `y` opens **History**. Use the arrow keys and `enter` to choose from the menu instead.
 
 ### Dev & Beta Build Hotkeys
 - `f9`: Open support dialog (beta channels only)
@@ -33,15 +33,13 @@ These apply to items in most planning tables or lists:
 - `a`: Create a new entry (issue, habit, repo, stream).
 - `c`: Checkout selection context or open checkout modal.
 - `e`: Edit the selected item.
-- `d`: Delete the selected item.
+- `d`: Change the selected issue's planning due date.
+- `D`: Delete the selected item.
 - `f`: Start focus session for the selected issue.
 - `m`: Log manual work session or habit completion.
-- `s`: Trigger status change popup menu.
-- `A`: Abandon selected issue.
-- `D`: Modify planning `todo_date`.
-- `Z`: Open stash list.
-- `w`: Open daily wellbeing check-in.
-- `W`: Toggle away mode.
+- `s`: Open the issue status menu, including **Abandoned**.
+- `w`: Open the daily wellbeing check-in in Daily or Wellbeing.
+- `W`: Toggle away mode in Daily, Wellbeing, or Away.
 
 ## View-Specific Shortcuts
 
@@ -60,13 +58,11 @@ These apply to items in most planning tables or lists:
 - `p`: Pause running session.
 - `r`: Resume paused session.
 - `x`: Stop session (opens summary prompt).
-- `z`: Stash active session state.
 - `i`: Focus active issue details.
 
 ### Calendar Range Picker (Rollup View)
 - `S`: Set range start date.
 - `E`: Set range end date.
-- `h` / `l`: Shift range window backward / forward.
 - `g`: Reset range to current week.
 
 ## Dialog & Text Form Controls
