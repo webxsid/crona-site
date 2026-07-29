@@ -14,6 +14,7 @@ The local alert layer fires on these events:
 - **Inactivity Warning**: Triggered if a focus session continues running without keypress activity from the TUI.
 - **System Events**: Completion of exports, diagnostic support bundles, or update detections.
 - **Scheduled Reminders**: Recurring alarms for check-ins or planning the day.
+- **Day Boundaries**: Start-of-day and end-of-day schedule events.
 
 ## Scheduled Reminders
 
@@ -23,6 +24,16 @@ Reminder rules can be configured via the **Alerts** view in the TUI:
 - **Action Group**: Create, edit, toggle, or delete rules directly from the interface.
 - **Suppression**: Check-in reminders stop firing once today's check-in exists. Daily-plan reminders stop firing once today's plan contains an item.
 - **Prerequisite**: Scheduled reminders only trigger while `crona-daemon` is running.
+
+## Day-Boundary Schedules
+
+Configure **Start of Day** and **End of Day** in the TUI Settings view. Each schedule has:
+
+- an enable/disable toggle
+- a default local wall-clock time in `HH:mm` format
+- optional weekday-specific overrides (Monday through Sunday)
+
+Start of Day is enabled at `00:00` by default. End of Day is disabled by default. The daemon evaluates these schedules, records each occurrence so a restart cannot duplicate it, and routes End of Day notifications through the normal local alert system. Schedules are daemon-owned and only run while `crona-daemon` is running.
 
 ## Alert Customization & Presets
 

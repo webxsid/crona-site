@@ -94,7 +94,7 @@ const structuredData = latestBeta
         <p class="eyebrow">Companions / macOS beta</p>
         <h1>Crona on your Mac, without living in the terminal.</h1>
         <p class="companions-hero__lede">
-          The macOS beta puts your current timer, break prompts, notifications, and quick actions in a native app and menu bar.
+          The macOS beta puts your current timer, break prompts, notifications, and quick actions in a native app and menu bar. The latest beta also brings daemon-backed day-boundary settings into the Mac client.
         </p>
         <p>
           It uses the same local Crona data as the CLI and terminal app. There is no account to create and no second place to keep your work in sync.
@@ -160,8 +160,13 @@ const structuredData = latestBeta
       </article>
       <article>
         <span>03</span>
+        <h3>Settings that stay aligned</h3>
+        <p>Configure day boundaries, alerts, break screens, smart pause, Dock behavior, and launch-at-login preferences while the daemon remains the source of truth.</p>
+      </article>
+      <article>
+        <span>04</span>
         <h3>Local diagnostics</h3>
-        <p>When something is off, check the connection, app setup, and notification support in one place.</p>
+        <p>When something is off, check the connection, app setup, runtime health, and notification support in one place.</p>
       </article>
     </div>
   </section>
@@ -185,7 +190,7 @@ const structuredData = latestBeta
         </li>
         <li>
           <strong>Get back to work.</strong>
-          <span>The app finds the local runtime and can restart its connection when the daemon is already installed.</span>
+          <span>The app finds the local runtime, can launch or reconnect to the daemon, and stops retrying after a failed launch until you choose to reconnect.</span>
         </li>
       </ol>
     </div>

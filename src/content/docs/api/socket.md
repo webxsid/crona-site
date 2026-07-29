@@ -98,6 +98,8 @@ Request DTO names below refer to types in [`shared/dto/requests.go`](../../share
 | --- | --- | --- | --- |
 | `events.subscribe` | `dto.Empty` | stream subscription ack | Starts the event stream. |
 
+Day-boundary schedules publish a `day.boundary` event when a configured Start of Day or End of Day occurrence is claimed. The payload identifies the boundary kind, logical date, scheduled time, and timezone. Occurrences are persisted by the daemon so reconnects and restarts do not deliver the same scheduled occurrence twice.
+
 ### Health And Kernel
 
 | Method | Request | Result | Notes |
