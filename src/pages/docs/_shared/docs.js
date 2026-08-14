@@ -18,6 +18,12 @@ const DOC_GROUPS = [
     docs: ["issues-and-planning", "habits", "focus-sessions", "check-ins-and-wellbeing"],
   },
   {
+    id: "macos-companion",
+    title: "macOS Companion",
+    description: "Use the native menu-bar client with the shared local Crona runtime.",
+    docs: ["macos-companion"],
+  },
+  {
     id: "outputs-and-operations",
     title: "Outputs and Operations",
     description: "Handle exports, reminders, and the operational side of Crona.",

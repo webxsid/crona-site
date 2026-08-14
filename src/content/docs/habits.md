@@ -29,3 +29,7 @@ Crona tracks streaks using customizable rules configured in Settings. These defi
   - `all`: All targets must meet the threshold to maintain the streak.
 - **Milestones**: Streaks are visualized via progress ladders on the Wellbeing dashboard.
 - **Grace Periods**: Weekly and monthly streaks do not break immediately when a new period starts; they remain valid until the period expires and the threshold fails to be met.
+
+## Protected Days and Away Today
+
+Protected rest rules and away days keep a completed Momentum streak continuous rather than treating time away as a miss. Turning on **Away Today** protects the current logical date immediately. Turn it off again on the same date and that provisional protection disappears; it does not create a historical away record. Once a protected day has passed the configured day boundary, Crona records it as immutable history.

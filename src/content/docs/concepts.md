@@ -114,6 +114,8 @@ Monthly customs:      1mo, 2mo, 3mo, 6mo, 12mo, 24mo
 
 The exact current and best values are shown next to the ladder, for example `14d current · 30d best`.
 
+Protected rest and away days are part of this history. Enabling Away Today protects the current logical date immediately; disabling it that same day removes the provisional protection. The daemon only commits a protected date to canonical history once the logical day completes, keeping both the terminal and native clients aligned.
+
 ## Terminal UI Surfaces
 
 On wider terminals, the Wellbeing dashboard splits its lower region into a 7-day Metrics Window pane and a separate Momentum pane. The Momentum pane is focusable and scrollable independently so custom habit momentum can grow without clipping the metrics content.

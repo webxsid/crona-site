@@ -31,7 +31,7 @@ Crona calculates burnout indicators using a localized heuristics engine. It proc
 - **Self-Reported Health**: Correlates mood and energy scores against work volumes.
 - **Planning Accountability**: Tracks the ratio of completed plans to overdue, rolled-over, or abandoned issues.
 
-Custom Momentum is rest-aware. Protected rest and away days can skip daily buckets, reduce weekly or monthly targets when real availability shrinks, and preserve continuity when a protected bucket should not count against the story.
+Custom Momentum is rest-aware. Protected rest and away days can skip daily buckets, reduce weekly or monthly targets when real availability shrinks, and preserve continuity when a protected bucket should not count against the story. Away Today is reversible for the current logical date; after the day boundary, qualifying protected dates become stable historical records.
 
 These signals are computed locally and visualized on the Wellbeing dashboard as trend indicators, helping you notice when workload patterns become unsustainable.
 

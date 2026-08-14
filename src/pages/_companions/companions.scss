@@ -95,7 +95,7 @@
 }
 
 .companions-heading h2,
-.companions-heading p:not(.eyebrow) {
+.companions-heading p {
   max-width: 58ch;
 }
 
@@ -119,7 +119,7 @@
 }
 
 .companions-workflow__grid span {
-  color: var(--color-accent);
+  color: var(--color-warning);
   font-family: var(--font-mono);
   font-size: 0.8rem;
 }
@@ -160,7 +160,7 @@
 }
 
 .companions-install__steps li::before {
-  color: var(--color-warning);
+  color: var(--color-accent);
   content: "0" counter(companion-step);
   counter-increment: companion-step;
   font-family: var(--font-mono);
@@ -210,7 +210,7 @@
   margin: 0;
 }
 
-.companions-beta__note p:not(.eyebrow) {
+.companions-beta__note p {
   margin: 0;
   max-width: 66ch;
 }

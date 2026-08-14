@@ -85,16 +85,15 @@ const structuredData = latestBeta
 <BaseLayout
   title="Companions"
   pageTitle="Crona companions"
-  description="Download the beta native macOS client for Crona. It connects to the local Crona daemon for focus, notifications, break screens, and quick actions."
+  description="Download the beta native macOS client for Crona. Create issues, check in on wellbeing, keep focus visible, and handle breaks from the menu bar."
   structuredData={structuredData}
 >
   <section class="container section companions-hero">
     <div class="companions-hero__grid">
       <div class="companions-hero__copy flow">
-        <p class="eyebrow">Companions / macOS beta</p>
         <h1>Crona on your Mac, without living in the terminal.</h1>
         <p class="companions-hero__lede">
-          The macOS beta puts your current timer, break prompts, notifications, and quick actions in a native app and menu bar. The latest beta also brings historical focus stats and daemon-backed day-boundary settings into the Mac client.
+          The macOS beta puts issue creation, daily check-ins, your current timer, and break prompts in a native menu-bar app. It stays in sync with the same local daemon as the terminal workflow.
         </p>
         <p>
           It uses the same local Crona data as the CLI and terminal app. There is no account to create and no second place to keep your work in sync.
@@ -142,9 +141,8 @@ const structuredData = latestBeta
 
   <section class="container section companions-workflow">
     <div class="companions-heading companions-frame flow">
-      <p class="eyebrow">Native workflow</p>
       <h2>The desktop bits, where they help.</h2>
-      <p>Use the terminal when you want depth. Use the Mac app when you want the timer, a quick action, or a break reminder close at hand.</p>
+      <p>Use the terminal for depth. Use the Mac app to capture a task, check in, keep focus visible, or respond to a break without breaking stride.</p>
     </div>
 
     <div class="companions-workflow__grid companions-frame">
@@ -155,18 +153,18 @@ const structuredData = latestBeta
       </article>
       <article>
         <span>02</span>
-        <h3>Menu bar actions</h3>
-        <p>See what you are working on and reach the actions you use most without reopening the full app. Longer Now and Stats content adapts to the available space instead of being clipped.</p>
+        <h3>Create and plan issues</h3>
+        <p>Create an issue with a title, flexible estimate, repo, stream, notes, and Today planning directly from the menu bar. Start focus as soon as it is ready.</p>
       </article>
       <article>
         <span>03</span>
-        <h3>Settings that stay aligned</h3>
-        <p>Configure day boundaries, alerts, break screens, smart pause, Dock behavior, and launch-at-login preferences while the daemon remains the source of truth.</p>
+        <h3>Check in and stay visible</h3>
+        <p>Record mood, energy, stress, sleep quality, and notes from a dedicated wellbeing tab. Keep an active timer in an optional floating HUD with a saved size and screen position.</p>
       </article>
       <article>
         <span>04</span>
-        <h3>Stats over time</h3>
-        <p>Browse a compact month calendar in Stats, select any previous day, see cached focus-score indicators, and return to today instantly.</p>
+        <h3>One shared day model</h3>
+        <p>Break deferral, Away Today, historical away dates, day boundaries, and focus stats all come from the daemon, so the Mac app and terminal tell the same story.</p>
       </article>
     </div>
   </section>
@@ -174,7 +172,6 @@ const structuredData = latestBeta
   <section class="container section companions-install">
     <div class="companions-install__panel companions-frame">
       <div class="companions-heading flow">
-        <p class="eyebrow">First install</p>
         <h2>Install the core once, then add the Mac app.</h2>
       </div>
 
@@ -198,11 +195,11 @@ const structuredData = latestBeta
 
   <section class="container section companions-beta">
     <div class="companions-beta__note companions-frame">
-      <p class="eyebrow">Beta expectations</p>
       <h2>It is useful now, but it is still a beta.</h2>
       <p>Expect rough edges and changing workflows. Beta installs receive beta and stable updates. Release notes live on GitHub, and the macOS project is the right place to report problems.</p>
       <a href={releaseLink} rel="noreferrer">Open macOS releases</a>
       <a href={repoUrl} rel="noreferrer">Open the macOS project</a>
+      <a href="/docs/macos-companion/">Read the macOS workflow guide</a>
     </div>
   </section>
 </BaseLayout>
