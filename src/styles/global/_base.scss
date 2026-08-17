@@ -5,40 +5,17 @@
 html {
   background: var(--color-page);
   color: var(--color-ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
 }
 
 body {
-  background:
-    radial-gradient(ellipse 70% 48% at 88% -10%, rgba(151, 109, 40, 0.22), transparent 68%),
-    radial-gradient(ellipse 42% 38% at -4% 44%, rgba(214, 177, 92, 0.1), transparent 72%),
-    radial-gradient(ellipse 52% 34% at 82% 82%, rgba(105, 75, 34, 0.1), transparent 72%),
-    linear-gradient(125deg, rgba(255, 238, 186, 0.018), transparent 32%, rgba(214, 177, 92, 0.025) 72%, transparent),
-    var(--color-page);
+  background: var(--color-page);
   margin: 0;
   min-width: 320px;
 }
 
-body::before {
-  background-image:
-    radial-gradient(rgba(240, 215, 138, 0.13) 0.6px, transparent 0.8px),
-    linear-gradient(rgba(214, 177, 92, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(214, 177, 92, 0.016) 1px, transparent 1px);
-  background-size: 6px 6px, 40px 40px, 40px 40px;
-  mask-image: linear-gradient(to bottom, black, transparent 84%);
-  content: "";
-  inset: 0;
-  pointer-events: none;
-  position: fixed;
-  z-index: -1;
-}
-
-@media (max-width: 720px) {
-  html,
-  body {
-    height: 100%;
-    overflow: hidden;
-  }
+body.has-install-modal {
+  overflow: hidden;
 }
 
 a {
@@ -48,25 +25,25 @@ a {
 
 p {
   color: var(--color-muted);
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
 h1,
 h2 {
-  letter-spacing: -0.045em;
-  line-height: 1.02;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
 }
 
 h1 {
   font-size: clamp(2.4rem, 5.4vw, 4.9rem);
-  font-weight: 700;
+  font-weight: 500;
   margin: 0;
   max-width: 20ch;
 }
 
 h2 {
   font-size: clamp(1.65rem, 3vw, 2.5rem);
-  font-weight: 650;
+  font-weight: 500;
 }
 
 h3 {
@@ -77,7 +54,7 @@ h3 {
 
 ::selection {
   background: var(--color-accent);
-  color: #171209;
+  color: var(--color-page);
 }
 
 img {

@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AppScreenshot from "../components/AppScreenshot/AppScreenshot.astro";
-import InstallCommandTabs from "../components/InstallCommandTabs/InstallCommandTabs.astro";
 import "./_home/index.scss";
 ---
 
@@ -26,193 +25,88 @@ import "./_home/index.scss";
     },
   ]}
 >
-  <section class="container section section--hero home-hero">
-    <div class="home-hero__stack">
-      <div class="home-hero__copy flow">
-        <h1>Local-first work tracking for developers.</h1>
-        <p class="home-hero__lede">Plan work, run issue-aware focus sessions, review rest-aware Momentum, and keep the workflow local.</p>
-        <p class="home-hero__body">
-          Crona keeps planning, focus sessions, alerts, exports, updates, and daily review tied to one local engine so
-          the desktop workflow stays coherent from first task selection through end-of-day review.
-        </p>
-      </div>
-
-      <div class="home-hero__actions">
-        <a class="button" href="/docs/getting-started/">See how it works</a>
-        <a class="button button--secondary" href="/docs/">Browse docs</a>
-      </div>
-      <div class="home-hero__install">
-        <InstallCommandTabs />
-      </div>
-
-
-      <div class="home-hero__visual" aria-label="Crona Daily dashboard preview">
-        <div class="home-hero__frame">
-          <AppScreenshot
-            name="daily-dashboard"
-            alt="Crona Daily dashboard showing compact momentum signals and issue summaries"
-            loading="eager"
-            quality={96}
-            sizes="(min-width: 1280px) 1080px, (min-width: 1024px) 72vw, 100vw"
-          />
+  <section class="home-hero" aria-labelledby="home-title">
+    <div class="home-hero__frame">
+      <div class="home-hero__grid">
+        <h1 id="home-title" class="home-hero__sr-title">Crona</h1>
+        <div class="home-hero__wordmark" role="img" aria-label="Crona">
+          <pre aria-hidden="true"> ██████╗██████╗  ██████╗ ███╗   ██╗ █████╗
+██╔════╝██╔══██╗██╔═══██╗████╗  ██║██╔══██╗
+██║     ██████╔╝██║   ██║██╔██╗ ██║███████║
+██║     ██╔══██╗██║   ██║██║╚██╗██║██╔══██║
+╚██████╗██║  ██║╚██████╔╝██║ ╚████║██║  ██║
+ ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝</pre>
         </div>
-
-        <!-- <div class="home-hero__note"> -->
-        <!--   <p>Today’s loop</p> -->
-        <!--   <ul> -->
-        <!--     <li>choose context</li> -->
-        <!--     <li>start focus</li> -->
-        <!--     <li>review the day</li> -->
-        <!--   </ul> -->
-        <!-- </div> -->
+        <div class="home-hero__intro">
+          <p class="home-hero__descriptor">local-first work tracking for developers</p>
+          <h2 class="home-hero__headline">Track the work where it happens without giving up your terminal or your data.</h2>
+          <div class="home-hero__actions">
+            <button class="button" type="button" data-install-open>Install Crona</button>
+            <a class="button button--secondary" href="/docs/">View Docs</a>
+          </div>
+        </div>
+        <figure class="home-hero__visual">
+          <AppScreenshot name="hero" alt="Crona TUI showing the local developer work-tracking dashboard" loading="eager" quality={88} sizes="(min-width: 820px) 38vw, 100vw" />
+        </figure>
+        <div class="home-hero__supporting">
+          <p class="home-hero__summary">Crona links focus sessions to issues, keeps local state in SQLite, and makes the day readable through its TUI and CLI.</p>
+          <p class="home-hero__platforms">macOS <span>/</span> Linux <span>/</span> Windows</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="container section home-why">
-    <div class="home-why__copy flow">
-      <h2>Planning, focus, and review belong in one local system.</h2>
-      <p>
-        I got tired of splitting my work across browser tabs, timers, task boards, and notes just to keep track of
-        what I planned and what actually happened.
-      </p>
-      <p>
-        Crona keeps issue tracking, focused work, Momentum, wellbeing, and operational tooling in the same local-first
-        workflow instead of turning the day into a handoff between unrelated apps.
-      </p>
+  <section class="home-features" id="features" aria-labelledby="features-title">
+    <div class="home-section-heading"><h2 id="features-title">Built for how you work.</h2></div>
+    <div class="home-status-matrix">
+      <div><span>workflow</span><strong>plan / focus / review</strong></div>
+      <div><span>runtime</span><strong>local daemon + TUI / CLI</strong></div>
+      <div><span>storage</span><strong>SQLite on your machine</strong></div>
+      <div><span>platforms</span><strong>macOS / Linux / Windows</strong></div>
+      <div><span>source</span><strong>open source · github.com/webxsid/crona</strong></div>
+      <div><span>install</span><strong>Homebrew / Scoop / Go</strong></div>
     </div>
   </section>
 
-  <section class="container section home-loop">
-    <div class="home-section-heading flow">
-      <h2>Planning, focus, and review should feel like one workflow.</h2>
-      <p>
-        You should be able to see what you planned, what you worked on, and where your time actually went without
-        stitching together three separate tools.
-      </p>
-    </div>
-
-    <div class="home-loop__grid">
-      <article class="home-loop__step">
-        <span>01</span>
-        <h3>Know what matters first</h3>
-        <p>Pick the repo, stream, and issues that should shape the day before you start working.</p>
-      </article>
-
-      <article class="home-loop__step">
-        <span>02</span>
-        <h3>Keep focus tied to real work</h3>
-        <p>Sessions attach to the issue itself, seed from the remaining estimate, and show worked time before the timer starts.</p>
-      </article>
-
-      <article class="home-loop__step">
-        <span>03</span>
-        <h3>Review what should count</h3>
-        <p>Momentum and review surfaces keep planned work, completed work, protected rest, and elapsed time in the same story.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="container section home-surfaces">
-    <div class="home-section-heading flow">
-      <h2>Work moves between planning, coding, and review.</h2>
-      <p>Crona keeps those parts connected instead of making you switch tools every time the day changes shape.</p>
-    </div>
-
-    <div class="home-surface home-surface--issues">
-      <div class="home-surface__media">
-        <AppScreenshot
-          name="issues"
-          alt="Crona Issues workspace showing issue-scoped timing and spent time"
-          sizes="(min-width: 1024px) 54vw, 100vw"
-        />
+  <div class="install-modal" data-install-modal hidden>
+    <div class="install-modal__backdrop" data-install-close></div>
+    <section class="install-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="install-modal-title" aria-describedby="install-modal-description" tabindex="-1">
+      <div class="install-modal__topline">
+        <div>
+          <span class="install-modal__eyebrow">setup / crona</span>
+          <h2 id="install-modal-title">Install Crona</h2>
+        </div>
+        <button class="install-modal__close" type="button" aria-label="Close installation instructions" data-install-close>×</button>
       </div>
-      <div class="home-surface__copy flow">
-        <p class="home-surface__label">Issues workspace</p>
-        <h3>Start focus from the issue, not from a generic timer.</h3>
-        <p>
-          Repos, streams, statuses, dates, estimates, worked time, and timer types make the start of a session concrete before the countdown begins.
-        </p>
-        <a href="/docs/issues-and-planning/">Read about issue planning</a>
+      <p class="install-modal__description" id="install-modal-description">Choose your platform. The core stays local and the commands install the current release path.</p>
+      <div class="install-modal__tabs" role="tablist" aria-label="Installation platform">
+        <button type="button" role="tab" aria-selected="true" aria-controls="install-panel-macos" id="install-tab-macos" data-install-platform="macos">macOS</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="install-panel-linux" id="install-tab-linux" data-install-platform="linux">Linux</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="install-panel-windows" id="install-tab-windows" data-install-platform="windows">Windows</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="install-panel-go" id="install-tab-go" data-install-platform="go">Go</button>
       </div>
-    </div>
-
-    <div class="home-surface home-surface--rollup">
-      <div class="home-surface__copy flow">
-        <p class="home-surface__label">Rollup dashboard</p>
-        <h3>Review workload without losing the operational context.</h3>
-        <p>See focus patterns, estimate bias, calendar context, and the session breakdown together when the day needs a real retrospective.</p>
-        <a href="/docs/screenshots-and-walkthrough/">Read the walkthrough</a>
+      <div class="install-modal__panels">
+        <div class="install-modal__panel" role="tabpanel" id="install-panel-macos" aria-labelledby="install-tab-macos" data-install-panel="macos">
+          <p>Install with Homebrew:</p>
+          <div class="install-modal__command"><code>brew install webxsid/tap/crona</code><button type="button" data-install-copy>[ copy ]</button></div>
+          <a class="install-modal__companion" href="/companions/">Need a native surface? Download the macOS Companion <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="install-modal__panel" role="tabpanel" id="install-panel-linux" aria-labelledby="install-tab-linux" data-install-panel="linux" hidden>
+          <p>Install with Homebrew:</p>
+          <div class="install-modal__command"><code>brew install webxsid/tap/crona</code><button type="button" data-install-copy>[ copy ]</button></div>
+        </div>
+        <div class="install-modal__panel" role="tabpanel" id="install-panel-windows" aria-labelledby="install-tab-windows" data-install-panel="windows" hidden>
+          <p>Install with Scoop:</p>
+          <div class="install-modal__command"><code>scoop bucket add webxsid https://github.com/webxsid/scoop-bucket
+scoop install crona</code><button type="button" data-install-copy>[ copy ]</button></div>
+        </div>
+        <div class="install-modal__panel" role="tabpanel" id="install-panel-go" aria-labelledby="install-tab-go" data-install-panel="go" hidden>
+          <p>Install from source with Go:</p>
+          <div class="install-modal__command"><code>go install github.com/webxsid/crona/...@latest</code><button type="button" data-install-copy>[ copy ]</button></div>
+        </div>
       </div>
-      <div class="home-surface__media">
-        <AppScreenshot
-          name="rollup-dashboard"
-          alt="Crona Rollup dashboard showing the focus graph beside the calendar and the Breakdown pane"
-          sizes="(min-width: 1024px) 54vw, 100vw"
-        />
-      </div>
-    </div>
-
-    <div class="home-surface home-surface--momentum">
-      <div class="home-surface__media">
-        <AppScreenshot
-          name="momentum-dashboard"
-          alt="Crona Momentum dashboard showing custom cards, week labels, and paused history states"
-          sizes="(min-width: 1024px) 54vw, 100vw"
-        />
-      </div>
-      <div class="home-surface__copy flow">
-        <p class="home-surface__label">Momentum dashboard</p>
-        <h3>See whether a day should count before it breaks the story.</h3>
-        <p>
-          Momentum tracks protected rest, skipped buckets, adjusted targets, and effective availability instead of flattening everything into a simple streak counter.
-        </p>
-        <a href="/docs/check-ins-and-wellbeing/">Read about Momentum</a>
-      </div>
-    </div>
-
-    <div class="home-surface home-surface--wellbeing">
-      <div class="home-surface__copy flow">
-        <p class="home-surface__label">Wellbeing dashboard</p>
-        <h3>Notice patterns a checklist would miss.</h3>
-        <p>Check-ins, energy, sleep, burnout signals, and Momentum detail keep the human side of the workload visible beside the work itself.</p>
-        <a href="/docs/check-ins-and-wellbeing/">Read about wellbeing</a>
-      </div>
-      <div class="home-surface__media">
-        <AppScreenshot
-          name="wellbeing-dashboard"
-          alt="Crona Wellbeing dashboard showing the configurable Metrics Window, details pane, and custom Momentum"
-          sizes="(min-width: 1024px) 54vw, 100vw"
-        />
-      </div>
-    </div>
-  </section>
-
-  <section class="container section home-close">
-    <div class="home-close__panel">
-      <div class="home-close__copy flow">
-        <h2>Install it, then keep the docs close.</h2>
-        <p>Start with Homebrew on macOS or Linux, Scoop on Windows, then use the migration pages if you are moving off an older script install.</p>
-      </div>
-
-      <div class="home-close__links">
-        <a href="/install/">
-          <strong>Install hub</strong>
-          <span>Homebrew and Scoop commands, fallback scripts, and links back to GitHub Releases.</span>
-        </a>
-        <a href="/docs/">
-          <strong>Documentation</strong>
-          <span>Start with getting started, then move into install, migration, and reference pages.</span>
-        </a>
-        <a href="/docs/migration/">
-          <strong>Migration guide</strong>
-          <span>Move a legacy install to Homebrew, Scoop, or Go source installs without losing state.</span>
-        </a>
-        <a href="/changelog/">
-          <strong>Releases</strong>
-          <span>Browse the latest release cards, then jump to GitHub for the raw notes and artifacts.</span>
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </BaseLayout>
+
+<script src="./_home/index.js"></script>

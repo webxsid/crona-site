@@ -1,5 +1,4 @@
 ---
-import CronaLogo from "../CronaLogo/CronaLogo.astro";
 import "./SiteHeader.scss";
 
 interface Props {
@@ -9,38 +8,53 @@ interface Props {
 const { currentPath = "/" } = Astro.props as Props;
 
 const links = [
+  { href: "/#install", label: "Install" },
   { href: "/docs/", label: "Docs" },
   { href: "/companions/", label: "Companions" },
   { href: "/changelog/", label: "Releases" },
-  { href: "/support/", label: "Support" },
+  { href: "https://github.com/webxsid/crona", label: "GitHub" },
 ];
+
+let githubStars = "—";
+try {
+  const response = await fetch("https://api.github.com/repos/webxsid/crona", {
+    headers: { Accept: "application/vnd.github+json", "User-Agent": "crona-site" },
+  });
+  if (response.ok) {
+    const repository = (await response.json()) as { stargazers_count?: number };
+    if (typeof repository.stargazers_count === "number") githubStars = repository.stargazers_count.toLocaleString("en-US");
+  }
+} catch {
+  // Keep the header buildable when GitHub is unavailable.
+}
 
 const normalizePath = (path: string) => path.replace(/\/+$/, "/");
 const current = normalizePath(currentPath);
 ---
 
 <header class="site-header">
-  <a class="site-header__brand" href="/" aria-label="Crona home" aria-current={current === "/" ? "page" : undefined}>
-    <CronaLogo class="site-header__mark" />
-    <span class="site-header__wordmark">Crona</span>
-  </a>
-  <nav class="site-header__nav" id="primary-navigation" aria-label="Primary navigation">
-    {
-      links.map((link) => {
-        const href = normalizePath(link.href);
-        const isActive = href === "/" ? current === "/" : current.startsWith(href);
+  <div class="site-header__inner">
+    <a class="site-header__brand" href="/" aria-label="Crona home" aria-current={current === "/" ? "page" : undefined}>
+      <span>&gt; crona</span>
+    </a>
+    <nav class="site-header__nav" id="primary-navigation" aria-label="Primary navigation">
+      {
+        links.map((link) => {
+          const href = normalizePath(link.href);
+          const isActive = href === "/" ? current === "/" : current.startsWith(href);
 
-        return (
-          <a
-            class:list={{ "is-active": isActive }}
-            href={link.href}
-            aria-current={isActive ? "page" : undefined}
-            {...(link.href.startsWith("http") ? { rel: "noreferrer" } : {})}
-          >
-            {link.label}
-          </a>
-        );
-      })
-    }
-  </nav>
+          return (
+            <a
+              class:list={{ "is-active": isActive }}
+              href={link.href}
+              aria-current={isActive ? "page" : undefined}
+              {...(link.href.startsWith("http") ? { rel: "noreferrer" } : {})}
+            >
+              {link.label === "GitHub" ? <><span>{link.label}</span><span class="site-header__stars" aria-label={`${githubStars} GitHub stars`}>★ {githubStars}</span></> : link.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+  </div>
 </header>

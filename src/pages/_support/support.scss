@@ -5,13 +5,14 @@
 }
 
 .support-card {
-  background: linear-gradient(135deg, var(--color-panel-raised), var(--color-panel));
-  border: 1px solid color-mix(in srgb, var(--color-line-strong) 65%, var(--color-line));
-  border-radius: 12px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-line);
+  border-left: 1px solid var(--color-line);
+  border-radius: 0;
   display: grid;
   gap: 8px;
   padding: 18px;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
   transition:
     border-color 140ms ease,
     transform 140ms ease;
@@ -19,9 +20,9 @@
 
 .support-card:hover,
 .support-card:focus-visible {
-  border-color: var(--color-accent);
+  border-left-color: var(--color-accent);
   outline: none;
-  transform: translateY(-1px);
+  transform: translateX(4px);
 }
 
 .support-card--primary {
@@ -29,7 +30,7 @@
 }
 
 .support-card span {
-  color: var(--color-warning);
+  color: var(--color-accent);
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -38,7 +39,7 @@
 
 .support-card strong {
   color: var(--color-ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 1.06rem;
   font-weight: 650;
 }

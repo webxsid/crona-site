@@ -9,9 +9,10 @@
 }
 
 .privacy-toc {
-  background: var(--color-panel);
+  background: transparent;
   border: 1px solid var(--color-line);
-  border-radius: 16px;
+  border-radius: 0;
+  border-left: 2px solid var(--color-accent);
   display: grid;
   gap: 0;
   grid-template-columns: 1fr;
@@ -36,7 +37,7 @@
 }
 
 .privacy-toc a::before {
-  color: var(--color-warning);
+  color: var(--color-accent);
   content: counter(toc-item, decimal-leading-zero);
   counter-increment: toc-item;
   flex: 0 0 auto;
@@ -45,7 +46,7 @@
 }
 
 .privacy-toc a:hover::before {
-  color: var(--color-warning);
+  color: var(--color-accent);
 }
 
 .privacy-toc a::after {

@@ -1,11 +1,5 @@
 const DOC_GROUPS = [
   {
-    id: "install-and-migration",
-    title: "Install and Migration",
-    description: "Install Crona, switch channels, and move off the legacy script without losing state.",
-    docs: ["install", "migration", "migration/legacy-to-brew", "migration/legacy-to-go", "migration/legacy-to-scoop"],
-  },
-  {
     id: "getting-started",
     title: "Getting Started",
     description: "Understand the runtime model, work objects, and the first few minutes in Crona.",

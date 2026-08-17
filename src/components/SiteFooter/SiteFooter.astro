@@ -1,18 +1,21 @@
 ---
 import "./SiteFooter.scss";
 
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = "/" } = Astro.props as Props;
+
 const links = [
-  { href: "/docs/", label: "Docs" },
-  { href: "/companions/", label: "Companions" },
-  { href: "/changelog/", label: "Releases" },
-  { href: "/support/", label: "Support" },
   { href: "/privacy/", label: "Privacy" },
   { href: "https://github.com/webxsid/crona", label: "GitHub", external: true },
 ];
 ---
 
 <footer class="site-footer">
-  <p class="site-footer__tagline">Local-first work tracking for developers.</p>
+  <p class="site-footer__path">~/crona{currentPath === "/" ? "" : currentPath}</p>
+  <p class="site-footer__hint">static buffer</p>
   <div class="site-footer__links">
     {
       links.map((link) => (
@@ -21,8 +24,6 @@ const links = [
         </a>
       ))
     }
-    <a class="external-link" href="https://webxsid.com" rel="noreferrer">
-      Built by Sid
-    </a>
+    <a class="external-link" href="https://webxsid.com" rel="noreferrer">sid</a>
   </div>
 </footer>

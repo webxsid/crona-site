@@ -49,10 +49,20 @@
 
 .page-header {
   --flow-space: var(--space-4);
+  border-bottom: 1px solid var(--color-line);
+  padding-bottom: var(--space-6);
 }
 
 .page-body {
   margin-top: var(--space-6);
+}
+
+.page-header > h1::before {
+  color: var(--color-accent);
+  content: "$ ";
+  font-family: var(--font-mono);
+  font-size: .38em;
+  vertical-align: .28em;
 }
 
 @media (min-width: 720px) {
@@ -60,7 +70,7 @@
     --gutter: 24px;
     --section-space: 72px;
     --section-space-lg: 112px;
-    --site-header-block: 69px;
+    --site-header-block: 48px;
   }
 
   .responsive-grid {
