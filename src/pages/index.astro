@@ -54,16 +54,18 @@ import "./_home/index.scss";
         <div class="home-hero__visual">
           <div class="home-video-stage" style={`background-image: url(${demoBg.src})`}>
             <div class="home-video-frame">
+              <div class="home-video-frame__context"><span class="home-video-frame__lights"><i></i><i></i><i></i></span><strong>Crona · daily — 192×53</strong><span>repo: crona-site / stream: Dev</span><span>engine: ok</span></div>
               <video data-demo-video data-timer-webm={sessionTimerWebm} data-timer-mp4={sessionTimerMp4} data-pomodoro-webm={sessionPomodoroWebm} data-pomodoro-mp4={sessionPomodoroMp4} autoplay muted loop playsinline preload="metadata" poster={demoBg.src} aria-label="Recorded Crona terminal workflow">
                 <source data-demo-webm src={openCronaWebm} type="video/webm" />
                 <source data-demo-mp4 src={openCronaMp4} type="video/mp4" />
               </video>
+              <div class="home-video-frame__footer"><span data-demo-status aria-live="polite">Open TUI · recorded workflow</span><span>[?] keys</span><span>[tab] next pane</span></div>
             </div>
           </div>
           <div class="home-demo-flows" aria-label="Crona demo flows">
-            <button class="is-active" type="button" data-demo-flow="open" aria-pressed="true">Open TUI</button>
-            <button type="button" data-demo-flow="timer" aria-pressed="false">Start a timer</button>
-            <button type="button" data-demo-flow="pomodoro" aria-pressed="false">Run Pomodoro</button>
+            <button class="is-active" type="button" data-demo-flow="open" aria-pressed="true" style="--demo-progress: 0%">Open TUI</button>
+            <button type="button" data-demo-flow="timer" aria-pressed="false" style="--demo-progress: 0%">Start a timer</button>
+            <button type="button" data-demo-flow="pomodoro" aria-pressed="false" style="--demo-progress: 0%">Run Pomodoro</button>
           </div>
         </div>
         <div class="home-hero__supporting">

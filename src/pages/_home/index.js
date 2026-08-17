@@ -107,8 +107,19 @@ if (demoVideo) {
       const active = button.dataset.demoFlow === key;
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", String(active));
+      button.style.setProperty("--demo-progress", "0%");
     });
   };
 
   demoFlows.forEach((button) => button.addEventListener("click", () => selectDemo(button.dataset.demoFlow)));
+  demoVideo.addEventListener("timeupdate", () => {
+    if (!Number.isFinite(demoVideo.duration) || demoVideo.duration <= 0) return;
+    const progress = `${Math.min(100, (demoVideo.currentTime / demoVideo.duration) * 100)}%`;
+    const active = demoFlows.find((button) => button.classList.contains("is-active"));
+    active?.style.setProperty("--demo-progress", progress);
+  });
+  demoVideo.addEventListener("ended", () => {
+    const active = demoFlows.find((button) => button.classList.contains("is-active"));
+    active?.style.setProperty("--demo-progress", "0%");
+  });
 }

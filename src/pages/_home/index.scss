@@ -576,6 +576,7 @@
 .home-tui__footer span:first-child { color: var(--color-accent-strong); }
 .home-demo-flows { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 18px auto 0; position: relative; z-index: 1; }
 .home-demo-flows button { background: color-mix(in srgb, var(--color-panel) 82%, transparent); border: 1px solid var(--color-line-strong); border-radius: 999px; color: var(--color-muted); cursor: pointer; font: .72rem var(--font-mono); padding: 8px 13px; transition: border-color 140ms ease, color 140ms ease, transform 140ms ease; }
+.home-demo-flows button { background: linear-gradient(to right, color-mix(in srgb, var(--color-accent) 20%, var(--color-panel)) var(--demo-progress), color-mix(in srgb, var(--color-panel) 82%, transparent) var(--demo-progress)); }
 .home-demo-flows button:hover, .home-demo-flows button:focus-visible, .home-demo-flows button.is-active { border-color: var(--color-accent); color: var(--color-accent-strong); outline: none; transform: translateY(-1px); }
 
 @media (max-width: 820px) {
@@ -627,10 +628,33 @@
   z-index: 1;
 }
 
-.home-video-stage video { background: #050708; display: block; height: auto; position: relative; width: 100%; z-index: 1; }
+.home-video-frame__context,
+.home-video-frame__footer {
+  align-items: center;
+  color: var(--color-muted);
+  display: flex;
+  font: .68rem var(--font-mono);
+  gap: 14px;
+  min-height: 30px;
+  overflow: hidden;
+  padding: 7px 12px;
+  white-space: nowrap;
+}
+
+.home-video-frame__context { border-bottom: 1px solid var(--color-line); }
+.home-video-frame__context strong { color: var(--color-ink); font-weight: 400; }
+.home-video-frame__context span:nth-last-child(-n+2) { color: var(--color-line-strong); margin-left: auto; }
+.home-video-frame__lights { display: flex; gap: 4px; }
+.home-video-frame__lights i { background: var(--color-line-strong); border-radius: 50%; height: 6px; width: 6px; }
+.home-video-frame__lights i:first-child { background: var(--color-error); }
+.home-video-frame__lights i:nth-child(2) { background: var(--color-warning); }
+.home-video-frame__footer { border-top: 1px solid var(--color-line); justify-content: flex-start; }
+.home-video-frame__footer span:first-child { color: var(--color-accent-strong); }
+.home-video-stage video { aspect-ratio: 16 / 9; background: #050708; display: block; height: auto; object-fit: contain; position: relative; width: 100%; z-index: 1; }
 
 @media (max-width: 640px) {
   .home-video-stage { padding: 10px; }
+  .home-video-frame__context span:nth-last-child(-n+2), .home-video-frame__footer span:nth-child(n+2) { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
