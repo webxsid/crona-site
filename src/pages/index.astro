@@ -1,5 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import demoBg from "../assets/demo/demo-bg.jpg";
+import openCronaMp4 from "../assets/demo/open-crona.mp4";
+import openCronaWebm from "../assets/demo/open-crona.webm";
+import sessionPomodoroMp4 from "../assets/demo/session-pomodoro.mp4";
+import sessionPomodoroWebm from "../assets/demo/session-pomodoro.webm";
+import sessionTimerMp4 from "../assets/demo/session-timer.mp4";
+import sessionTimerWebm from "../assets/demo/session-timer.webm";
 import "./_home/index.scss";
 ---
 
@@ -45,45 +52,20 @@ import "./_home/index.scss";
           </div>
         </div>
         <div class="home-hero__visual">
-          <div class="home-tui-stage">
-            <div class="home-tui" data-demo-terminal aria-label="Interactive preview of the Crona terminal interface">
-              <div class="home-tui__titlebar"><span class="home-tui__lights"><i></i><i></i><i></i></span><strong>Crona · daily — 192×53</strong><span>v1.9.0-beta.5</span></div>
-              <div class="home-tui__header"><span><b>[ CRONA ]</b> / repo: webxsid / stream: Dev</span><span>engine: ok</span></div>
-              <div class="home-tui__body">
-                <aside class="home-tui__sidebar">
-                  <div class="home-tui__sidebar-label">Views</div>
-                  <div class="home-tui__hint">[ and ] switch</div>
-                  <div class="home-tui__sidebar-group">DASHBOARD</div>
-                  <button class="is-active" data-demo-nav="daily">Daily</button>
-                  <button data-demo-nav="summary">Summary</button>
-                  <button data-demo-nav="momentum">Momentum</button>
-                  <button data-demo-nav="wellbeing">Wellbeing</button>
-                  <div class="home-tui__sidebar-group">WORKSPACE</div>
-                  <button data-demo-nav="issues">Issues</button>
-                  <button data-demo-nav="meta">Meta</button>
-                  <div class="home-tui__sidebar-group">SESSION</div>
-                  <button data-demo-nav="session">Session</button>
-                  <button>History</button>
-                </aside>
-                <main class="home-tui__content">
-                  <div class="home-tui__content-topline"><strong data-demo-title>Daily Dashboard</strong><span data-demo-date>Tue 18 Aug 2026</span></div>
-                  <div class="home-tui__content-meta" data-demo-meta>focus: 2h 15m  ·  issues: 3/8 resolved  ·  habits: 4/5 done</div>
-                  <div class="home-tui__panes" data-demo-content>
-                    <section class="home-tui__pane home-tui__pane--wide"><h3>Daily Context <em>Active</em></h3><div class="home-tui__bars"><span style="--value: 78%"></span><span style="--value: 52%"></span><span style="--value: 64%"></span><span style="--value: 36%"></span><span style="--value: 86%"></span></div><p>Plan the day, focus on the next issue, keep the signal visible.</p></section>
-                    <section class="home-tui__pane"><h3>Issues <em>3/8 resolved</em></h3><ul><li class="is-done">Refine daily view</li><li>Document local engine</li><li>Review companion flow</li></ul></section>
-                    <section class="home-tui__pane"><h3>Habits <em>4/5 done</em></h3><ul><li class="is-done">Morning check-in</li><li class="is-done">Deep work block</li><li>Walk away from desk</li></ul></section>
-                  </div>
-                </main>
-              </div>
-              <div class="home-tui__footer"><span data-demo-action>[f] start focus</span><span>[c] context</span><span>[?] keys</span><span>[tab] next pane</span></div>
+          <div class="home-video-stage" style={`background-image: url(${demoBg.src})`}>
+            <div class="home-video-frame">
+              <div class="home-video-frame__bar"><span><i></i><i></i><i></i></span><strong>Crona · live workflow preview</strong><span>terminal demo</span></div>
+              <video data-demo-video data-timer-webm={sessionTimerWebm} data-timer-mp4={sessionTimerMp4} data-pomodoro-webm={sessionPomodoroWebm} data-pomodoro-mp4={sessionPomodoroMp4} autoplay muted loop playsinline preload="metadata" poster={demoBg.src} aria-label="Recorded Crona terminal workflow">
+                <source data-demo-webm src={openCronaWebm} type="video/webm" />
+                <source data-demo-mp4 src={openCronaMp4} type="video/mp4" />
+              </video>
+              <div class="home-video-frame__status" aria-live="polite" data-demo-status>Open TUI · recorded workflow</div>
             </div>
           </div>
           <div class="home-demo-flows" aria-label="Crona demo flows">
-            <button class="is-active" type="button" data-demo-flow="daily">Open TUI</button>
-            <button type="button" data-demo-flow="session">Start focus</button>
-            <button type="button" data-demo-flow="summary">Review summary</button>
-            <button type="button" data-demo-flow="wellbeing">Check in</button>
-            <button type="button" data-demo-flow="momentum">Momentum</button>
+            <button class="is-active" type="button" data-demo-flow="open" aria-pressed="true">Open TUI</button>
+            <button type="button" data-demo-flow="timer" aria-pressed="false">Start a timer</button>
+            <button type="button" data-demo-flow="pomodoro" aria-pressed="false">Run Pomodoro</button>
           </div>
         </div>
         <div class="home-hero__supporting">
