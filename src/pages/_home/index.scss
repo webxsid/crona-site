@@ -623,6 +623,7 @@
   box-shadow: 0 26px 70px rgba(0, 0, 0, .46);
   margin: 0 auto;
   max-width: 1200px;
+  overflow: hidden;
   position: relative;
   width: 100%;
   z-index: 1;
@@ -648,7 +649,7 @@
 .home-video-frame__lights i { background: var(--color-line-strong); border-radius: 50%; height: 6px; width: 6px; }
 .home-video-frame__lights i:first-child { background: var(--color-error); }
 .home-video-frame__lights i:nth-child(2) { background: var(--color-warning); }
-.home-video-frame__footer { border-top: 1px solid var(--color-line); justify-content: flex-start; }
+.home-video-frame__footer { border-top: 1px solid var(--color-line); justify-content: space-between; }
 .home-video-frame__footer span:first-child { color: var(--color-accent-strong); }
 .home-video-stage video { aspect-ratio: 16 / 9; background: #050708; display: block; height: auto; object-fit: contain; position: relative; width: 100%; z-index: 1; }
 
