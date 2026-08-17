@@ -616,6 +616,17 @@
   position: absolute;
 }
 
+.home-video-frame {
+  background: var(--color-page);
+  border: 1px solid var(--color-line-strong);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, .46);
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
 .home-video-stage video { background: #050708; display: block; height: auto; position: relative; width: 100%; z-index: 1; }
 
 @media (max-width: 640px) {
