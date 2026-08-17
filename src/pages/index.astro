@@ -55,10 +55,11 @@ import "./_home/index.scss";
           <div class="home-video-stage" style={`background-image: url(${demoBg.src})`}>
             <div class="home-video-frame">
               <div class="home-video-frame__context"><span class="home-video-frame__lights"><i></i><i></i><i></i></span><strong>Crona · daily — 192×53</strong><span>repo: crona-site / stream: Dev</span><span>engine: ok</span></div>
-              <video data-demo-video data-timer-webm={sessionTimerWebm} data-timer-mp4={sessionTimerMp4} data-pomodoro-webm={sessionPomodoroWebm} data-pomodoro-mp4={sessionPomodoroMp4} autoplay muted loop playsinline preload="metadata" poster={demoBg.src} aria-label="Recorded Crona terminal workflow">
+              <video data-demo-video data-timer-webm={sessionTimerWebm} data-timer-mp4={sessionTimerMp4} data-pomodoro-webm={sessionPomodoroWebm} data-pomodoro-mp4={sessionPomodoroMp4} autoplay muted playsinline preload="metadata" poster={demoBg.src} aria-label="Recorded Crona terminal workflow">
                 <source data-demo-webm src={openCronaWebm} type="video/webm" />
                 <source data-demo-mp4 src={openCronaMp4} type="video/mp4" />
               </video>
+              <button class="home-video-frame__play" type="button" data-demo-play aria-label="Play the Crona workflow again">play again</button>
               <div class="home-video-frame__footer"><span data-demo-status aria-live="polite">Open TUI · recorded workflow</span><span>local daemon: connected</span><span>select a flow below</span></div>
             </div>
           </div>

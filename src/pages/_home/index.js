@@ -87,6 +87,7 @@ const demoVideo = document.querySelector("[data-demo-video]");
 
 if (demoVideo) {
   const demoStatus = document.querySelector("[data-demo-status]");
+  const demoPlay = document.querySelector("[data-demo-play]");
   const demoFlows = [...document.querySelectorAll("[data-demo-flow]")];
   const sources = {
     open: { label: "Open TUI · recorded workflow", webm: demoVideo.querySelector("[data-demo-webm]").src, mp4: demoVideo.querySelector("[data-demo-mp4]").src },
@@ -102,6 +103,7 @@ if (demoVideo) {
     mp4.src = source.mp4;
     demoVideo.load();
     demoVideo.play().catch(() => {});
+    demoVideo.closest(".home-video-frame")?.classList.remove("is-ended");
     demoStatus.textContent = source.label;
     demoFlows.forEach((button) => {
       const active = button.dataset.demoFlow === key;
@@ -112,6 +114,11 @@ if (demoVideo) {
   };
 
   demoFlows.forEach((button) => button.addEventListener("click", () => selectDemo(button.dataset.demoFlow)));
+  demoPlay?.addEventListener("click", () => {
+    demoVideo.currentTime = 0;
+    demoVideo.play().catch(() => {});
+    demoVideo.closest(".home-video-frame")?.classList.remove("is-ended");
+  });
   demoVideo.addEventListener("timeupdate", () => {
     if (!Number.isFinite(demoVideo.duration) || demoVideo.duration <= 0) return;
     const progress = `${Math.min(100, (demoVideo.currentTime / demoVideo.duration) * 100)}%`;
@@ -121,5 +128,6 @@ if (demoVideo) {
   demoVideo.addEventListener("ended", () => {
     const active = demoFlows.find((button) => button.classList.contains("is-active"));
     active?.style.setProperty("--demo-progress", "0%");
+    demoVideo.closest(".home-video-frame")?.classList.add("is-ended");
   });
 }
