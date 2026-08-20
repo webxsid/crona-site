@@ -35,24 +35,17 @@ import "./_home/index.scss";
     <div class="home-hero__frame">
       <div class="home-hero__grid">
         <h1 id="home-title" class="home-hero__sr-title">Crona</h1>
-        <div class="home-hero__wordmark" role="img" aria-label="Crona">
-          <pre aria-hidden="true"> ██████╗██████╗  ██████╗ ███╗   ██╗ █████╗
-██╔════╝██╔══██╗██╔═══██╗████╗  ██║██╔══██╗
-██║     ██████╔╝██║   ██║██╔██╗ ██║███████║
-██║     ██╔══██╗██║   ██║██║╚██╗██║██╔══██║
-╚██████╗██║  ██║╚██████╔╝██║ ╚████║██║  ██║
- ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝</pre>
-        </div>
         <div class="home-hero__intro">
-          <p class="home-hero__descriptor">local-first work tracking for developers</p>
-          <h2 class="home-hero__headline">Track the work where it happens without giving up your terminal or your data.</h2>
+          <p class="home-hero__descriptor"><span>&gt;</span> local-first work tracking for developers</p>
+          <h2 class="home-hero__headline">Make the workday readable.</h2>
+          <p class="home-hero__lede">Plan what matters, stay with it, and leave a useful record — without leaving your terminal or your data.</p>
           <div class="home-hero__actions">
-            <button class="button" type="button" data-install-open>Install Crona</button>
-            <a class="button button--secondary" href="/docs/">View Docs</a>
+            <button class="button" type="button" data-install-open><span>[i]</span> install crona</button>
+            <a class="button button--secondary" href="https://docs.crona.work/"><span>[d]</span> view docs</a>
           </div>
         </div>
         <div class="home-hero__visual">
-          <div class="home-video-stage" style={`background-image: url(${demoBg.src})`}>
+          <div class="home-video-stage">
             <div class="home-video-frame">
               <div class="home-video-frame__context"><span class="home-video-frame__lights"><i></i><i></i><i></i></span><strong>Crona · daily — 192×53</strong><span>repo: crona-site / stream: Dev</span><span>engine: ok</span></div>
               <video data-demo-video data-timer-webm={sessionTimerWebm} data-timer-mp4={sessionTimerMp4} data-pomodoro-webm={sessionPomodoroWebm} data-pomodoro-mp4={sessionPomodoroMp4} controls muted playsinline preload="metadata" poster={demoBg.src} aria-label="Recorded Crona terminal workflow">
@@ -76,24 +69,38 @@ import "./_home/index.scss";
             <button type="button" data-demo-flow="pomodoro" aria-pressed="false" style="--demo-progress: 0%"><span class="home-demo-flow__key">[3]</span><span class="home-demo-flow__label">run pomodoro</span><span class="home-demo-flow__progress" aria-hidden="true"></span></button>
           </div>
         </div>
-        <div class="home-hero__supporting">
-          <p class="home-hero__summary">Crona links focus sessions to issues, keeps local state in SQLite, and makes the day readable through its TUI and CLI.</p>
-          <p class="home-hero__platforms">macOS <span>/</span> Linux <span>/</span> Windows</p>
-        </div>
       </div>
     </div>
   </section>
 
-  <section class="home-features" id="features" aria-labelledby="features-title">
-    <div class="home-section-heading"><h2 id="features-title">Built for how you work.</h2></div>
-    <div class="home-status-matrix">
-      <div><span>workflow</span><strong>plan / focus / review</strong></div>
-      <div><span>runtime</span><strong>local daemon + TUI / CLI</strong></div>
-      <div><span>storage</span><strong>SQLite on your machine</strong></div>
-      <div><span>platforms</span><strong>macOS / Linux / Windows</strong></div>
-      <div><span>source</span><strong>open source · github.com/webxsid/crona</strong></div>
-      <div><span>install</span><strong>Homebrew / Scoop / Go</strong></div>
+  <section class="home-features home-reveal" id="features" aria-labelledby="features-title">
+    <div class="home-section-heading"><h2 id="features-title">A workday that leaves a trail.</h2><p>Crona connects what you meant to do, what you focused on, and what actually moved.</p></div>
+    <div class="home-workflow" aria-label="Crona workflow">
+      <article class="home-workflow__step"><span class="home-workflow__key">[1]</span><h3>plan</h3><p>Pull issues and habits into one day you can see.</p><span class="home-workflow__meta">issues / habits / sqlite</span></article>
+      <article class="home-workflow__step"><span class="home-workflow__key">[2]</span><h3>focus</h3><p>Start a session with the work already attached.</p><span class="home-workflow__meta">session / timer / tui</span></article>
+      <article class="home-workflow__step"><span class="home-workflow__key">[3]</span><h3>review</h3><p>See what moved. Keep the context.</p><span class="home-workflow__meta">history / momentum / reports</span></article>
     </div>
+    <div class="home-workflow__footer"><span>&gt; plan → focus → review / one local record</span><a href="https://docs.crona.work/">read the docs <span aria-hidden="true">→</span></a></div>
+  </section>
+
+  <section class="home-local home-reveal" aria-labelledby="local-title">
+    <div class="home-local__copy">
+      <h2 id="local-title">Nothing to sync before you start.</h2>
+      <p>Crona keeps the day in SQLite, runs through a local daemon, and stays usable from the TUI and CLI.</p>
+    </div>
+    <div class="home-local__details" aria-label="Crona local runtime">
+      <div><span>storage</span><strong>sqlite</strong></div>
+      <div><span>runtime</span><strong>local daemon</strong></div>
+      <div><span>surfaces</span><strong>tui + cli</strong></div>
+      <div><span>companion</span><strong>macos</strong></div>
+    </div>
+    <div class="home-local__links"><a href="https://docs.crona.work/">read the docs <span aria-hidden="true">→</span></a><a href="/companions/">open the macOS companion <span aria-hidden="true">→</span></a></div>
+  </section>
+
+  <section class="home-closing home-reveal" aria-labelledby="closing-title">
+    <h2 id="closing-title">Give the day somewhere to go.</h2>
+    <p>Install Crona, open the TUI, and make the next session easier to find.</p>
+    <div class="home-hero__actions"><button class="button" type="button" data-install-open><span>[i]</span> install crona</button><a class="button button--secondary" href="https://docs.crona.work/"><span>[d]</span> read the docs</a></div>
   </section>
 
   <div class="install-modal" data-install-modal hidden>

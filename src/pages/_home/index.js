@@ -1,7 +1,24 @@
 const modal = document.querySelector("[data-install-modal]");
-const openButton = document.querySelector("[data-install-open]");
+const openButtons = [...document.querySelectorAll("[data-install-open]")];
 
-if (modal && openButton) {
+const revealSections = [...document.querySelectorAll(".home-reveal")];
+if (revealSections.length) {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (reducedMotion.matches || !("IntersectionObserver" in window)) {
+    revealSections.forEach((section) => section.classList.add("is-visible"));
+  } else {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    revealSections.forEach((section) => revealObserver.observe(section));
+  }
+}
+
+if (modal && openButtons.length) {
   const dialog = modal.querySelector("[role=dialog]");
   const closeButtons = [...modal.querySelectorAll("[data-install-close]")];
   const tabs = [...modal.querySelectorAll("[data-install-platform]")];
@@ -9,7 +26,7 @@ if (modal && openButton) {
   const copyButtons = [...modal.querySelectorAll("[data-install-copy]")];
   const installLinks = [...document.querySelectorAll('a[href="/#install"]')];
   const validPlatforms = new Set(["macos", "linux", "windows", "go"]);
-  let returnFocus = openButton;
+  let returnFocus = openButtons[0];
 
   const detectedPlatform = () => {
     const platform = navigator.platform.toLowerCase();
@@ -35,7 +52,7 @@ if (modal && openButton) {
   };
 
   const openModal = (platform = platformFromHash(), shouldUpdateHash = true) => {
-    returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : openButton;
+    returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : openButtons[0];
     setPlatform(platform);
     modal.hidden = false;
     document.body.classList.add("has-install-modal");
@@ -50,8 +67,20 @@ if (modal && openButton) {
     if (shouldClearHash && window.location.hash.startsWith("#install")) window.history.replaceState(null, "", window.location.pathname + window.location.search);
   };
 
-  openButton.addEventListener("click", () => openModal());
+  openButtons.forEach((button) => button.addEventListener("click", () => openModal()));
   installLinks.forEach((link) => link.addEventListener("click", (event) => { event.preventDefault(); openModal(); }));
+  document.addEventListener("keydown", (event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+    if (event.target instanceof HTMLElement && ["INPUT", "TEXTAREA", "SELECT"].includes(event.target.tagName)) return;
+    if (event.key.toLowerCase() === "i") {
+      event.preventDefault();
+      openModal();
+    }
+    if (event.key.toLowerCase() === "d") {
+      event.preventDefault();
+      window.location.href = "https://docs.crona.work/";
+    }
+  });
   closeButtons.forEach((button) => button.addEventListener("click", () => closeModal()));
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => openModal(tab.dataset.installPlatform));
@@ -122,6 +151,14 @@ if (demoVideo) {
   };
 
   demoFlows.forEach((button) => button.addEventListener("click", () => selectDemo(button.dataset.demoFlow)));
+  document.addEventListener("keydown", (event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+    if (event.target instanceof HTMLElement && ["INPUT", "TEXTAREA", "SELECT"].includes(event.target.tagName)) return;
+    const flowIndex = Number(event.key) - 1;
+    if (flowIndex < 0 || flowIndex >= demoFlows.length) return;
+    event.preventDefault();
+    demoFlows[flowIndex].click();
+  });
   demoPlay?.addEventListener("click", () => {
     demoVideo.currentTime = 0;
     demoVideo.play().catch(() => {});

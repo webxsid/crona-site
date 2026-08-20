@@ -5,10 +5,12 @@
   display: grid;
   font-family: var(--font-mono);
   gap: 16px;
-  grid-template-columns: minmax(0, 1fr) max-content max-content;
-  min-height: 38px;
+  grid-template-columns: max-content minmax(0, 1fr) max-content max-content;
+  min-height: 54px;
   padding: 0 var(--gutter);
 }
+
+.site-footer__wordmark { overflow: hidden; width: clamp(88px, 11vw, 150px); }
 
 .site-footer__path,
 .site-footer__hint {
@@ -34,6 +36,7 @@
 .site-footer a:focus-visible { color: var(--color-accent-strong); outline: none; }
 
 @media (max-width: 640px) {
-  .site-footer { grid-template-columns: minmax(0, 1fr) max-content; }
+  .site-footer { grid-template-columns: max-content minmax(0, 1fr) max-content; min-height: 46px; }
+  .site-footer__wordmark { width: 88px; }
   .site-footer__hint { display: none; }
 }

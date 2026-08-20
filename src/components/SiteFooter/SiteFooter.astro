@@ -1,5 +1,6 @@
 ---
 import "./SiteFooter.scss";
+import CronaWordmark from "../CronaWordmark/CronaWordmark.astro";
 
 interface Props {
   currentPath?: string;
@@ -14,6 +15,7 @@ const links = [
 ---
 
 <footer class="site-footer">
+  <div class="site-footer__wordmark"><CronaWordmark /></div>
   <p class="site-footer__path">~/crona{currentPath === "/" ? "" : currentPath}</p>
   <p class="site-footer__hint">static buffer</p>
   <div class="site-footer__links">

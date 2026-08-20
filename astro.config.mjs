@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
 
 function remarkGithubCallouts() {
@@ -68,7 +69,7 @@ function remarkGithubCallouts() {
 }
 
 export default defineConfig({
-  integrations: [mdx()],
+  integrations: [mdx(), cloudflare()],
   markdown: {
     remarkPlugins: [remarkGithubCallouts],
   },

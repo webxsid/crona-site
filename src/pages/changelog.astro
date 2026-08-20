@@ -2,6 +2,8 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "./_changelog/changelog.scss";
 
+export const prerender = false;
+
 const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium", timeZone: "UTC" });
 const apps = {
   core: { label: "Crona core", repoUrl: "https://github.com/webxsid/crona", installUrl: "/#install" },
@@ -57,6 +59,7 @@ const timelineDays = timeline.reduce<{ key: string; date: Date | null; releases:
   return days;
 }, []);
 const siteUrl = Astro.site ?? new URL("https://crona.work");
+Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=600");
 ---
 
 <BaseLayout title="Releases" pageTitle="Crona releases" description="Track the latest core Crona and Crona for macOS releases in one place." structuredData={{ "@context": "https://schema.org", "@type": "CollectionPage", name: "Crona releases", url: new URL("/changelog/", siteUrl).href }}>
