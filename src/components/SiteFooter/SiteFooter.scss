@@ -36,7 +36,9 @@
 .site-footer a:focus-visible { color: var(--color-accent-strong); outline: none; }
 
 @media (max-width: 640px) {
-  .site-footer { grid-template-columns: max-content minmax(0, 1fr) max-content; min-height: 46px; }
+  .site-footer { align-items: start; grid-template-columns: minmax(0, 1fr) auto; min-height: 46px; padding-block: 14px; }
   .site-footer__wordmark { width: 88px; }
+  .site-footer__path { grid-column: 1 / -1; grid-row: 2; }
   .site-footer__hint { display: none; }
+  .site-footer__links { flex-wrap: wrap; gap: 8px 14px; grid-column: 2; grid-row: 1; justify-content: end; }
 }

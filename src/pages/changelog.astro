@@ -7,7 +7,7 @@ export const prerender = false;
 const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium", timeZone: "UTC" });
 const apps = {
   core: { label: "Crona core", repoUrl: "https://github.com/webxsid/crona", installUrl: "/#install" },
-  macos: { label: "Crona for macOS", repoUrl: "https://github.com/webxsid/crona-macos", installUrl: "/companions/" },
+  macos: { label: "Crona for macOS", repoUrl: "https://github.com/webxsid/crona-macos", installUrl: "/mac/" },
 } as const;
 type AppId = keyof typeof apps;
 type ReleaseStatus = "stable" | "pre-release";

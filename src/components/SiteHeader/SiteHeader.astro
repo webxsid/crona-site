@@ -10,7 +10,7 @@ const { currentPath = "/" } = Astro.props as Props;
 const links = [
   { href: "/#install", label: "Install" },
   { href: "https://docs.crona.work/", label: "Docs", external: true },
-  { href: "/companions/", label: "Companions" },
+  { href: "/mac/", label: "Mac app" },
   { href: "/changelog/", label: "Releases" },
   { href: "https://github.com/webxsid/crona", label: "GitHub" },
 ];
@@ -37,6 +37,10 @@ const current = normalizePath(currentPath);
     <a class="site-header__brand" href="/" aria-label="Crona home" aria-current={current === "/" ? "page" : undefined}>
       <span>&gt; crona</span>
     </a>
+    <button class="site-header__menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-site-menu-toggle>
+      <span class="site-header__menu-icon" aria-hidden="true"><i></i><i></i></span>
+      <span class="site-header__sr-only">Open navigation</span>
+    </button>
     <nav class="site-header__nav" id="primary-navigation" aria-label="Primary navigation">
       {
         links.map((link) => {
@@ -58,3 +62,37 @@ const current = normalizePath(currentPath);
     </nav>
   </div>
 </header>
+
+<script>
+  const toggle = document.querySelector("[data-site-menu-toggle]");
+  const header = document.querySelector(".site-header");
+  const navigation = document.querySelector("#primary-navigation");
+
+  if (toggle instanceof HTMLButtonElement && header && navigation) {
+    const closeMenu = () => {
+      header.removeAttribute("data-menu-open");
+      toggle.setAttribute("aria-expanded", "false");
+    };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = header.hasAttribute("data-menu-open");
+      if (isOpen) closeMenu();
+      else {
+        header.setAttribute("data-menu-open", "");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+    });
+
+    navigation.addEventListener("click", (event) => {
+      if (event.target instanceof HTMLAnchorElement) closeMenu();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Node && !header.contains(event.target)) closeMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
+  }
+</script>

@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
+import react from "@astrojs/react";
 
 function remarkGithubCallouts() {
   const calloutTypes = new Set(["note", "tip", "important", "warning", "caution"]);
@@ -29,7 +30,11 @@ function remarkGithubCallouts() {
       const child = node.children[index];
       transform(child);
 
-      if (child?.type !== "blockquote" || !Array.isArray(child.children) || child.children.length === 0) {
+      if (
+        child?.type !== "blockquote" ||
+        !Array.isArray(child.children) ||
+        child.children.length === 0
+      ) {
         continue;
       }
 
@@ -38,7 +43,9 @@ function remarkGithubCallouts() {
         continue;
       }
 
-      const markerMatch = getText(firstParagraph).match(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i);
+      const markerMatch = getText(firstParagraph).match(
+        /^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i,
+      );
       if (!markerMatch) {
         continue;
       }
@@ -50,7 +57,11 @@ function remarkGithubCallouts() {
 
       const paragraphs = child.children
         .filter((entry) => entry.type === "paragraph")
-        .map((entry) => normalizeText(getText(entry).replace(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i, "")))
+        .map((entry) =>
+          normalizeText(
+            getText(entry).replace(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i, ""),
+          ),
+        )
         .filter(Boolean);
 
       const html = `<div class="callout callout--${calloutType}">${paragraphs.map((paragraph) => escapeHtml(paragraph)).join("<br /><br />")}</div>`;
@@ -69,10 +80,11 @@ function remarkGithubCallouts() {
 }
 
 export default defineConfig({
-  integrations: [mdx(), cloudflare()],
+  integrations: [mdx(), react()],
+  adapter: cloudflare(),
   markdown: {
     remarkPlugins: [remarkGithubCallouts],
   },
-  output: "static",
+  output: "server",
   site: "https://crona.work",
 });

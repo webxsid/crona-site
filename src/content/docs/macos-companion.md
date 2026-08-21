@@ -25,4 +25,4 @@ The Mac app is for close-at-hand daily actions. Use the TUI and CLI for deeper p
 
 ## Updates and Support
 
-The app uses Sparkle for beta and stable updates. Beta installs receive beta and stable releases; stable installs receive stable releases only. See the [Companions page](/companions/) for the current build and [macOS releases](https://github.com/webxsid/crona-macos/releases) for full notes.
+The app uses Sparkle for beta and stable updates. Beta installs receive beta and stable releases; stable installs receive stable releases only. See the [Crona for macOS page](/mac/) for the current build and [macOS releases](https://github.com/webxsid/crona-macos/releases) for full notes.

@@ -1,12 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import demoBg from "../assets/demo/demo-bg.jpg";
-import openCronaMp4 from "../assets/demo/open-crona.mp4";
-import openCronaWebm from "../assets/demo/open-crona.webm";
-import sessionPomodoroMp4 from "../assets/demo/session-pomodoro.mp4";
-import sessionPomodoroWebm from "../assets/demo/session-pomodoro.webm";
-import sessionTimerMp4 from "../assets/demo/session-timer.mp4";
-import sessionTimerWebm from "../assets/demo/session-timer.webm";
+import WorkflowDemo from "../components/WorkflowDemo/WorkflowDemo.astro";
 import "./_home/index.scss";
 ---
 
@@ -45,29 +39,7 @@ import "./_home/index.scss";
           </div>
         </div>
         <div class="home-hero__visual">
-          <div class="home-video-stage">
-            <div class="home-video-frame">
-              <div class="home-video-frame__context"><span class="home-video-frame__lights"><i></i><i></i><i></i></span><strong>Crona · daily — 192×53</strong><span>repo: crona-site / stream: Dev</span><span>engine: ok</span></div>
-              <video data-demo-video data-timer-webm={sessionTimerWebm} data-timer-mp4={sessionTimerMp4} data-pomodoro-webm={sessionPomodoroWebm} data-pomodoro-mp4={sessionPomodoroMp4} controls muted playsinline preload="metadata" poster={demoBg.src} aria-label="Recorded Crona terminal workflow">
-                <source data-demo-webm src={openCronaWebm} type="video/webm" />
-                <source data-demo-mp4 src={openCronaMp4} type="video/mp4" />
-              </video>
-              <div class="home-video-controls" data-demo-controls aria-label="Video controls">
-                <button class="home-video-controls__play" type="button" data-demo-toggle aria-label="Play video">play</button>
-                <span class="home-video-controls__time" data-demo-current>00:00</span>
-                <input class="home-video-controls__seek" data-demo-seek type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress" />
-                <span class="home-video-controls__time" data-demo-duration>00:00</span>
-                <button type="button" data-demo-mute aria-label="Unmute video" aria-pressed="false">sound off</button>
-              </div>
-              <button class="home-video-frame__play" type="button" data-demo-play aria-label="Play the Crona workflow again">play again</button>
-              <div class="home-video-frame__footer"><span data-demo-status aria-live="polite">Open TUI · recorded workflow</span><span>local daemon: connected</span><span>select a flow below</span></div>
-            </div>
-          </div>
-          <div class="home-demo-flows" aria-label="Crona demo flows">
-            <button class="is-active" type="button" data-demo-flow="open" aria-pressed="true" style="--demo-progress: 0%"><span class="home-demo-flow__key">[1]</span><span class="home-demo-flow__label">open tui</span><span class="home-demo-flow__progress" aria-hidden="true"></span></button>
-            <button type="button" data-demo-flow="timer" aria-pressed="false" style="--demo-progress: 0%"><span class="home-demo-flow__key">[2]</span><span class="home-demo-flow__label">start timer</span><span class="home-demo-flow__progress" aria-hidden="true"></span></button>
-            <button type="button" data-demo-flow="pomodoro" aria-pressed="false" style="--demo-progress: 0%"><span class="home-demo-flow__key">[3]</span><span class="home-demo-flow__label">run pomodoro</span><span class="home-demo-flow__progress" aria-hidden="true"></span></button>
-          </div>
+          <WorkflowDemo variant="core" />
         </div>
       </div>
     </div>
@@ -92,9 +64,8 @@ import "./_home/index.scss";
       <div><span>storage</span><strong>sqlite</strong></div>
       <div><span>runtime</span><strong>local daemon</strong></div>
       <div><span>surfaces</span><strong>tui + cli</strong></div>
-      <div><span>companion</span><strong>macos</strong></div>
     </div>
-    <div class="home-local__links"><a href="https://docs.crona.work/">read the docs <span aria-hidden="true">→</span></a><a href="/companions/">open the macOS companion <span aria-hidden="true">→</span></a></div>
+    <div class="home-local__links"><a href="https://docs.crona.work/">read the docs <span aria-hidden="true">→</span></a><a href="/mac/">open the Mac app <span aria-hidden="true">→</span></a></div>
   </section>
 
   <section class="home-closing home-reveal" aria-labelledby="closing-title">
@@ -124,7 +95,7 @@ import "./_home/index.scss";
         <div class="install-modal__panel" role="tabpanel" id="install-panel-macos" aria-labelledby="install-tab-macos" data-install-panel="macos">
           <p>Install with Homebrew:</p>
           <div class="install-modal__command"><code>brew install webxsid/tap/crona</code><button type="button" data-install-copy>[ copy ]</button></div>
-          <a class="install-modal__companion" href="/companions/">Need a native surface? Download the macOS Companion <span aria-hidden="true">→</span></a>
+          <a class="install-modal__companion" href="/mac/">Need a native surface? Get the Mac app <span aria-hidden="true">→</span></a>
         </div>
         <div class="install-modal__panel" role="tabpanel" id="install-panel-linux" aria-labelledby="install-tab-linux" data-install-panel="linux" hidden>
           <p>Install with Homebrew:</p>

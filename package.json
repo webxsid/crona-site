@@ -8,7 +8,9 @@
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
-    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check"
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "crona",
@@ -21,13 +23,20 @@
   "dependencies": {
     "@astrojs/cloudflare": "^13.1.0",
     "@astrojs/mdx": "^5.0.3",
+    "@astrojs/react": "^5.0.4",
     "astro": "^6.3.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "sass": "^1.99.0",
     "sharp": "^0.34.5",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
     "wrangler": "^4.123.0"
   },
   "overrides": {

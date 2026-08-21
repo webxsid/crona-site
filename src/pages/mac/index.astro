@@ -1,0 +1,51 @@
+---
+import MacLayout from "../../layouts/MacLayout.astro";
+import { loadGitHubReleases } from "../../lib/github-releases";
+import "../_mac/mac.scss";
+
+const repoUrl = "https://github.com/webxsid/crona-macos";
+const releasesUrl = `${repoUrl}/releases`;
+const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium", timeZone: "UTC" });
+const releases = await loadGitHubReleases(repoUrl).catch(() => []);
+const latest = releases.find((release) => release.prerelease && release.assets?.some((asset) => /-macOS\.dmg$/i.test(asset.name)));
+const dmg = latest?.assets?.find((asset) => /-macOS\.dmg$/i.test(asset.name));
+const version = latest?.tag_name ?? "Latest beta";
+const description = "Crona for macOS keeps focus, issue capture, wellbeing, and break prompts close at hand while sharing the same local runtime as Crona core.";
+---
+
+<MacLayout title="The workday, one glance away" description={description} structuredData={latest && dmg ? { "@context": "https://schema.org", "@type": "SoftwareApplication", name: "Crona for macOS", applicationCategory: "ProductivityApplication", operatingSystem: "macOS 14.0 or later", softwareVersion: version, downloadUrl: dmg.browser_download_url, url: "https://crona.work/mac/" } : undefined}>
+  <section class="mac-hero">
+    <div class="mac-hero__copy">
+      <h1>The workday, one glance away.</h1>
+      <p class="mac-hero__lede">A native Mac app for the moments between terminal sessions. Keep focus, capture the next issue, and let the day stay visible without opening another dashboard.</p>
+      <div class="mac-actions">
+        <a class="mac-button" href={dmg?.browser_download_url ?? releasesUrl} rel="noreferrer">{dmg ? `Download ${version}` : "Find the latest beta"}<span aria-hidden="true">↗</span></a>
+        <a class="mac-text-link" href="#features">See what stays close <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="mac-hero__meta">Requires macOS 14 or later · {latest?.published_at ? `updated ${dateFormatter.format(new Date(latest.published_at))}` : "beta channel"}</p>
+    </div>
+  </section>
+
+  <section class="mac-intro" id="features">
+    <p class="mac-kicker">Close at hand</p>
+    <h2>Less window. More continuity.</h2>
+    <p>Use Crona core for depth. Use the Mac app for the small decisions that keep a day moving.</p>
+  </section>
+
+  <section class="mac-features" aria-label="Mac app features">
+    <article><span>01</span><h3>Keep focus visible</h3><p>Start a session from the menu bar and keep the timer present without turning it into another place to manage.</p></article>
+    <article><span>02</span><h3>Capture the next thing</h3><p>Turn a thought into an issue with context, estimate, and Today planning before it disappears.</p></article>
+    <article><span>03</span><h3>Check in naturally</h3><p>Record wellbeing, respond to breaks, and let native prompts return you to the work at the right moment.</p></article>
+  </section>
+
+  <section class="mac-runtime">
+    <div><p class="mac-kicker">Under the surface</p><h2>One local runtime. Two ways to work.</h2></div>
+    <p>The Mac app connects to the same daemon and SQLite data as the CLI and TUI. There is no account, cloud sync, or second database to reconcile.</p>
+    <a class="mac-text-link" href="https://docs.crona.work/workflows/macos-companion/">Read how it works <span aria-hidden="true">↗</span></a>
+  </section>
+
+  <section class="mac-download" id="download">
+    <div><p class="mac-kicker">Download</p><h2>Start with the Mac app. Keep the terminal underneath.</h2><p>Install Crona core first, then open the DMG and move Crona to Applications.</p></div>
+    <div class="mac-download__aside"><strong>{version}</strong><span>macOS 14+ · Universal DMG</span><a class="mac-button" href={dmg?.browser_download_url ?? releasesUrl} rel="noreferrer">{dmg ? "Download DMG" : "View releases"}<span aria-hidden="true">↗</span></a></div>
+  </section>
+</MacLayout>

@@ -1,0 +1,97 @@
+---
+import "../styles/global/global.scss";
+import "./_mac/mac-layout.scss";
+
+interface Props {
+  title: string;
+  description: string;
+  structuredData?: Record<string, unknown>;
+}
+
+const { title, description, structuredData } = Astro.props;
+const siteUrl = Astro.site ?? new URL("https://crona.work");
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const documentTitle = `${title} | Crona for macOS`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#101214" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:site_name" content="Crona" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={documentTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={new URL("/social/crona-og.png", siteUrl).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={documentTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL("/social/crona-og.png", siteUrl).href} />
+    <link rel="icon" href="/favicon.png" />
+    <title>{documentTitle}</title>
+    {structuredData && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+  </head>
+  <body class="mac-site">
+    <div class="mac-shell">
+      <header class="mac-header">
+        <a class="mac-header__brand" href="/mac/" aria-label="Crona for macOS home"><span class="mac-header__dot"></span>Crona for macOS</a>
+        <button class="mac-header__menu-toggle" type="button" aria-expanded="false" aria-controls="mac-navigation" data-mac-menu-toggle>
+          <span class="mac-header__menu-icon" aria-hidden="true"><i></i><i></i></span>
+          <span class="sr-only">Open navigation</span>
+        </button>
+        <nav id="mac-navigation" aria-label="Mac app navigation">
+          <a href="#features">Features</a>
+          <a href="#download">Download</a>
+          <a href="/changelog/">Releases</a>
+          <a class="mac-header__core-link" href="/">Crona core <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
+      <main><slot /></main>
+      <footer class="mac-footer">
+        <a class="mac-footer__brand" href="/mac/">Crona for macOS</a>
+        <span>One local runtime. A calmer way to stay close to the work.</span>
+        <nav aria-label="Footer navigation"><a href="/privacy/">Privacy</a><a href="https://github.com/webxsid/crona-macos" rel="noreferrer">GitHub</a><a href="/">Crona core</a></nav>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<script>
+  const toggle = document.querySelector("[data-mac-menu-toggle]");
+  const header = document.querySelector(".mac-header");
+  const navigation = document.querySelector("#mac-navigation");
+
+  if (toggle instanceof HTMLButtonElement && header && navigation) {
+    const closeMenu = () => {
+      header.removeAttribute("data-menu-open");
+      toggle.setAttribute("aria-expanded", "false");
+    };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = header.hasAttribute("data-menu-open");
+      if (isOpen) closeMenu();
+      else {
+        header.setAttribute("data-menu-open", "");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+    });
+
+    navigation.addEventListener("click", (event) => {
+      if (event.target instanceof HTMLAnchorElement) closeMenu();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Node && !header.contains(event.target)) closeMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
+  }
+</script>

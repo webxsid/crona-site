@@ -1,0 +1,13 @@
+---
+import TuiDemo from "./TuiDemo";
+import "./WorkflowDemo.scss";
+import "../WorkflowDemos/tui/TuiShell.scss";
+interface Props {
+  variant?: "core" | "mac";
+}
+const { variant = "core" } = Astro.props as Props;
+---
+
+<div class:list={["workflow-demo", `workflow-demo--${variant}`]} data-workflow-demo>
+  <TuiDemo client:only="react" />
+</div>
