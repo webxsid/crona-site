@@ -1,4 +1,4 @@
-import { demoToday, habitHistory, habits } from "../../../../data/crona-demo";
+import { demoToday, habitHistory, habitsDueForDate, type DemoContext } from "../../../../data/crona-demo";
 import { useTui } from "../tui-context";
 
 const fixtureDate = demoToday;
@@ -13,10 +13,10 @@ const statusMark = (status?: string) =>
 const duration = (minutes?: number) =>
   minutes && minutes >= 60 ? `${minutes / 60}h` : `${minutes ?? 0}m`;
 
-export default function HabitsPane({ repo, stream }: { repo: string; stream: string }) {
+export default function HabitsPane({ repo, stream, context }: { repo: string; stream: string; context?: DemoContext }) {
   const { getActivePane } = useTui();
   const isActive = getActivePane("Daily") === "habits";
-  const dueHabits = habits.filter((habit) => habit.streamId === 11 && habit.active);
+  const dueHabits = habitsDueForDate(demoToday, context);
   const entries = new Map(
     habitHistory
       .filter(
@@ -25,16 +25,13 @@ export default function HabitsPane({ repo, stream }: { repo: string; stream: str
       )
       .map((entry) => [entry.habitId, entry]),
   );
-  const remaining = dueHabits.filter(
-    (habit) => entries.get(habit.id)?.status !== "completed",
-  ).length;
   return (
     <g className="tui-habits-pane">
       <text className="tui-habits__title" x="663" y="296">
-        Habits Due [{remaining}]
+        Habits Due [2]
       </text>
       <text className="tui-habits__muted" x="663" y="310">
-        Scope: {repo} / {stream}
+        Scope: {repo === "-" && stream === "-" ? "All contexts" : `${repo} / ${stream}`}
       </text>
       {isActive && (
         <text className="tui-habits__muted" x="663" y="324">

@@ -1,6 +1,7 @@
-import { demoToday, issues, sessions } from "../../../../data/crona-demo";
+import { activeDemoContext, demoToday, issueMatchesContext, issues, sessions } from "../../../../data/crona-demo";
 import { useTui, type TuiPaneDefinition } from "../tui-context";
 import TuiView from "../TuiView";
+import { issueStatusColor } from "../issue-status";
 
 const issuePanes: TuiPaneDefinition[] = [
   { id: "open", x: 174, y: 70, width: 386, height: 58, label: "Open", focusable: false },
@@ -11,8 +12,9 @@ const issuePanes: TuiPaneDefinition[] = [
   { id: "completed-issues", x: 174, y: 390, width: 780, height: 112, label: "Completed Issues" },
 ];
 
-const activeIssues = issues.filter((issue) => !["completed", "abandoned"].includes(issue.status));
-const completedIssues = issues.filter((issue) => ["completed", "abandoned"].includes(issue.status));
+const scopedIssues = issues.filter((issue) => issueMatchesContext(issue, activeDemoContext));
+const activeIssues = scopedIssues.filter((issue) => !["done", "abandoned"].includes(issue.status));
+const completedIssues = scopedIssues.filter((issue) => ["done", "abandoned"].includes(issue.status));
 const minutesWorked = (issueId: number) =>
   Math.round(
     sessions
@@ -30,22 +32,6 @@ const issueColumns = {
   repo: 790,
   stream: 875,
 };
-const issueStatusColor = (status: string) => {
-  switch (status) {
-    case "completed":
-      return "var(--color-success)";
-    case "abandoned":
-    case "blocked":
-      return "var(--color-error)";
-    case "in_progress":
-      return "var(--color-warning)";
-    case "in_review":
-      return "var(--demo-accent)";
-    default:
-      return "var(--demo-strong)";
-  }
-};
-
 function SummaryCard({
   label,
   value,
@@ -125,7 +111,7 @@ function IssueList({
       </g>
       {list.slice(0, completed ? 4 : 4).map((issue, index) => {
         const rowY = y + (isActive && !completed ? 86 : 60) + index * 14;
-        const status = issue.status === "completed" ? "done" : issue.status;
+        const status = issue.status;
         const isSelected =
           isActive && (selectedIssueId ? issue.id === selectedIssueId : index === 0);
         const due = issue.todoForDate ? ` [on ${issue.todoForDate}]` : "";
@@ -166,8 +152,8 @@ export default function IssuesView({
 }: {
   selectedIssueId?: number;
 }) {
-  const open = issues.filter((issue) => !["completed", "abandoned"].includes(issue.status));
-  const closed = issues.filter((issue) => ["completed", "abandoned"].includes(issue.status));
+  const open = issues.filter((issue) => !["done", "abandoned"].includes(issue.status));
+  const closed = issues.filter((issue) => ["done", "abandoned"].includes(issue.status));
   const todayDue = open.filter((issue) => issue.todoForDate === demoToday).length;
   const overdue = open.filter((issue) => issue.todoForDate && issue.todoForDate < demoToday).length;
   const estimated = open.reduce((total, issue) => total + (issue.estimateMinutes ?? 0), 0);
@@ -189,7 +175,7 @@ export default function IssuesView({
         closed: (
           <SummaryCard
             label="Closed"
-            value={`done ${closed.filter((i) => i.status === "completed").length}  abandoned ${closed.filter((i) => i.status === "abandoned").length}`}
+        value={`done ${closed.filter((i) => i.status === "done").length}  abandoned ${closed.filter((i) => i.status === "abandoned").length}`}
             hint="done + abandoned"
             x={568}
             y={70}

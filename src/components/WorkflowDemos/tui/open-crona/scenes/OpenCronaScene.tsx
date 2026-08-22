@@ -11,9 +11,11 @@ import HabitsPane from "../../panes/HabitsPane";
 import ViewSwitcherDialog from "../../components/ViewSwitcherDialog";
 import IssuesView from "../../views/IssuesView";
 import DatePickerDialog from "../../components/DatePickerDialog";
+import TimerStartTypeDialog from "../../components/TimerStartTypeDialog";
+import PomodoroStartDialog from "../../components/PomodoroStartDialog";
 import { useTui } from "../../tui-context";
 import { useEffect } from "react";
-import { demoToday } from "../../../../../data/crona-demo";
+import { demoToday, activeDemoContext } from "../../../../../data/crona-demo";
 
 const groups = [
   { label: "Dashboard", items: ["Summary", "Daily", "Rollup", "Momentum", "Wellbeing"] },
@@ -28,7 +30,7 @@ const dailyPanes = [
   { id: "issues", x: 174, y: 276, width: 461, height: 226, label: "Issues" },
   { id: "habits", x: 647, y: 276, width: 307, height: 226, label: "Habits" },
 ];
-const activeContext = { repo: "seed-qa", stream: "Dev" };
+const activeContext = activeDemoContext;
 
 export default function OpenCronaScene({
   scene,
@@ -81,8 +83,8 @@ export default function OpenCronaScene({
         <TuiShell title="Crona · daily">
           <TuiNav groups={groups} />
           <TuiHeader
-            repo={activeContext.repo}
-            stream={activeContext.stream}
+            repo={activeContext?.repoName ?? "-"}
+            stream={activeContext?.streamName ?? "-"}
             environment="Dev"
             version="1.9.0-beta.8"
           />
@@ -98,16 +100,17 @@ export default function OpenCronaScene({
                 viewId="Daily"
                 panes={dailyPanes}
                 paneContent={{
-                  summary: <DailySummaryPane />,
+                  summary: <DailySummaryPane context={activeContext} dueDateOverrides={dueDates} />,
                   issues: (
                     <IssuesPane
-                      repo={activeContext.repo}
-                      stream={activeContext.stream}
+                      repo={activeContext?.repoName ?? "-"}
+                      stream={activeContext?.streamName ?? "-"}
+                      context={activeContext}
                       dueDateOverrides={dueDates}
                       selectedIssueId={scene === "daily-updated" ? 104 : undefined}
                     />
                   ),
-                  habits: <HabitsPane repo={activeContext.repo} stream={activeContext.stream} />,
+                  habits: <HabitsPane repo={activeContext?.repoName ?? "-"} stream={activeContext?.streamName ?? "-"} context={activeContext} />,
                 }}
               />
             )}
@@ -164,13 +167,39 @@ export default function OpenCronaScene({
               [ d ] set due date
             </text>
           )}
-          {scene === "due-date" && (
+      {scene === "due-date" && (
             <DatePickerDialog
               selectedDate={demoToday}
               visibleMonth={demoToday.slice(0, 7)}
               currentDate={demoToday}
             />
-          )}
+      )}
+      {scene === "timer-start" && (
+        <TimerStartTypeDialog issueTitle="Review habit history output" workedMinutes={12} estimateMinutes={60} />
+      )}
+      {scene === "pomodoro-start" && (
+        <PomodoroStartDialog issueTitle="Review habit history output" workedMinutes={12} estimateMinutes={60} />
+      )}
+      {scene === "timer-focus" && (
+        <text
+          className="workflow-demo__key-hint is-visible"
+          x="480"
+          y="494"
+          textAnchor="middle"
+        >
+          [ f ] focus
+        </text>
+      )}
+      {scene === "timer-start" && (
+        <text
+          className="workflow-demo__key-hint is-visible"
+          x="480"
+          y="494"
+          textAnchor="middle"
+        >
+          [ p ] select pomodoro
+        </text>
+      )}
           {scene === "due-date" && (
             <text
               className="workflow-demo__key-hint is-visible"

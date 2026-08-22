@@ -2,7 +2,7 @@ export const openCronaWorkflow = {
   id: "open",
   label: "Open Crona",
   description: "Open Crona and see the day in one local workspace.",
-  duration: 20000,
+  duration: 32000,
   segments: [
     {
       id: "open-crona",
@@ -17,6 +17,13 @@ export const openCronaWorkflow = {
       start: 7000,
       end: 20000,
       description: "Move from the daily dashboard into the work that needs doing today.",
+    },
+    {
+      id: "start-pomodoro",
+      label: "Start a Pomodoro session",
+      start: 20000,
+      end: 32000,
+      description: "Carry the selected issue into a focused Pomodoro session with breaks configured up front.",
     },
   ],
   scenes: [

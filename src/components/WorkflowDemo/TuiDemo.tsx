@@ -66,9 +66,17 @@ function Player() {
                 ? "issue-next-2"
                 : elapsed < 14000
                   ? "issue-due-action"
-                  : elapsed < 18000
+      : elapsed < 18000
                     ? "due-date"
-                    : "daily-updated";
+                    : elapsed < 20000
+                      ? "daily-updated"
+                      : elapsed < 26000
+                        ? elapsed < 22000
+                          ? "timer-focus"
+                          : elapsed < 27000
+                            ? "timer-start"
+                            : "pomodoro-start"
+                        : "pomodoro-start";
   const command = "crona".slice(0, Math.max(0, Math.min(5, Math.floor((elapsed - 600) / 180))));
   const showKeyHint = elapsed >= 2200 && elapsed < 4000;
   useEffect(() => {

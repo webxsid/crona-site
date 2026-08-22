@@ -13,6 +13,13 @@ const weekdayLabels = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 const iso = (date: Date) => date.toISOString().slice(0, 10);
 const addDays = (date: Date, days: number) =>
   new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + days));
+const isoWeekNumber = (value: string) => {
+  const date = new Date(`${value}T12:00:00Z`);
+  const day = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  return Math.ceil(((date.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+};
 
 export default function CalendarSvg({
   year,
@@ -39,7 +46,9 @@ export default function CalendarSvg({
         {year}
       </text>
       <text className="tui-calendar__meta" x={x} y={y + 14}>
-        Week 34 Today 21 Wk 34
+        Week {currentDate ? isoWeekNumber(currentDate) : "-"} Today{" "}
+        {currentDate ? new Date(`${currentDate}T12:00:00Z`).getUTCDate() : "-"} Wk{" "}
+        {currentDate ? isoWeekNumber(currentDate) : "-"}
       </text>
       <g className="tui-calendar__grid">
         {weekdayLabels.map((label, index) => (

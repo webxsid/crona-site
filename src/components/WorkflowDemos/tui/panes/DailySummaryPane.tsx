@@ -1,29 +1,14 @@
-import { checkIns, habitHistory, habits, issues, sessions } from "../../../../data/crona-demo";
+import { activeDemoContext, checkIns, demoToday, habitHistory, habitsDueForDate, issuesDueForDate, sessions, type DemoContext } from "../../../../data/crona-demo";
 import CalendarSvg from "../components/CalendarSvg";
+import { issueStatusColor } from "../issue-status";
 
 const today = new Date();
 const date = today.toISOString().slice(0, 10);
-const fixtureDate = checkIns.at(0)?.date ?? date;
-const streamIssues = issues.filter((issue) => issue.streamId === 11 && issue.pinnedDaily);
-const streamHabits = habits.filter((habit) => habit.streamId === 11 && habit.active);
+const fixtureDate = demoToday;
+const streamHabits = habitsDueForDate(demoToday, activeDemoContext);
 const streamHabitIds = new Set(streamHabits.map((habit) => habit.id));
 const dayHistory = habitHistory.filter(
   (entry) => entry.date === fixtureDate && streamHabitIds.has(entry.habitId),
-);
-const resolvedIssues = streamIssues.filter(
-  (issue) => issue.status === "completed" || issue.status === "abandoned",
-).length;
-const issueEstimate = streamIssues.reduce(
-  (total, issue) => total + (issue.estimateMinutes ?? 0),
-  0,
-);
-const issueWorked = streamIssues.reduce(
-  (total, issue) =>
-    total +
-    sessions
-      .filter((session) => session.issueId === issue.id)
-      .reduce((sum, session) => sum + (session.durationSeconds ?? 0), 0),
-  0,
 );
 const completedHabits = dayHistory.filter((entry) => entry.status === "completed").length;
 const failedHabits = dayHistory.filter((entry) => entry.status === "failed").length;
@@ -35,8 +20,11 @@ const habitTarget = streamHabits.reduce((total, habit) => total + (habit.targetM
 const habitWorked = dayHistory.reduce((total, entry) => total + (entry.durationMinutes ?? 0), 0);
 const checkIn = checkIns.find((entry) => entry.date === fixtureDate);
 const weekNumber = (value: Date) => {
-  const start = new Date(Date.UTC(value.getUTCFullYear(), 0, 1));
-  return Math.ceil(((value.getTime() - start.getTime()) / 86400000 + start.getUTCDay() + 1) / 7);
+  const date = new Date(value);
+  const day = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  return Math.ceil(((date.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 };
 const weekStart = new Date(
   Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - today.getUTCDay()),
@@ -50,16 +38,30 @@ const displayDate = today.toLocaleDateString("en-GB", {
   year: "numeric",
   timeZone: "UTC",
 });
-const statusColor = (status: string) =>
-  status === "completed"
-    ? "var(--color-success)"
-    : status === "abandoned" || status === "blocked"
-      ? "var(--color-error)"
-      : status === "in_progress" || status === "in_review"
-        ? "var(--demo-accent)"
-        : "var(--color-warning)";
-
-export default function DailySummaryPane() {
+export default function DailySummaryPane({
+  context: _context,
+  dueDateOverrides = {},
+}: {
+  context?: DemoContext;
+  dueDateOverrides?: Record<number, string>;
+}) {
+  const visibleIssues = issuesDueForDate(demoToday, activeDemoContext, dueDateOverrides);
+  const resolvedIssues = visibleIssues.filter(
+    (issue) => issue.status === "done" || issue.status === "abandoned",
+  ).length;
+  const issueEstimate = visibleIssues.reduce(
+    (total, issue) => total + (issue.estimateMinutes ?? 0),
+    0,
+  );
+  const issueWorked = visibleIssues.reduce(
+    (total, issue) =>
+      total +
+      sessions
+        .filter((session) => session.issueId === issue.id)
+        .reduce((sum, session) => sum + (session.durationSeconds ?? 0), 0),
+    0,
+  );
+  const issueBarSegmentWidth = 144 / Math.max(visibleIssues.length, 1);
   return (
     <g className="tui-daily-summary">
       <text className="tui-summary__title" x="194" y="94">
@@ -69,7 +71,7 @@ export default function DailySummaryPane() {
         For {displayDate} · Week {weekNumber(today)}
       </text>
       <text className="tui-summary__muted" x="194" y="122">
-        Scope: All
+        Scope: {activeDemoContext ? `${activeDemoContext.repoName} / ${activeDemoContext.streamName}` : "All contexts"}
       </text>
       <text className="tui-summary__muted" x="194" y="136">
         [,] prev [.] next [g] today
@@ -78,20 +80,20 @@ export default function DailySummaryPane() {
         Issues
       </text>
       <text className="tui-summary__value" x="245" y="160">
-        {resolvedIssues}/{streamIssues.length} resolved
+        {resolvedIssues}/{visibleIssues.length} resolved
       </text>
       <text className="tui-summary__muted" x="325" y="160">
         {Math.floor(issueWorked / 60)}m/{issueEstimate}m
       </text>
       <rect className="tui-summary__bar-bg" x="380" y="151" width="144" height="10" />
-      {streamIssues.map((issue, index) => (
+      {visibleIssues.map((issue, index) => (
         <rect
           key={issue.id}
-          x={380 + index * (144 / Math.max(streamIssues.length, 1))}
+          x={380 + index * issueBarSegmentWidth}
           y="151"
-          width={144 / Math.max(streamIssues.length, 1)}
+          width={issueBarSegmentWidth}
           height="10"
-          fill={statusColor(issue.status)}
+          fill={issueStatusColor(issue.status)}
         />
       ))}
       <text className="tui-summary__muted" x="194" y="173">
