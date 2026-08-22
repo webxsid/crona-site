@@ -29,10 +29,9 @@ if (modal && openButtons.length) {
   let returnFocus = openButtons[0];
 
   const detectedPlatform = () => {
-    const platform = navigator.platform.toLowerCase();
     const userAgent = navigator.userAgent.toLowerCase();
-    if (platform.includes("win") || userAgent.includes("windows")) return "windows";
-    if (platform.includes("linux") || userAgent.includes("linux")) return "linux";
+    if (userAgent.includes("windows")) return "windows";
+    if (userAgent.includes("linux")) return "linux";
     return "macos";
   };
 

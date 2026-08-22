@@ -219,7 +219,7 @@ export const habits: Habit[] = [
   { id: 204, streamId: 21, name: "Review the queue", scheduleType: "daily", targetMinutes: 20, active: true },
 ];
 
-const legacySessions: Session[] = [
+export const legacySessions: Session[] = [
   {
     id: "session-301",
     issueId: 101,
@@ -240,7 +240,7 @@ const legacySessions: Session[] = [
   },
 ];
 
-const legacyHabitHistory: HabitHistoryEntry[] = [
+export const legacyHabitHistory: HabitHistoryEntry[] = [
   {
     id: 401,
     habitId: 201,
@@ -305,7 +305,7 @@ const legacyHabitHistory: HabitHistoryEntry[] = [
   })),
 ];
 
-const legacyCheckIns: DailyCheckIn[] = [
+export const legacyCheckIns: DailyCheckIn[] = [
   {
     date: "2026-08-21",
     mood: 4,
@@ -434,7 +434,7 @@ export const momentums: MomentumCard[] = [
   },
 ];
 
-const legacyMomentums: MomentumCard[] = [
+export const legacyMomentums: MomentumCard[] = [
   {
     id: "daily-reflection",
     name: "Daily reflection",
