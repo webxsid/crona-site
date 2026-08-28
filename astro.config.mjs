@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
+import { unified } from "@astrojs/markdown-remark";
 
 function remarkGithubCallouts() {
   const calloutTypes = new Set(["note", "tip", "important", "warning", "caution"]);
@@ -83,7 +84,9 @@ export default defineConfig({
   integrations: [mdx(), react()],
   adapter: cloudflare(),
   markdown: {
-    remarkPlugins: [remarkGithubCallouts],
+    processor: unified({
+      remarkPlugins: [remarkGithubCallouts],
+    }),
   },
   output: "server",
   site: "https://crona.work",

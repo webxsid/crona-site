@@ -1,0 +1,71 @@
+---
+import { demoToday } from "../../data/crona-demo";
+import { Settings } from "@lucide/astro";
+import "./MacPopoverDemo.scss";
+
+const dateLabel = new Intl.DateTimeFormat("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(new Date(`${demoToday}T12:00:00Z`));
+---
+
+<svg
+  class="mac-popover-demo"
+  viewBox="0 0 451 318"
+  role="img"
+  aria-labelledby="mac-popover-title mac-popover-description"
+>
+  <title id="mac-popover-title">Crona menu bar popup</title>
+  <desc id="mac-popover-description">The Crona Mac app showing its Issues tab and an empty daily focus state.</desc>
+  <defs>
+    <linearGradient id="mac-popover-shell" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#303238" />
+      <stop offset="1" stop-color="#292b2f" />
+    </linearGradient>
+    <linearGradient id="mac-popover-tab" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#4a4c53" />
+      <stop offset="1" stop-color="#3b3d43" />
+    </linearGradient>
+    <filter id="mac-popover-shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="12" flood-color="#000" flood-opacity=".48" stdDeviation="10" />
+    </filter>
+  </defs>
+
+  <g class="mac-popover-demo__shell" filter="url(#mac-popover-shadow)">
+    <rect x="20.5" y="9.5" width="428" height="297" rx="27" />
+    <rect class="mac-popover-demo__inner-border" x="21.5" y="10.5" width="426" height="295" rx="26" />
+  </g>
+
+  <g class="mac-popover-demo__toolbar">
+    <circle class="mac-popover-demo__round-button" cx="55" cy="48" r="15" />
+    <path d="M50 48h10M55 43v10" />
+
+    <rect class="mac-popover-demo__tabs" x="80" y="29" width="300" height="38" rx="19" />
+    <rect class="mac-popover-demo__active-tab" x="83" y="32" width="76" height="32" rx="16" />
+    <text x="121" y="53" text-anchor="middle">Issues</text>
+    <text class="is-muted" x="186" y="53" text-anchor="middle">Habits</text>
+    <text class="is-muted" x="267" y="53" text-anchor="middle">Wellbeing</text>
+    <text class="is-muted" x="348" y="53" text-anchor="middle">Stats</text>
+
+    <circle class="mac-popover-demo__round-button" cx="404" cy="48" r="15" />
+    <g class="mac-popover-demo__settings" transform="translate(395.5 39.5)">
+      <Settings size={17} stroke-width={1.8} aria-hidden="true" />
+    </g>
+  </g>
+
+  <g class="mac-popover-demo__date">
+    <circle cx="58" cy="96" r="5" />
+    <path d="M58 87v18M49 96h18" />
+    <text x="80" y="102">{dateLabel}</text>
+  </g>
+
+  <g class="mac-popover-demo__empty-state">
+    <rect x="34" y="121" width="392" height="172" rx="17" />
+    <circle cx="230" cy="181" r="10" />
+    <path d="m225 181 4 4 7-9" />
+    <text class="mac-popover-demo__empty-title" x="230" y="219" text-anchor="middle">Today is clear</text>
+    <text class="mac-popover-demo__empty-copy" x="230" y="244" text-anchor="middle">No planned focus issues for today.</text>
+  </g>
+</svg>

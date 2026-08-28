@@ -1,0 +1,386 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "./_releases/releases.scss";
+
+export const prerender = false;
+
+const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium", timeZone: "UTC" });
+const apps = {
+  core: {
+    label: "Crona core",
+    repoUrl: "https://github.com/webxsid/crona",
+    installUrl: "/#install",
+  },
+  macos: {
+    label: "Crona for macOS",
+    repoUrl: "https://github.com/webxsid/crona-macos",
+    installUrl: "/mac/",
+  },
+} as const;
+type AppId = keyof typeof apps;
+type ReleaseStatus = "stable" | "pre-release";
+type GitHubRelease = {
+  draft: boolean;
+  prerelease: boolean;
+  tag_name?: string | null;
+  name?: string | null;
+  html_url: string;
+  published_at?: string | null;
+  body?: string | null;
+};
+type ReleaseCard = {
+  app: AppId;
+  version: string;
+  title: string;
+  url: string;
+  publishedAt: Date | null;
+  status: ReleaseStatus;
+  summary: string;
+};
+
+const fallbackReleases: ReleaseCard[] = [
+  {
+    app: "core",
+    version: "v1.9.0-beta.4",
+    title: "Crona v1.9.0-beta.4",
+    url: `${apps.core.repoUrl}/releases/tag/v1.9.0-beta.4`,
+    publishedAt: new Date("2026-08-09"),
+    status: "pre-release",
+    summary:
+      "Makes same-day ad-hoc away mode reversible while preserving immutable historical away dates.",
+  },
+  {
+    app: "core",
+    version: "v1.9.0-beta.3",
+    title: "Crona v1.9.0-beta.3",
+    url: `${apps.core.repoUrl}/releases/tag/v1.9.0-beta.3`,
+    publishedAt: new Date("2026-08-09"),
+    status: "pre-release",
+    summary: "Fixes Momentum continuity across protected away and rest days.",
+  },
+  {
+    app: "core",
+    version: "v1.9.0-beta.2",
+    title: "Crona v1.9.0-beta.2",
+    url: `${apps.core.repoUrl}/releases/tag/v1.9.0-beta.2`,
+    publishedAt: new Date("2026-08-09"),
+    status: "pre-release",
+    summary:
+      "Makes Pomodoro break deferral daemon-authoritative and advances the local IPC protocol to 1.3.",
+  },
+  {
+    app: "core",
+    version: "v1.9.0-beta.1",
+    title: "Crona v1.9.0-beta.1",
+    url: `${apps.core.repoUrl}/releases/tag/v1.9.0-beta.1`,
+    publishedAt: new Date("2026-08-05"),
+    status: "pre-release",
+    summary:
+      "Adds Pomodoro segment advance handling and the shared timer contract behind current clients.",
+  },
+  {
+    app: "macos",
+    version: "v1.0.0-beta.11",
+    title: "Crona for macOS v1.0.0-beta.11",
+    url: `${apps.macos.repoUrl}/releases/tag/v1.0.0-beta.11`,
+    publishedAt: new Date("2026-08-14"),
+    status: "pre-release",
+    summary:
+      "Adds configurable floating-timer size and position, live preview, and reliable empty-day wellbeing check-ins.",
+  },
+  {
+    app: "macos",
+    version: "v1.0.0-beta.10",
+    title: "Crona for macOS v1.0.0-beta.10",
+    url: `${apps.macos.repoUrl}/releases/tag/v1.0.0-beta.10`,
+    publishedAt: new Date("2026-08-13"),
+    status: "pre-release",
+    summary:
+      "Brings issue quick-create, daily wellbeing check-ins, and the optional floating timer HUD to the menu-bar app.",
+  },
+  {
+    app: "macos",
+    version: "v1.0.0-beta.9",
+    title: "Crona for macOS v1.0.0-beta.9",
+    url: `${apps.macos.repoUrl}/releases/tag/v1.0.0-beta.9`,
+    publishedAt: new Date("2026-08-09"),
+    status: "pre-release",
+    summary:
+      "Moves break deferral and away-day semantics to the daemon-owned protocol 1.3 workflow.",
+  },
+  {
+    app: "macos",
+    version: "v1.0.0-beta.8",
+    title: "Crona for macOS v1.0.0-beta.8",
+    url: `${apps.macos.repoUrl}/releases/tag/v1.0.0-beta.8`,
+    publishedAt: new Date("2026-08-05"),
+    status: "pre-release",
+    summary: "Adds activity-based break-screen deferral with capped session extensions.",
+  },
+];
+const fallbackStable: Partial<Record<AppId, ReleaseCard>> = {
+  core: {
+    app: "core",
+    version: "v1.8.0",
+    title: "Crona v1.8.0",
+    url: `${apps.core.repoUrl}/releases/tag/v1.8.0`,
+    publishedAt: new Date("2026-07-29"),
+    status: "stable",
+    summary: "Adds day-boundary scheduling and a stepped TUI editor.",
+  },
+};
+
+function summaryFromReleaseBody(body = "") {
+  const text = body
+    .replace(/\r/g, "")
+    .replace(/^#{1,6}\s+.*$/gm, "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/[`*_>]/g, "");
+  const candidate = text
+    .split(/\n{2,}/)
+    .map((block) =>
+      block
+        .replace(/^[-*+]\s+/, "")
+        .replace(/\s+/g, " ")
+        .trim(),
+    )
+    .find((block) => block.length > 18 && !/^(added|changed|fixed|release|version)$/i.test(block));
+  return candidate
+    ? candidate.length > 185
+      ? `${candidate.slice(0, 184).trimEnd()}…`
+      : candidate
+    : "View release notes on GitHub.";
+}
+
+async function loadAppReleases(app: AppId) {
+  try {
+    const response = await fetch(
+      `${apps[app].repoUrl.replace("https://github.com", "https://api.github.com/repos")}/releases?per_page=20`,
+      { headers: { Accept: "application/vnd.github+json", "User-Agent": "crona-site" } },
+    );
+    if (!response.ok) throw new Error("release request failed");
+    return ((await response.json()) as GitHubRelease[])
+      .filter((release) => !release.draft)
+      .map((release): ReleaseCard => ({
+        app,
+        version: release.tag_name ?? release.name ?? "Release",
+        title: release.name?.trim() || release.tag_name || "Release",
+        url: release.html_url,
+        publishedAt: release.published_at ? new Date(release.published_at) : null,
+        status: release.prerelease ? "pre-release" : "stable",
+        summary: summaryFromReleaseBody(release.body ?? ""),
+      }));
+  } catch {
+    return fallbackReleases
+      .filter((release) => release.app === app)
+      .concat(fallbackStable[app] ? [fallbackStable[app]] : []);
+  }
+}
+
+const [coreReleases, macosReleases] = await Promise.all([
+  loadAppReleases("core"),
+  loadAppReleases("macos"),
+]);
+const allReleases = [...coreReleases, ...macosReleases];
+const timeline = (Object.keys(apps) as AppId[])
+  .flatMap((app) => allReleases.filter((release) => release.app === app).slice(0, 4))
+  .sort((a, b) => (b.publishedAt?.getTime() ?? 0) - (a.publishedAt?.getTime() ?? 0));
+const latestFor = (app: AppId, status: ReleaseStatus) =>
+  allReleases.find((release) => release.app === app && release.status === status) ??
+  (status === "stable"
+    ? fallbackStable[app]
+    : fallbackReleases.find((release) => release.app === app));
+const timelineDays = timeline.reduce<{ key: string; date: Date | null; releases: ReleaseCard[] }[]>(
+  (days, release) => {
+    const key = release.publishedAt?.toISOString().slice(0, 10) ?? "undated";
+    const day = days.find((candidate) => candidate.key === key);
+    if (day) day.releases.push(release);
+    else days.push({ key, date: release.publishedAt, releases: [release] });
+    return days;
+  },
+  [],
+);
+const siteUrl = Astro.site ?? new URL("https://crona.work");
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=0, s-maxage=300, stale-while-revalidate=600",
+);
+---
+
+<BaseLayout
+  title="Releases"
+  pageTitle="Crona releases"
+  description="Track the latest core Crona and Crona for macOS releases in one place."
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Crona releases",
+    url: new URL("/releases/", siteUrl).href,
+  }}
+>
+  <section class="container section releases-page">
+    <header class="releases-header">
+      <div class="releases-header__intro">
+        <p class="releases-kicker">Ship log / core + macOS</p>
+        <h1>Crona core and macOS releases.</h1>
+        <p class="releases-header__lede">
+          Install the current build or read the notes behind each change.
+        </p>
+      </div>
+      <nav class="releases-header__nav" aria-label="Release page sections">
+        <a href="#current">Current builds <span aria-hidden="true">↓</span></a>
+        <a href="#release-timeline">Recent notes <span aria-hidden="true">↓</span></a>
+      </nav>
+    </header>
+
+    <section class="release-versions" id="current" aria-labelledby="latest-versions">
+      <div class="release-versions__heading">
+        <p class="releases-kicker">Current builds</p>
+      </div>
+      <div class="release-versions__table-wrap">
+        <table>
+          <thead>
+            <tr
+              ><th scope="col">Surface</th><th scope="col">Stable</th><th scope="col">Beta</th><th
+                scope="col">Latest published</th
+              ><th scope="col">Action</th></tr
+            >
+          </thead>
+          <tbody>
+            {
+              (Object.keys(apps) as AppId[]).map((app) => {
+                const stable = latestFor(app, "stable");
+                const beta = latestFor(app, "pre-release");
+                const current = beta ?? stable;
+                return (
+                  <tr>
+                    <th scope="row">
+                      <>
+                        <span class="release-table__index">{app === "core" ? "01" : "02"}</span>
+                        <span>{apps[app].label}</span>
+                        <small>{app === "core" ? "Terminal + TUI" : "Native Mac client"}</small>
+                      </>
+                    </th>
+                    <td>
+                      {stable ? (
+                        <a class="release-table__version" href={stable.url} rel="noreferrer">
+                          {stable.version}
+                        </a>
+                      ) : (
+                        <span class="release-table__unavailable">—</span>
+                      )}
+                    </td>
+                    <td>
+                      {beta ? (
+                        <a
+                          class="release-table__version release-table__version--beta"
+                          href={beta.url}
+                          rel="noreferrer"
+                        >
+                          {beta.version}
+                        </a>
+                      ) : (
+                        <span class="release-table__unavailable">—</span>
+                      )}
+                    </td>
+                    <td>
+                      {current?.publishedAt ? dateFormatter.format(current.publishedAt) : "—"}
+                    </td>
+                    <td>
+                      <a class="button" href={apps[app].installUrl}>
+                        {app === "core" ? "Install core" : "Get the Mac app"}
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    </td>
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="releases-actions">
+      <a class="button button--secondary" href={`${apps.core.repoUrl}/releases`} rel="noreferrer"
+        >All core releases</a
+      ><a class="button button--secondary" href={`${apps.macos.repoUrl}/releases`} rel="noreferrer"
+        >All macOS releases</a
+      >
+    </div>
+    <section
+      class:list={{
+        "releases-timeline": true,
+        "page-body": true,
+        "is-empty": timeline.length === 0,
+      }}
+      id="release-timeline"
+      aria-labelledby="release-timeline-heading"
+    >
+      <div class="releases-timeline__heading">
+        <h2 id="release-timeline-heading">Release timeline</h2><p>
+          The latest four builds from each surface, grouped by publishing day.
+        </p>
+      </div>
+      {
+        timelineDays.length > 0 ? (
+          timelineDays.map((day) => (
+            <section class="release-day">
+              <>
+                <header class="release-day__date">
+                  {day.date ? (
+                    <time datetime={day.date.toISOString()}>{dateFormatter.format(day.date)}</time>
+                  ) : (
+                    "Date unavailable"
+                  )}
+                </header>
+                <div class="release-day__items">
+                  {day.releases.map((release) => (
+                    <article
+                      class:list={[
+                        "release-row",
+                        { "is-prerelease": release.status === "pre-release" },
+                      ]}
+                    >
+                      <div class="release-row__identity">
+                        <span class="release-row__app">{apps[release.app].label}</span>
+                        <span
+                          class:list={[
+                            "release-row__channel",
+                            { "is-prerelease": release.status === "pre-release" },
+                          ]}
+                        >
+                          {release.status === "pre-release" ? "Beta" : "Stable"}
+                        </span>
+                      </div>
+                      <div class="release-row__body">
+                        <h3>
+                          <a href={release.url} rel="noreferrer">
+                            {release.title}
+                          </a>
+                        </h3>
+                        <p>{release.summary}</p>
+                      </div>
+                      <div class="release-row__action">
+                        <a href={release.url} rel="noreferrer">
+                          Notes <span aria-hidden="true">↗</span>
+                        </a>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </>
+            </section>
+          ))
+        ) : (
+          <div class="releases-empty">
+            <>
+              <h2>Release notes are temporarily unavailable</h2>
+              <p>You can still check GitHub for the latest builds.</p>
+            </>
+          </div>
+        )
+      }
+    </section>
+  </section>
+</BaseLayout>

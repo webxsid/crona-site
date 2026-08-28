@@ -74,6 +74,11 @@
   outline: none;
 }
 
+.site-header__nav a:has(.site-header__stars):hover,
+.site-header__nav a:has(.site-header__stars):focus-visible {
+  border-color: var(--color-accent);
+}
+
 @media (max-width: 720px) {
   .site-header__inner { gap: 16px; justify-content: space-between; }
   .site-header__menu-toggle { display: block; }

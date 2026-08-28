@@ -1,0 +1,108 @@
+.mac-popover-demo {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  overflow: visible;
+  width: 100%;
+}
+
+.mac-popover-demo__shell rect:first-child {
+  fill: url("#mac-popover-shell");
+  stroke: #17191c;
+  stroke-width: 1;
+}
+
+.mac-popover-demo__inner-border {
+  fill: none;
+  stroke: rgba(122, 128, 178, .62);
+  stroke-width: 1;
+}
+
+.mac-popover-demo__toolbar text,
+.mac-popover-demo__date text,
+.mac-popover-demo__empty-state text {
+  fill: #f0f1f3;
+  font-family: var(--font-sans);
+  font-weight: 650;
+}
+
+.mac-popover-demo__toolbar text {
+  font-size: 13px;
+}
+
+.mac-popover-demo__toolbar .is-muted {
+  fill: #a3a5aa;
+}
+
+.mac-popover-demo__tabs {
+  fill: rgba(64, 66, 72, .72);
+  stroke: rgba(110, 113, 122, .5);
+}
+
+.mac-popover-demo__active-tab {
+  fill: url("#mac-popover-tab");
+  stroke: rgba(151, 153, 164, .34);
+}
+
+.mac-popover-demo__round-button {
+  fill: #4a4c52;
+}
+
+.mac-popover-demo__toolbar path,
+.mac-popover-demo__toolbar circle:not(.mac-popover-demo__round-button) {
+  fill: none;
+  stroke: #c3c5c9;
+  stroke-linecap: round;
+  stroke-width: 1.6;
+}
+
+.mac-popover-demo__settings {
+  color: #c3c5c9;
+}
+
+.mac-popover-demo__settings svg {
+  display: block;
+  height: 17px;
+  width: 17px;
+}
+
+.mac-popover-demo__date circle,
+.mac-popover-demo__date path {
+  fill: none;
+  stroke: #f2c900;
+  stroke-linecap: round;
+  stroke-width: 1.25;
+}
+
+.mac-popover-demo__date text {
+  font-size: 16px;
+}
+
+.mac-popover-demo__empty-state rect {
+  fill: #303337;
+  stroke: #45484d;
+}
+
+.mac-popover-demo__empty-state circle {
+  fill: none;
+  stroke: #aeb1b5;
+  stroke-width: 2;
+}
+
+.mac-popover-demo__empty-state path {
+  fill: none;
+  stroke: #aeb1b5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.mac-popover-demo__empty-title {
+  font-size: 16px;
+}
+
+.mac-popover-demo__empty-copy {
+  fill: #a3a5aa !important;
+  font-size: 12px;
+  font-weight: 500 !important;
+}

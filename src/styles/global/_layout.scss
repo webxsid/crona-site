@@ -10,16 +10,9 @@
   overflow: clip;
 }
 
-.site-buffer[data-route]:not([data-route="/"])::before {
-  border-bottom: 1px solid var(--color-line);
-  color: var(--color-muted);
-  content: "cd " attr(data-route);
-  display: block;
-  font-family: var(--font-mono);
-  font-size: .72rem;
-  padding: 10px max(var(--gutter), calc((100vw - var(--max-width)) / 2 + var(--gutter)));
-}
 
 @media (max-width: 720px) {
-  .site-buffer { overflow: visible; }
+  .site-buffer {
+    overflow: visible;
+  }
 }

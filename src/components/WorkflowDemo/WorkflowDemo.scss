@@ -301,12 +301,18 @@
   }
 
   .workflow-demo__stage {
-    flex: 1 1 auto;
+    align-self: center;
+    aspect-ratio: 16 / 9;
+    flex: 0 0 auto;
+    height: auto;
     min-height: 0;
+    max-width: 100%;
+    width: 100%;
   }
 
   .workflow-demo__scene {
-    object-fit: contain;
+    height: 100%;
+    width: 100%;
   }
 }
 

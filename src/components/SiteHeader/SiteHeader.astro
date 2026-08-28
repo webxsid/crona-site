@@ -11,7 +11,7 @@ const links = [
   { href: "/#install", label: "Install" },
   { href: "https://docs.crona.work/", label: "Docs", external: true },
   { href: "/mac/", label: "Mac app" },
-  { href: "/changelog/", label: "Releases" },
+  { href: "/releases/", label: "Releases" },
   { href: "https://github.com/webxsid/crona", label: "GitHub" },
 ];
 
@@ -52,7 +52,7 @@ const current = normalizePath(currentPath);
               class:list={{ "is-active": isActive }}
               href={link.href}
               aria-current={isActive ? "page" : undefined}
-              {...(link.href.startsWith("http") ? { rel: "noreferrer" } : {})}
+              {...(link.href.startsWith("http") ? { rel: "noreferrer", ...(link.label === "GitHub" ? { target: "_blank" } : {}) } : {})}
             >
               {link.label === "GitHub" ? <><span>{link.label}</span><span class="site-header__stars" aria-label={`${githubStars} GitHub stars`}>★ {githubStars}</span></> : link.label}
             </a>

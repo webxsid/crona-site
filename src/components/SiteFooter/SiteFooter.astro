@@ -8,24 +8,44 @@ interface Props {
 
 const { currentPath = "/" } = Astro.props as Props;
 
-const links = [
+const primaryLinks = [
+  { href: "https://docs.crona.work/", label: "Docs", external: true },
+  { href: "/mac/", label: "Mac app" },
+  { href: "/releases/", label: "Releases" },
+  { href: "/support/", label: "Support" },
+];
+
+const secondaryLinks = [
   { href: "/privacy/", label: "Privacy" },
   { href: "https://github.com/webxsid/crona", label: "GitHub", external: true },
 ];
 ---
 
 <footer class="site-footer">
-  <div class="site-footer__wordmark"><CronaWordmark /></div>
-  <p class="site-footer__path">~/crona{currentPath === "/" ? "" : currentPath}</p>
-  <p class="site-footer__hint">static buffer</p>
-  <div class="site-footer__links">
-    {
-      links.map((link) => (
-        <a class:list={{ "external-link": Boolean(link.external) }} href={link.href} {...(link.external ? { rel: "noreferrer" } : {})}>
-          {link.label}
-        </a>
-      ))
-    }
-    <a class="external-link" href="https://webxsid.com" rel="noreferrer">sid</a>
+  <div class="site-footer__main">
+    <a class="site-footer__wordmark" href="/" aria-label="Crona home"><CronaWordmark /></a>
+    <nav class="site-footer__nav" aria-label="Footer navigation">
+      {
+        primaryLinks.map((link) => (
+          <a class:list={{ "external-link": Boolean(link.external) }} href={link.href} {...(link.external ? { rel: "noreferrer" } : {})}>
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="site-footer__links">
+      {
+        secondaryLinks.map((link) => (
+          <a class:list={{ "external-link": Boolean(link.external) }} href={link.href} {...(link.external ? { rel: "noreferrer" } : {})}>
+            {link.label}
+          </a>
+        ))
+      }
+      <a class="external-link" href="https://webxsid.com" rel="noreferrer">sid</a>
+    </div>
+  </div>
+  <div class="site-footer__status">
+    <p class="site-footer__path">~/crona{currentPath === "/" ? "" : currentPath}</p>
+    <p class="site-footer__hint">local-first · no account required</p>
   </div>
 </footer>
