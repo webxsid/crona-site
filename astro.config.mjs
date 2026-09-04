@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, sessionDrivers } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
@@ -83,6 +83,9 @@ function remarkGithubCallouts() {
 export default defineConfig({
   integrations: [mdx(), react()],
   adapter: cloudflare(),
+  session: {
+    driver: sessionDrivers.lruCache(),
+  },
   markdown: {
     processor: unified({
       remarkPlugins: [remarkGithubCallouts],
