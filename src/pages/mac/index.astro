@@ -11,7 +11,7 @@ const releases = await loadGitHubReleases(repoUrl).catch(() => []);
 const latest = releases.find((release) => release.prerelease && release.assets?.some((asset) => /-macOS\.dmg$/i.test(asset.name)));
 const dmg = latest?.assets?.find((asset) => /-macOS\.dmg$/i.test(asset.name));
 const version = latest?.tag_name ?? "Latest beta";
-const description = "Crona for macOS keeps focus, issue capture, wellbeing, and break prompts close at hand while sharing the same local runtime as Crona core.";
+const description = "Make the workday readable from the menu bar with Crona for macOS, backed by the same local runtime as Crona core.";
 ---
 
 <MacLayout title="Keep the workday visible" description={description} structuredData={latest && dmg ? { "@context": "https://schema.org", "@type": "SoftwareApplication", name: "Crona for macOS", applicationCategory: "ProductivityApplication", operatingSystem: "macOS 14.0 or later", softwareVersion: version, downloadUrl: dmg.browser_download_url, url: "https://crona.work/mac/" } : undefined}>

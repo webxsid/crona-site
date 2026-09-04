@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
 
-const staticPaths = ["/", "/docs/", "/mac/", "/support/", "/privacy/", "/releases/"];
+const staticPaths = ["/", "/mac/", "/support/", "/privacy/", "/releases/"];
 
 function escapeXml(value: string) {
   return value
@@ -14,11 +13,7 @@ function escapeXml(value: string) {
 
 export const GET: APIRoute = async ({ site }) => {
   const baseUrl = site ?? new URL("https://crona.work");
-  const docs = await getCollection("docs");
-  const urls = [
-    ...staticPaths,
-    ...docs.map((doc) => `/docs/${doc.id}/`),
-  ].map((path) => new URL(path, baseUrl).href);
+  const urls = staticPaths.map((path) => new URL(path, baseUrl).href);
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
