@@ -1,12 +1,9 @@
 ---
 import "./CronaWordmark.scss";
+import CronaMark from "../CronaMark/CronaMark.astro";
 ---
 
 <div class="crona-wordmark" role="img" aria-label="Crona">
-  <pre aria-hidden="true"> ██████╗██████╗  ██████╗ ███╗   ██╗ █████╗
-██╔════╝██╔══██╗██╔═══██╗████╗  ██║██╔══██╗
-██║     ██████╔╝██║   ██║██╔██╗ ██║███████║
-██║     ██╔══██╗██║   ██║██║╚██╗██║██╔══██║
-╚██████╗██║  ██║╚██████╔╝██║ ╚████║██║  ██║
- ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝</pre>
+  <CronaMark class="crona-wordmark__mark" decorative />
+  <span class="crona-wordmark__text">Crona</span>
 </div>

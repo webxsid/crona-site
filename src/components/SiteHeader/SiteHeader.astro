@@ -1,5 +1,6 @@
 ---
 import "./SiteHeader.scss";
+import CronaMark from "../CronaMark/CronaMark.astro";
 
 interface Props {
   currentPath?: string;
@@ -35,7 +36,8 @@ const current = normalizePath(currentPath);
 <header class="site-header">
   <div class="site-header__inner">
     <a class="site-header__brand" href="/" aria-label="Crona home" aria-current={current === "/" ? "page" : undefined}>
-      <span>&gt; crona</span>
+      <CronaMark class="site-header__mark" decorative />
+      <span>Crona</span>
     </a>
     <button class="site-header__menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-site-menu-toggle>
       <span class="site-header__menu-icon" aria-hidden="true"><i></i><i></i></span>

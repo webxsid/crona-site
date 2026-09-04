@@ -17,14 +17,17 @@
 }
 
 .site-header__brand {
+  align-items: center;
   color: var(--color-accent-strong);
-  font-family: var(--font-mono);
-  font-size: .88rem;
+  display: inline-flex;
+  font-family: var(--font-sans);
+  font-size: .98rem;
   font-weight: 500;
+  gap: 8px;
   white-space: nowrap;
 }
 
-.site-header__brand::first-letter { color: var(--color-accent); }
+.site-header__mark { height: 22px; width: 24px; }
 
 .site-header__nav {
   display: flex;

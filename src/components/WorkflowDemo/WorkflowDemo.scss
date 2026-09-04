@@ -215,16 +215,10 @@
   padding: 7px 10px;
 }
 
-.workflow-demo__status span:first-child {
-  color: var(--color-accent-strong);
-}
-
 .workflow-demo__controls {
   align-items: center;
-  border-bottom: 1px solid var(--demo-line);
   display: flex;
   gap: 10px;
-  padding: 8px 10px;
 }
 
 .workflow-demo__controls button {

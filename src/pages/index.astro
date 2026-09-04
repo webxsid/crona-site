@@ -15,7 +15,7 @@ import "./_home/index.scss";
       "@type": "Organization",
       name: "Crona",
       url: "https://crona.work",
-      logo: "https://crona.work/logos/Logo Dark.png",
+      logo: "https://crona.work/brand/marks/crona-dark.svg",
       sameAs: ["https://github.com/webxsid/crona"],
     },
     {
@@ -126,7 +126,7 @@ import "./_home/index.scss";
   <section class="home-local home-reveal" aria-labelledby="local-title">
     <div class="home-local__copy">
       <span class="home-features__context">crona / runtime</span>
-      <h2 id="local-title">One engine. Every surface stays in step.</h2>
+      <h2 id="local-title"><button class="home-local__lotr" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="lotr-overlay" data-lotr-toggle>One engine to rule them all.</button></h2>
       <p>
         Crona keeps issues, sessions, habits, and history in one local SQLite record. The TUI, CLI,
         and Mac app talk to the same daemon, so there is no second workspace to reconcile.
@@ -173,10 +173,8 @@ import "./_home/index.scss";
         The clients talk to the daemon. The daemon owns the record.
       </p>
       <div class="home-local__runtime-meta">
-        <p class="home-local__status">socket: local · storage: sqlite · network: not required by default</p>
-        <p class="home-local__telemetry">
-          <span>telemetry: opt-in</span> · anonymous diagnostics via PostHog · work data stays local ·
-          <a href="/privacy/#telemetry">privacy <span aria-hidden="true">→</span></a>
+        <p class="home-local__status">
+          socket: local · storage: sqlite · network: not required by default
         </p>
       </div>
     </div>
@@ -186,6 +184,33 @@ import "./_home/index.scss";
       >
     </div>
   </section>
+
+  <div class="home-lotr-overlay" id="lotr-overlay" data-lotr-overlay hidden>
+    <div class="home-lotr-overlay__backdrop" data-lotr-close></div>
+    <section
+      class="home-lotr-overlay__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lotr-overlay-title"
+      tabindex="-1"
+    >
+      <button class="home-lotr-overlay__close" type="button" aria-label="Close easter egg" data-lotr-close>
+        <span aria-hidden="true">×</span>
+      </button>
+      <div class="home-lotr-overlay__light" aria-hidden="true"></div>
+      <div class="home-lotr-overlay__reveal">
+        <img class="home-lotr-overlay__ring" src="/assets/easter-egg/one-ring.png" alt="" />
+        <p class="home-lotr-overlay__quote" id="lotr-overlay-title">
+          <span>One Ring to rule them all,</span>
+          <span>One Ring to find them,</span>
+          <span>One Ring to bring them all</span>
+          <span>and in the darkness bind them</span>
+        </p>
+      </div>
+      <div class="home-lotr-overlay__countdown" aria-hidden="true"><span></span></div>
+      <p class="home-lotr-overlay__countdown-label">This easter egg closes automatically.</p>
+    </section>
+  </div>
 
   <section class="home-closing home-reveal" aria-labelledby="closing-title">
     <div class="home-closing__copy">

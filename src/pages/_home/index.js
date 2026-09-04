@@ -1,6 +1,48 @@
 const modal = document.querySelector("[data-install-modal]");
 const openButtons = [...document.querySelectorAll("[data-install-open]")];
 
+const lotrToggle = document.querySelector("[data-lotr-toggle]");
+const lotrOverlay = document.querySelector("[data-lotr-overlay]");
+const lotrDialog = lotrOverlay?.querySelector("[role=dialog]");
+const lotrCloseButtons = lotrOverlay ? [...lotrOverlay.querySelectorAll("[data-lotr-close]")] : [];
+let lotrReturnFocus;
+let lotrAutoCloseTimer;
+let lotrCloseTimer;
+
+if (lotrToggle instanceof HTMLButtonElement && lotrOverlay instanceof HTMLElement && lotrDialog instanceof HTMLElement) {
+  const closeLotrOverlay = () => {
+    if (lotrOverlay.hidden) return;
+    window.clearTimeout(lotrAutoCloseTimer);
+    window.clearTimeout(lotrCloseTimer);
+    lotrToggle.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("has-lotr-overlay");
+    lotrOverlay.classList.add("is-closing");
+    lotrCloseTimer = window.setTimeout(() => {
+      lotrOverlay.hidden = true;
+      lotrOverlay.classList.remove("is-closing");
+      lotrReturnFocus?.focus();
+    }, 420);
+  };
+
+  const openLotrOverlay = () => {
+    window.clearTimeout(lotrAutoCloseTimer);
+    window.clearTimeout(lotrCloseTimer);
+    lotrReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : lotrToggle;
+    lotrOverlay.classList.remove("is-closing");
+    lotrOverlay.hidden = false;
+    lotrToggle.setAttribute("aria-expanded", "true");
+    document.body.classList.add("has-lotr-overlay");
+    lotrDialog.focus();
+    lotrAutoCloseTimer = window.setTimeout(closeLotrOverlay, 10000);
+  };
+
+  lotrToggle.addEventListener("click", openLotrOverlay);
+  lotrCloseButtons.forEach((button) => button.addEventListener("click", closeLotrOverlay));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !lotrOverlay.hidden) closeLotrOverlay();
+  });
+}
+
 const revealSections = [...document.querySelectorAll(".home-reveal")];
 if (revealSections.length) {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");

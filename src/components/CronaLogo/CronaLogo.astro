@@ -1,4 +1,6 @@
 ---
+import CronaMark from "../CronaMark/CronaMark.astro";
+
 interface Props {
   class?: string;
   decorative?: boolean;
@@ -12,11 +14,4 @@ const {
 } = Astro.props as Props;
 ---
 
-<img
-  class={className}
-  src="/logos/Logo Dark.png"
-  alt={decorative ? "" : title}
-  aria-hidden={decorative ? "true" : undefined}
-  loading="eager"
-  decoding="async"
-/>
+<CronaMark class={className} decorative={decorative} title={title} />

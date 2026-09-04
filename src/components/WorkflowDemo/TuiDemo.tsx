@@ -11,6 +11,9 @@ function Player() {
   const frame = useRef<number | undefined>(undefined);
   const { setFooterActions } = useTui();
   useEffect(() => {
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) setPlaying(true);
+  }, []);
+  useEffect(() => {
     if (!playing) return;
     const tick = () => {
       setElapsed((value) => {
@@ -120,17 +123,16 @@ function Player() {
           dueDates={dueDates}
         />
       </div>
-      <div className="workflow-demo__status" aria-live="polite">
-        <span>Open TUI</span>
-        <span>{`00:${String(Math.floor(elapsed / 1000)).padStart(2, "0")}`}</span>
-      </div>
-      <div className="workflow-demo__controls" aria-label="Workflow controls">
-        <button type="button" onClick={() => setPlaying((value) => !value)}>
-          {playing ? "pause" : "play"}
-        </button>
-        <button type="button" onClick={restart}>
-          replay
-        </button>
+      <div className="workflow-demo__status" aria-label="Workflow playback">
+        <div className="workflow-demo__controls">
+          <button type="button" aria-label={playing ? "Pause workflow" : "Play workflow"} onClick={() => setPlaying((value) => !value)}>
+            {playing ? "pause" : "play"}
+          </button>
+          <button type="button" aria-label="Replay workflow" onClick={restart}>
+            replay
+          </button>
+        </div>
+        <span aria-live="polite">{`00:${String(Math.floor(elapsed / 1000)).padStart(2, "0")}`}</span>
       </div>
       <div
         className="workflow-demo__flows"

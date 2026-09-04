@@ -1,6 +1,7 @@
 ---
 import "../styles/global/global.scss";
 import "./_mac/mac-layout.scss";
+import macIcon from "../assets/companion/crona-mac-icon.png";
 
 interface Props {
   title: string;
@@ -33,14 +34,15 @@ const documentTitle = `${title} | Crona for macOS`;
     <meta name="twitter:title" content={documentTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL("/social/crona-og.png", siteUrl).href} />
-    <link rel="icon" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="/brand/marks/crona-dark.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/icons/crona-dark-32.png" />
     <title>{documentTitle}</title>
     {structuredData && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
   </head>
   <body class="mac-site">
     <div class="mac-shell">
       <header class="mac-header">
-        <a class="mac-header__brand" href="/mac/" aria-label="Crona for macOS home"><span class="mac-header__dot"></span>Crona for macOS</a>
+        <a class="mac-header__brand" href="/mac/" aria-label="Crona for macOS home"><img class="mac-header__mark" src={macIcon.src} alt="" aria-hidden="true" />Crona for macOS</a>
         <button class="mac-header__menu-toggle" type="button" aria-expanded="false" aria-controls="mac-navigation" data-mac-menu-toggle>
           <span class="mac-header__menu-icon" aria-hidden="true"><i></i><i></i></span>
           <span class="sr-only">Open navigation</span>
@@ -54,7 +56,7 @@ const documentTitle = `${title} | Crona for macOS`;
       </header>
       <main><slot /></main>
       <footer class="mac-footer">
-        <a class="mac-footer__brand" href="/mac/">Crona for macOS</a>
+        <a class="mac-footer__brand" href="/mac/"><img class="mac-footer__mark" src={macIcon.src} alt="" aria-hidden="true" />Crona for macOS</a>
         <span>One local runtime. A calmer way to stay close to the work.</span>
         <nav aria-label="Footer navigation"><a href="/privacy/">Privacy</a><a href="https://github.com/webxsid/crona-macos" rel="noreferrer">GitHub</a><a href="/">Crona core</a></nav>
       </footer>

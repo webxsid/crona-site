@@ -36,10 +36,20 @@
 
 .mac-header__brand,
 .mac-footer__brand {
+  align-items: center;
   color: var(--mac-ink);
+  display: inline-flex;
   font-size: .95rem;
-  font-weight: 650;
+  font-weight: 500;
+  gap: 8px;
   letter-spacing: -.02em;
+}
+
+.mac-header__mark,
+.mac-footer__mark {
+  border-radius: 6px;
+  height: 22px;
+  width: 24px;
 }
 
 .mac-header__dot {

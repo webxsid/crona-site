@@ -1,2 +1,3 @@
-.crona-wordmark { color: var(--color-accent-strong); min-width: 0; }
-.crona-wordmark pre { font: 600 clamp(.32rem, .62vw, .56rem) / 1.08 var(--font-mono); letter-spacing: -.07em; margin: 0; overflow: hidden; white-space: pre; }
+.crona-wordmark { align-items: center; color: var(--color-accent-strong); display: inline-flex; gap: 10px; min-width: 0; }
+.crona-wordmark__mark { flex: 0 0 auto; height: 30px; width: 32px; }
+.crona-wordmark__text { font-family: var(--font-sans); font-size: 1rem; font-weight: 500; letter-spacing: -.04em; }
