@@ -25,7 +25,7 @@ const {
   structuredData,
 } = Astro.props;
 
-const documentTitle = pageTitle ?? (title === "Crona" ? "Crona | Local-first work tracking for developers" : `${title} | Crona`);
+const documentTitle = pageTitle ?? (title === "Crona" ? "Crona | Make the workday readable" : `${title} | Crona`);
 const siteUrl = Astro.site ?? new URL("https://crona.work");
 const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : new URL(Astro.url.pathname, siteUrl).href;
 const imageUrl = new URL(image ?? "/social/crona-og.png", siteUrl).href;
