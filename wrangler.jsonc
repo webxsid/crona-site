@@ -1,5 +1,5 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "crona-site-beta",
+  "name": "crona-site",
   "compatibility_date": "2026-05-03",
 }
