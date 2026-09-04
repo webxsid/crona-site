@@ -89,5 +89,5 @@ export default defineConfig({
     }),
   },
   output: "server",
-  site: "https://crona.work",
+  site: "https://crona-site-beta.autumn-frost-c223.workers.dev",
 });
