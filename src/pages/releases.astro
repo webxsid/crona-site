@@ -41,13 +41,13 @@ type ReleaseCard = {
 const fallbackReleases: ReleaseCard[] = [
   {
     app: "core",
-    version: "v1.9.0-beta.4",
-    title: "Crona v1.9.0-beta.4",
-    url: `${apps.core.repoUrl}/releases/tag/v1.9.0-beta.4`,
-    publishedAt: new Date("2026-08-09"),
+    version: "v1.9.0-beta.9",
+    title: "Crona v1.9.0-beta.9",
+    url: `${apps.core.repoUrl}/releases/tag/v1.9.0-beta.9`,
+    publishedAt: new Date("2026-09-04"),
     status: "pre-release",
     summary:
-      "Makes same-day ad-hoc away mode reversible while preserving immutable historical away dates.",
+      "Keeps the latest daemon and TUI workflow changes available for beta users.",
   },
   {
     app: "core",
@@ -80,13 +80,13 @@ const fallbackReleases: ReleaseCard[] = [
   },
   {
     app: "macos",
-    version: "v1.0.0-beta.11",
-    title: "Crona for macOS v1.0.0-beta.11",
-    url: `${apps.macos.repoUrl}/releases/tag/v1.0.0-beta.11`,
-    publishedAt: new Date("2026-08-14"),
+    version: "v1.0.0-beta.16",
+    title: "Crona for macOS v1.0.0-beta.16",
+    url: `${apps.macos.repoUrl}/releases/tag/v1.0.0-beta.16`,
+    publishedAt: new Date("2026-09-04"),
     status: "pre-release",
     summary:
-      "Adds configurable floating-timer size and position, live preview, and reliable empty-day wellbeing check-ins.",
+      "Keeps the latest menu-bar client workflow aligned with the shared local runtime.",
   },
   {
     app: "macos",
@@ -121,12 +121,21 @@ const fallbackReleases: ReleaseCard[] = [
 const fallbackStable: Partial<Record<AppId, ReleaseCard>> = {
   core: {
     app: "core",
-    version: "v1.8.0",
-    title: "Crona v1.8.0",
-    url: `${apps.core.repoUrl}/releases/tag/v1.8.0`,
-    publishedAt: new Date("2026-07-29"),
+    version: "v1.9.0",
+    title: "Crona v1.9.0",
+    url: `${apps.core.repoUrl}/releases/tag/v1.9.0`,
+    publishedAt: new Date("2026-09-13"),
     status: "stable",
-    summary: "Adds day-boundary scheduling and a stepped TUI editor.",
+    summary: "The current stable Crona core release.",
+  },
+  macos: {
+    app: "macos",
+    version: "v1.0.0",
+    title: "Crona for macOS v1.0.0",
+    url: `${apps.macos.repoUrl}/releases/tag/v1.0.0`,
+    publishedAt: new Date("2026-09-13"),
+    status: "stable",
+    summary: "The current stable Crona for macOS release.",
   },
 };
 
@@ -154,9 +163,14 @@ function summaryFromReleaseBody(body = "") {
 
 async function loadAppReleases(app: AppId) {
   try {
+    const apiUrl = `${apps[app].repoUrl.replace("https://github.com", "https://api.github.com/repos")}/releases?per_page=20`;
+    const requestOptions = {
+      headers: { Accept: "application/vnd.github+json", "User-Agent": "crona-site" },
+      cf: { cacheTtl: 300, cacheEverything: true },
+    } as RequestInit & { cf: { cacheTtl: number; cacheEverything: boolean } };
     const response = await fetch(
-      `${apps[app].repoUrl.replace("https://github.com", "https://api.github.com/repos")}/releases?per_page=20`,
-      { headers: { Accept: "application/vnd.github+json", "User-Agent": "crona-site" } },
+      apiUrl,
+      requestOptions,
     );
     if (!response.ok) throw new Error("release request failed");
     return ((await response.json()) as GitHubRelease[])
@@ -169,11 +183,13 @@ async function loadAppReleases(app: AppId) {
         publishedAt: release.published_at ? new Date(release.published_at) : null,
         status: release.prerelease ? "pre-release" : "stable",
         summary: summaryFromReleaseBody(release.body ?? ""),
-      }));
+      }))
+      .sort((a, b) => (b.publishedAt?.getTime() ?? 0) - (a.publishedAt?.getTime() ?? 0));
   } catch {
     return fallbackReleases
       .filter((release) => release.app === app)
-      .concat(fallbackStable[app] ? [fallbackStable[app]] : []);
+      .concat(fallbackStable[app] ? [fallbackStable[app]] : [])
+      .sort((a, b) => (b.publishedAt?.getTime() ?? 0) - (a.publishedAt?.getTime() ?? 0));
   }
 }
 

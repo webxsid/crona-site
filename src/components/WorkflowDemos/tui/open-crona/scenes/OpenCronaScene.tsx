@@ -86,7 +86,7 @@ export default function OpenCronaScene({
             repo={activeContext?.repoName ?? "-"}
             stream={activeContext?.streamName ?? "-"}
             environment="Dev"
-            version="1.9.0-beta.8"
+            version="1.9.0"
           />
           <TuiWorkArea>
             {["issues", "issue-next-1", "issue-next-2", "issue-due-action", "due-date"].includes(
@@ -167,39 +167,39 @@ export default function OpenCronaScene({
               [ d ] set due date
             </text>
           )}
-      {scene === "due-date" && (
+          {scene === "due-date" && (
             <DatePickerDialog
               selectedDate={demoToday}
               visibleMonth={demoToday.slice(0, 7)}
               currentDate={demoToday}
             />
-      )}
-      {scene === "timer-start" && (
-        <TimerStartTypeDialog issueTitle="Review habit history output" workedMinutes={12} estimateMinutes={60} />
-      )}
-      {scene === "pomodoro-start" && (
-        <PomodoroStartDialog issueTitle="Review habit history output" workedMinutes={12} estimateMinutes={60} />
-      )}
-      {scene === "timer-focus" && (
-        <text
-          className="workflow-demo__key-hint is-visible"
-          x="480"
-          y="494"
-          textAnchor="middle"
-        >
-          [ f ] focus
-        </text>
-      )}
-      {scene === "timer-start" && (
-        <text
-          className="workflow-demo__key-hint is-visible"
-          x="480"
-          y="494"
-          textAnchor="middle"
-        >
-          [ p ] select pomodoro
-        </text>
-      )}
+          )}
+          {scene === "timer-start" && (
+            <TimerStartTypeDialog issueTitle="Review habit history output" workedMinutes={12} estimateMinutes={60} />
+          )}
+          {scene === "pomodoro-start" && (
+            <PomodoroStartDialog issueTitle="Review habit history output" workedMinutes={12} estimateMinutes={60} />
+          )}
+          {scene === "timer-focus" && (
+            <text
+              className="workflow-demo__key-hint is-visible"
+              x="480"
+              y="494"
+              textAnchor="middle"
+            >
+              [ f ] focus
+            </text>
+          )}
+          {scene === "timer-start" && (
+            <text
+              className="workflow-demo__key-hint is-visible"
+              x="480"
+              y="494"
+              textAnchor="middle"
+            >
+              [ p ] select pomodoro
+            </text>
+          )}
           {scene === "due-date" && (
             <text
               className="workflow-demo__key-hint is-visible"
