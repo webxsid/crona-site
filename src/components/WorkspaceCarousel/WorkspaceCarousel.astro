@@ -1,0 +1,181 @@
+---
+import AppScreenshot from "../AppScreenshot/AppScreenshot.astro";
+import MeshGradient from "../MeshGradient/MeshGradient.astro";
+import WorkspaceCard from "../WorkspaceCard/WorkspaceCard.astro";
+---
+
+<div class="home-workspace-carousel" data-workspace-carousel hidden>
+  <div class="home-workspace-carousel__backdrop" data-workspace-close></div>
+  <section
+    class="home-workspace-carousel__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="workspace-carousel-title"
+    tabindex="-1"
+  >
+    <button
+      class="home-workspace-carousel__close"
+      type="button"
+      data-workspace-close
+      aria-label="Close workspace viewer"><span aria-hidden="true">×</span></button
+    >
+    <button
+      class="home-workspace-carousel__arrow home-workspace-carousel__arrow--previous"
+      type="button"
+      data-workspace-previous
+      aria-label="Previous workspace view"><span aria-hidden="true">←</span></button
+    >
+    <div class="home-workspace-carousel__slides">
+      <article class="home-workspace-carousel__slide" data-workspace-slide="0">
+        <MeshGradient variant="momentum" /><div class="home-workspace-carousel__content">
+          <h2 id="workspace-carousel-title">Momentum</h2><div
+            class="home-workspace-carousel__image"
+          >
+            <AppScreenshot
+              name="momentum"
+              alt="Crona Momentum terminal view showing focus patterns and habit progress across a 30-day window"
+              sizes="(min-width: 1024px) 78vw, 92vw"
+            />
+          </div><WorkspaceCard
+            variant="momentum"
+            label="momentum"
+            description="Track habits and focus across the weeks."
+          />
+        </div>
+      </article>
+      <article class="home-workspace-carousel__slide" data-workspace-slide="1" hidden>
+        <MeshGradient variant="rollup" /><div class="home-workspace-carousel__content">
+          <h2>Rollup</h2><div class="home-workspace-carousel__image">
+            <AppScreenshot
+              name="rollup"
+              alt="Crona Rollup terminal view comparing estimated and logged focus across a date range"
+              sizes="(min-width: 1024px) 78vw, 92vw"
+            />
+          </div><WorkspaceCard
+            variant="rollup"
+            label="rollup"
+            description="Compare estimated time with logged focus."
+          />
+        </div>
+      </article>
+      <article class="home-workspace-carousel__slide" data-workspace-slide="2" hidden>
+        <MeshGradient variant="summary" /><div class="home-workspace-carousel__content">
+          <h2>Summary</h2><div class="home-workspace-carousel__image">
+            <AppScreenshot
+              name="summary"
+              alt="Crona Summary terminal view showing focus, issues, habits, agenda, wellbeing, and momentum"
+              sizes="(min-width: 1024px) 78vw, 92vw"
+            />
+          </div><WorkspaceCard
+            variant="summary"
+            label="summary"
+            description="Reconstruct the day without reconstructing it from memory."
+          />
+        </div>
+      </article>
+    </div>
+    <button
+      class="home-workspace-carousel__arrow home-workspace-carousel__arrow--next"
+      type="button"
+      data-workspace-next
+      aria-label="Next workspace view"><span aria-hidden="true">→</span></button
+    >
+    <p class="home-workspace-carousel__counter" data-workspace-counter aria-live="polite">
+      01 / 03
+    </p>
+  </section>
+</div>
+
+<script>
+  const workspaceCarousel = document.querySelector("[data-workspace-carousel]");
+  const workspaceOpeners = [
+    ...document.querySelectorAll<HTMLButtonElement>("[data-workspace-open]"),
+  ];
+  const workspaceDialog = workspaceCarousel?.querySelector<HTMLElement>("[role=dialog]");
+  const workspaceSlides = workspaceCarousel
+    ? [...workspaceCarousel.querySelectorAll<HTMLElement>("[data-workspace-slide]")]
+    : [];
+  const workspacePrevious = workspaceCarousel?.querySelector<HTMLButtonElement>(
+    "[data-workspace-previous]",
+  );
+  const workspaceNext =
+    workspaceCarousel?.querySelector<HTMLButtonElement>("[data-workspace-next]");
+  const workspaceCounter = workspaceCarousel?.querySelector<HTMLElement>(
+    "[data-workspace-counter]",
+  );
+  const workspaceCloseButtons = workspaceCarousel
+    ? [...workspaceCarousel.querySelectorAll<HTMLButtonElement>("[data-workspace-close]")]
+    : [];
+  let workspaceIndex = 0;
+  let workspaceReturnFocus: HTMLElement | undefined;
+  const workspaceMobileQuery = window.matchMedia("(max-width: 820px)");
+
+  if (
+    workspaceCarousel instanceof HTMLElement &&
+    workspaceDialog instanceof HTMLElement &&
+    workspaceSlides.length > 0
+  ) {
+    const syncWorkspaceOpeners = () => {
+      const mobile = workspaceMobileQuery.matches;
+      workspaceOpeners.forEach((button) => {
+        button.tabIndex = mobile ? -1 : 0;
+        button.setAttribute("aria-disabled", String(mobile));
+      });
+    };
+    const setWorkspaceSlide = (nextIndex: number) => {
+      workspaceIndex = (nextIndex + workspaceSlides.length) % workspaceSlides.length;
+      workspaceSlides.forEach((slide, index) => {
+        const active = index === workspaceIndex;
+        slide.hidden = !active;
+        slide.setAttribute("aria-hidden", String(!active));
+      });
+      if (workspaceCounter)
+        workspaceCounter.textContent = `${String(workspaceIndex + 1).padStart(2, "0")} / ${String(workspaceSlides.length).padStart(2, "0")}`;
+    };
+    const closeWorkspaceCarousel = () => {
+      if (workspaceCarousel.hidden) return;
+      workspaceCarousel.hidden = true;
+      document.body.classList.remove("has-workspace-carousel");
+      workspaceReturnFocus?.focus();
+    };
+    const openWorkspaceCarousel = (index: number) => {
+      if (workspaceMobileQuery.matches) return;
+      workspaceReturnFocus =
+        document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : workspaceOpeners[0];
+      setWorkspaceSlide(index);
+      workspaceCarousel.hidden = false;
+      document.body.classList.add("has-workspace-carousel");
+      workspaceDialog.focus();
+    };
+    const moveWorkspaceSlide = (direction: number) => setWorkspaceSlide(workspaceIndex + direction);
+    workspaceOpeners.forEach((button) =>
+      button.addEventListener("click", () =>
+        openWorkspaceCarousel(Number(button.dataset.workspaceOpen)),
+      ),
+    );
+    workspacePrevious?.addEventListener("click", () => moveWorkspaceSlide(-1));
+    workspaceNext?.addEventListener("click", () => moveWorkspaceSlide(1));
+    workspaceCloseButtons.forEach((button) =>
+      button.addEventListener("click", closeWorkspaceCarousel),
+    );
+    syncWorkspaceOpeners();
+    workspaceMobileQuery.addEventListener("change", (event) => {
+      syncWorkspaceOpeners();
+      if (event.matches) closeWorkspaceCarousel();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (workspaceCarousel.hidden || workspaceMobileQuery.matches) return;
+      if (event.key === "Escape") closeWorkspaceCarousel();
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        moveWorkspaceSlide(-1);
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        moveWorkspaceSlide(1);
+      }
+    });
+  }
+</script>

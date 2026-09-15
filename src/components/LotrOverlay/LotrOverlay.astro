@@ -1,0 +1,81 @@
+---
+
+---
+
+<div class="home-lotr-overlay" id="lotr-overlay" data-lotr-overlay hidden>
+  <div class="home-lotr-overlay__backdrop" data-lotr-close></div>
+  <section
+    class="home-lotr-overlay__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lotr-overlay-title"
+    tabindex="-1"
+  >
+    <button
+      class="home-lotr-overlay__close"
+      type="button"
+      aria-label="Close easter egg"
+      data-lotr-close><span aria-hidden="true">×</span></button
+    >
+    <div class="home-lotr-overlay__light" aria-hidden="true"></div>
+    <div class="home-lotr-overlay__reveal">
+      <img class="home-lotr-overlay__ring" src="/assets/easter-egg/one-ring.png" alt="" />
+      <p class="home-lotr-overlay__quote" id="lotr-overlay-title">
+        <span>One Ring to rule them all,</span><span>One Ring to find them,</span><span
+          >One Ring to bring them all</span
+        ><span>and in the darkness bind them</span>
+      </p>
+    </div>
+    <div class="home-lotr-overlay__countdown" aria-hidden="true"><span></span></div>
+    <p class="home-lotr-overlay__countdown-label">This easter egg closes automatically.</p>
+  </section>
+</div>
+
+<script>
+  const lotrToggle = document.querySelector("[data-lotr-toggle]");
+  const lotrOverlay = document.querySelector("[data-lotr-overlay]");
+  const lotrDialog = lotrOverlay?.querySelector<HTMLElement>("[role=dialog]");
+  const lotrCloseButtons = lotrOverlay
+    ? [...lotrOverlay.querySelectorAll<HTMLButtonElement>("[data-lotr-close]")]
+    : [];
+  let lotrReturnFocus: HTMLElement | null = null;
+  let lotrAutoCloseTimer: number | undefined;
+  let lotrCloseTimer: number | undefined;
+
+  if (
+    lotrToggle instanceof HTMLButtonElement &&
+    lotrOverlay instanceof HTMLElement &&
+    lotrDialog instanceof HTMLElement
+  ) {
+    const closeLotrOverlay = () => {
+      if (lotrOverlay.hidden) return;
+      window.clearTimeout(lotrAutoCloseTimer);
+      window.clearTimeout(lotrCloseTimer);
+      lotrToggle.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("has-lotr-overlay");
+      lotrOverlay.classList.add("is-closing");
+      lotrCloseTimer = window.setTimeout(() => {
+        lotrOverlay.hidden = true;
+        lotrOverlay.classList.remove("is-closing");
+        lotrReturnFocus?.focus();
+      }, 420);
+    };
+    const openLotrOverlay = () => {
+      window.clearTimeout(lotrAutoCloseTimer);
+      window.clearTimeout(lotrCloseTimer);
+      lotrReturnFocus =
+        document.activeElement instanceof HTMLElement ? document.activeElement : lotrToggle;
+      lotrOverlay.classList.remove("is-closing");
+      lotrOverlay.hidden = false;
+      lotrToggle.setAttribute("aria-expanded", "true");
+      document.body.classList.add("has-lotr-overlay");
+      lotrDialog.focus();
+      lotrAutoCloseTimer = window.setTimeout(closeLotrOverlay, 10000);
+    };
+    lotrToggle.addEventListener("click", openLotrOverlay);
+    lotrCloseButtons.forEach((button) => button.addEventListener("click", closeLotrOverlay));
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !lotrOverlay.hidden) closeLotrOverlay();
+    });
+  }
+</script>

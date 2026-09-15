@@ -1,0 +1,80 @@
+---
+const commands = {
+  brew: ["brew install webxsid/tap/crona", "crona"],
+  scoop: [
+    "scoop bucket add webxsid https://github.com/webxsid/scoop-bucket && scoop install crona",
+    "crona",
+  ],
+} as const;
+---
+
+<div class="home-closing__terminal" data-install-commands>
+  <div class="home-closing__command-tabs" role="tablist" aria-label="Package manager">
+    <button
+      type="button"
+      role="tab"
+      aria-selected="true"
+      aria-controls="install-command-brew"
+      id="install-command-tab-brew"
+      data-install-command-tab="brew">brew</button
+    >
+    <button
+      type="button"
+      role="tab"
+      aria-selected="false"
+      aria-controls="install-command-scoop"
+      id="install-command-tab-scoop"
+      data-install-command-tab="scoop">scoop</button
+    >
+  </div>
+  {
+    Object.entries(commands).map(([name, lines]) => (
+      <div
+        class="home-closing__command-panel"
+        role="tabpanel"
+        id={`install-command-${name}`}
+        aria-labelledby={`install-command-tab-${name}`}
+        data-install-command-panel={name}
+        hidden={name !== "brew"}
+      >
+        {lines.map((line) => (
+          <code>
+            <span class="home-closing__prompt">$</span> {line}
+          </code>
+        ))}
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  const commandRoot = document.querySelector("[data-install-commands]");
+  if (commandRoot) {
+    const tabs = [...commandRoot.querySelectorAll<HTMLButtonElement>("[data-install-command-tab]")];
+    const panels = [...commandRoot.querySelectorAll<HTMLElement>("[data-install-command-panel]")];
+    const setCommand = (name: string) => {
+      tabs.forEach((tab) => {
+        const active = tab.dataset.installCommandTab === name;
+        tab.setAttribute("aria-selected", String(active));
+        tab.tabIndex = active ? 0 : -1;
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.installCommandPanel !== name;
+      });
+    };
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => setCommand(tab.dataset.installCommandTab ?? "brew"));
+      tab.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+        event.preventDefault();
+        const index = tabs.indexOf(tab);
+        const next =
+          event.key === "ArrowRight"
+            ? (index + 1) % tabs.length
+            : (index - 1 + tabs.length) % tabs.length;
+        tabs[next].focus();
+        setCommand(tabs[next].dataset.installCommandTab ?? "brew");
+      });
+    });
+  }
+</script>

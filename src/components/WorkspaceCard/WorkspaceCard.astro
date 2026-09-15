@@ -1,0 +1,14 @@
+---
+interface Props {
+  description: string;
+  label: string;
+  variant: "momentum" | "rollup" | "summary";
+}
+
+const { description, label, variant } = Astro.props as Props;
+---
+
+<div class:list={["home-workspace-screen__card", `home-workspace-screen__card--${variant}`]}>
+  <span class="home-workspace-screen__key">{label}</span>
+  <p>{description}</p>
+</div>

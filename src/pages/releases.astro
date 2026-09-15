@@ -46,8 +46,7 @@ const fallbackReleases: ReleaseCard[] = [
     url: `${apps.core.repoUrl}/releases/tag/v1.9.0-beta.9`,
     publishedAt: new Date("2026-09-04"),
     status: "pre-release",
-    summary:
-      "Keeps the latest daemon and TUI workflow changes available for beta users.",
+    summary: "Keeps the latest daemon and TUI workflow changes available for beta users.",
   },
   {
     app: "core",
@@ -85,8 +84,7 @@ const fallbackReleases: ReleaseCard[] = [
     url: `${apps.macos.repoUrl}/releases/tag/v1.0.0-beta.16`,
     publishedAt: new Date("2026-09-04"),
     status: "pre-release",
-    summary:
-      "Keeps the latest menu-bar client workflow aligned with the shared local runtime.",
+    summary: "Keeps the latest menu-bar client workflow aligned with the shared local runtime.",
   },
   {
     app: "macos",
@@ -168,10 +166,7 @@ async function loadAppReleases(app: AppId) {
       headers: { Accept: "application/vnd.github+json", "User-Agent": "crona-site" },
       cf: { cacheTtl: 300, cacheEverything: true },
     } as RequestInit & { cf: { cacheTtl: number; cacheEverything: boolean } };
-    const response = await fetch(
-      apiUrl,
-      requestOptions,
-    );
+    const response = await fetch(apiUrl, requestOptions);
     if (!response.ok) throw new Error("release request failed");
     return ((await response.json()) as GitHubRelease[])
       .filter((release) => !release.draft)
@@ -239,7 +234,7 @@ Astro.response.headers.set(
       <div class="releases-header__intro">
         <p class="releases-kicker">Ship log / core + macOS</p>
         <h1>Crona core and macOS releases.</h1>
-        <p class="releases-header__lede">
+        <p class="releases-header__sub-headline">
           Install the current build or read the notes behind each change.
         </p>
       </div>
@@ -315,6 +310,66 @@ Astro.response.headers.set(
           </tbody>
         </table>
       </div>
+      <div class="release-versions__mobile" aria-label="Current builds by surface">
+        {
+          (Object.keys(apps) as AppId[]).map((app) => {
+            const stable = latestFor(app, "stable");
+            const beta = latestFor(app, "pre-release");
+            const current = beta ?? stable;
+            return (
+              <article class="release-mobile-build">
+                <header class="release-mobile-build__header">
+                  <span class="release-table__index">{app === "core" ? "01" : "02"}</span>
+                  <div>
+                    <h3>{apps[app].label}</h3>
+                    <p>{app === "core" ? "Terminal + TUI" : "Native Mac client"}</p>
+                  </div>
+                </header>
+                <dl class="release-mobile-build__versions">
+                  <div>
+                    <dt>Stable</dt>
+                    <dd>
+                      {stable ? (
+                        <a class="release-table__version" href={stable.url} rel="noreferrer">
+                          {stable.version}
+                        </a>
+                      ) : (
+                        <span class="release-table__unavailable">—</span>
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Beta</dt>
+                    <dd>
+                      {beta ? (
+                        <a
+                          class="release-table__version release-table__version--beta"
+                          href={beta.url}
+                          rel="noreferrer"
+                        >
+                          {beta.version}
+                        </a>
+                      ) : (
+                        <span class="release-table__unavailable">—</span>
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Latest published</dt>
+                    <dd>
+                      {current?.publishedAt ? dateFormatter.format(current.publishedAt) : "—"}
+                    </dd>
+                  </div>
+                </dl>
+                <a class="button release-mobile-build__action" href={apps[app].installUrl}>
+                  {app === "core" ? "Install core" : "Get the Mac app"}
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </article>
+            );
+          })
+        }
+      </div>
     </section>
 
     <div class="releases-actions">
@@ -334,9 +389,7 @@ Astro.response.headers.set(
       aria-labelledby="release-timeline-heading"
     >
       <div class="releases-timeline__heading">
-        <h2 id="release-timeline-heading">Release timeline</h2><p>
-          The latest four builds from each surface, grouped by publishing day.
-        </p>
+        <h2 id="release-timeline-heading">Release timeline</h2>
       </div>
       {
         timelineDays.length > 0 ? (

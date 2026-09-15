@@ -1,0 +1,38 @@
+---
+
+---
+
+<div class="home-local__architecture">
+  <div class="home-local__architecture-map" aria-label="Crona local runtime architecture">
+    <svg
+      class="home-local__connectors"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <defs
+        ><marker
+          id="home-local-arrow"
+          markerWidth="5"
+          markerHeight="5"
+          refX="4"
+          refY="2.5"
+          orient="auto"><path d="M0,0 L5,2.5 L0,5 z"></path></marker
+        ></defs
+      >
+      <path d="M16.7 20 L16.7 42 L50 42 L50 51"></path><path d="M50 20 L50 51"></path><path
+        d="M83.3 20 L83.3 42 L50 42 L50 51"></path><path d="M50 60 L50 75"></path>
+    </svg>
+    <div class="home-local__clients">
+      <div class="home-local__node"><strong>crona-tui</strong><span>terminal</span></div>
+      <div class="home-local__node"><strong>crona</strong><span>cli</span></div>
+      <div class="home-local__node"><strong>crona-mac</strong><span>menu bar</span></div>
+    </div>
+    <div class="home-local__node home-local__node--daemon">
+      <strong>crona-daemon</strong><span>source of truth · local socket</span>
+    </div>
+    <div class="home-local__node home-local__node--storage">
+      <strong>sqlite</strong><span>local record</span>
+    </div>
+  </div>
+</div>

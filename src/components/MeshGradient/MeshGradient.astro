@@ -1,0 +1,101 @@
+---
+interface Props {
+  class?: string;
+  variant?: "momentum" | "rollup" | "summary" | "workspace" | "warm" | "cool";
+}
+
+const { class: className, variant = "workspace" } = Astro.props as Props;
+---
+
+<div
+  class:list={["mesh-gradient", className, `mesh-gradient--${variant}`]}
+  aria-hidden="true"
+></div>
+
+<style>
+  .mesh-gradient {
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .mesh-gradient::before,
+  .mesh-gradient::after {
+    content: "";
+    inset: -18%;
+    position: absolute;
+  }
+
+  .mesh-gradient::before {
+    background:
+      radial-gradient(ellipse at 18% 22%, var(--mesh-a), transparent 38%),
+      radial-gradient(ellipse at 78% 18%, var(--mesh-b), transparent 34%),
+      radial-gradient(ellipse at 52% 82%, var(--mesh-c), transparent 42%),
+      radial-gradient(ellipse at 92% 76%, var(--mesh-d), transparent 34%);
+    filter: blur(18px);
+    opacity: .94;
+  }
+
+  .mesh-gradient::after {
+    background: conic-gradient(
+      from 214deg at 52% 48%,
+      transparent 0deg,
+      color-mix(in srgb, var(--color-ink) 4%, transparent) 78deg,
+      transparent 150deg,
+      color-mix(in srgb, var(--color-page) 16%, transparent) 238deg,
+      transparent 312deg
+    );
+    mix-blend-mode: soft-light;
+    opacity: .76;
+  }
+
+  .mesh-gradient--workspace {
+    --mesh-a: color-mix(in srgb, var(--color-accent) 38%, transparent);
+    --mesh-b: color-mix(in srgb, #2a756d 30%, transparent);
+    --mesh-c: color-mix(in srgb, var(--color-warning) 25%, transparent);
+    --mesh-d: color-mix(in srgb, #3b4e7e 22%, transparent);
+  }
+
+  .mesh-gradient--warm {
+    --mesh-a: color-mix(in srgb, var(--color-warning) 28%, transparent);
+    --mesh-b: color-mix(in srgb, var(--color-error) 16%, transparent);
+    --mesh-c: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    --mesh-d: transparent;
+  }
+
+  .mesh-gradient--cool {
+    --mesh-a: color-mix(in srgb, var(--color-accent) 28%, transparent);
+    --mesh-b: color-mix(in srgb, #3b4e7e 22%, transparent);
+    --mesh-c: color-mix(in srgb, #2a756d 18%, transparent);
+    --mesh-d: transparent;
+  }
+
+  .mesh-gradient--momentum {
+    --mesh-a: color-mix(in srgb, var(--color-accent) 28%, transparent);
+    --mesh-b: color-mix(in srgb, #2a756d 24%, transparent);
+    --mesh-c: color-mix(in srgb, #3b4e7e 20%, transparent);
+    --mesh-d: transparent;
+  }
+
+  .mesh-gradient--rollup {
+    --mesh-a: color-mix(in srgb, var(--color-warning) 24%, transparent);
+    --mesh-b: color-mix(in srgb, #995d35 18%, transparent);
+    --mesh-c: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    --mesh-d: transparent;
+  }
+
+  .mesh-gradient--summary {
+    --mesh-a: color-mix(in srgb, #7187d1 22%, transparent);
+    --mesh-b: color-mix(in srgb, var(--color-accent) 20%, transparent);
+    --mesh-c: color-mix(in srgb, #3b4e7e 24%, transparent);
+    --mesh-d: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mesh-gradient::before,
+    .mesh-gradient::after {
+      filter: none;
+    }
+  }
+</style>

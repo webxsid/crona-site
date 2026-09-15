@@ -1,0 +1,56 @@
+---
+import type { MacRelease } from "../../lib/mac-releases";
+
+interface Props {
+  stable: MacRelease;
+  beta?: MacRelease | null;
+  releasesUrl: string;
+}
+
+const { stable, beta, releasesUrl } = Astro.props as Props;
+const stableUrl = stable.downloadUrl ?? stable.releaseUrl;
+const stableLabel = stable.downloadUrl ? `Download ${stable.version}` : `View ${stable.version}`;
+---
+
+<section class="mac-download" id="download" aria-labelledby="download-title">
+  <div class="mac-download__intro">
+    <h2 id="download-title">Get Crona for Mac.</h2>
+    <p>The Mac app works alongside Crona core. Install Crona first, then add the Mac app.</p>
+    <ol class="mac-download__steps">
+      <li>
+        <span>01 / Crona</span>
+        <strong>Install Crona</strong>
+        <p>This sets up the local daemon shared by the TUI, CLI, and Mac app.</p>
+      </li>
+      <li>
+        <span>02 / Mac app</span>
+        <strong>Install the Mac App</strong>
+        <p>Download the DMG, move Crona to Applications, and launch it.</p>
+      </li>
+    </ol>
+    <a
+      class="mac-text-link mac-download__guide"
+      href="https://docs.crona.work/workflows/macos-companion/"
+      >Read the install guide <span aria-hidden="true">↗</span></a
+    >
+  </div>
+  <div class="mac-download__aside">
+    <span class="mac-download__release-label">Stable release</span>
+    <strong>{stable.version}</strong>
+    <span>macOS 14+ · Universal DMG</span>
+    <a class="mac-button" href={stableUrl} rel="noreferrer"
+      >{stableLabel}<span aria-hidden="true">↗</span></a
+    >
+    {
+      beta && (
+        <a class="mac-download__beta" href={beta.downloadUrl ?? beta.releaseUrl} rel="noreferrer">
+          Try latest beta · {beta.version}
+          <span aria-hidden="true">↗</span>
+        </a>
+      )
+    }
+    <a class="mac-download__release-link" href={releasesUrl} rel="noreferrer"
+      >View release notes <span aria-hidden="true">↗</span></a
+    >
+  </div>
+</section>

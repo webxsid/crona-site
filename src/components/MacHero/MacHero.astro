@@ -1,0 +1,49 @@
+---
+import type { MacRelease } from "../../lib/mac-releases";
+import MacPopoverDemo from "../MacPopoverDemo/MacPopoverDemo.astro";
+
+interface Props {
+  stable: MacRelease;
+  beta?: MacRelease | null;
+}
+
+const { stable, beta } = Astro.props as Props;
+const stableUrl = stable.downloadUrl ?? stable.releaseUrl;
+const stableLabel = stable.downloadUrl ? `Download ${stable.version}` : `View ${stable.version}`;
+const stableDate = stable.publishedAt
+  ? new Intl.DateTimeFormat("en", { dateStyle: "medium", timeZone: "UTC" }).format(
+      new Date(stable.publishedAt),
+    )
+  : null;
+---
+
+<section class="mac-hero" aria-labelledby="mac-hero-title">
+  <div class="mac-hero__copy">
+    <h1 id="mac-hero-title">Keep the workday visible.</h1>
+    <p class="mac-hero__sub-headline">
+      Start a focus session, capture an issue, or check in on your day — all from the menu bar.
+    </p>
+    <div class="mac-actions">
+      <a class="mac-button" href={stableUrl} rel="noreferrer"
+        >{stableLabel}<span aria-hidden="true">↗</span></a
+      >
+      <a class="mac-text-link" href="#features"
+        >View Mac app features <span aria-hidden="true">↓</span></a
+      >
+    </div>
+    {
+      beta && (
+        <a class="mac-hero__beta-link" href={beta.downloadUrl ?? beta.releaseUrl} rel="noreferrer">
+          Try the latest beta · {beta.version}
+          <span aria-hidden="true">↗</span>
+        </a>
+      )
+    }
+    <p class="mac-hero__meta">
+      Requires macOS 14 or later · {stableDate ? `updated ${stableDate}` : "stable release"}
+    </p>
+  </div>
+  <div class="mac-hero__visual" aria-label="Preview of the Crona menu bar companion">
+    <MacPopoverDemo />
+  </div>
+</section>

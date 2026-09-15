@@ -1,6 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AppScreenshot from "../components/AppScreenshot/AppScreenshot.astro";
+import InstallCommands from "../components/InstallCommands/InstallCommands.astro";
+import InstallModal from "../components/InstallModal/InstallModal.astro";
+import LotrOverlay from "../components/LotrOverlay/LotrOverlay.astro";
+import MeshGradient from "../components/MeshGradient/MeshGradient.astro";
+import RuntimeArchitecture from "../components/RuntimeArchitecture/RuntimeArchitecture.astro";
+import WorkspaceCard from "../components/WorkspaceCard/WorkspaceCard.astro";
+import WorkspaceCarousel from "../components/WorkspaceCarousel/WorkspaceCarousel.astro";
 import WorkflowDemo from "../components/WorkflowDemo/WorkflowDemo.astro";
 import "./_home/index.scss";
 ---
@@ -26,16 +33,17 @@ import "./_home/index.scss";
     },
   ]}
 >
+  <!-- Hero: introduce Crona and its local workday record. -->
   <section class="home-hero" aria-labelledby="home-title">
     <div class="home-hero__frame">
       <div class="home-hero__grid">
         <h1 id="home-title" class="home-hero__sr-title">Crona</h1>
         <div class="home-hero__intro">
           <h2 class="home-hero__headline">Make the workday readable.</h2>
-          <p class="home-hero__lede">
-            A local work tracker for planning the day, focusing on work, and reviewing what moved.
-            Crona is built for everyone who want to keep the context of their work without relying
-            on a cloud service.
+          <p class="home-hero__sub-headline">
+            A local work tracker for planning the day, focusing on work, and reviewing what
+            happened. Crona is built for everyone who want to keep the context of their work without
+            relying on a cloud service.
           </p>
           <div class="home-hero__actions">
             <button class="button" type="button" data-install-open
@@ -53,68 +61,73 @@ import "./_home/index.scss";
     </div>
   </section>
 
+  <!-- Workspace views: show the same record through three focused surfaces. -->
   <section class="home-features home-reveal" id="features" aria-labelledby="features-title">
     <div class="home-section-heading">
-      <span class="home-features__context">crona / workspace</span>
-      <h2 id="features-title">One record. Three ways to read it.</h2><p>
-        Rollup shows where the time went. Momentum shows what is building. Summary brings the day
-        back into focus.
+      <h2 id="features-title">One record. Three ways to read it.</h2>
+      <p>
+        Look back at where your time went, see what you’re building toward, or get a clear picture
+        of the day.
       </p>
     </div>
-    <figure class="home-workspace-screen">
-      <div class="home-workspace-screen__desktop">
-        <AppScreenshot
-          name="hero"
-          alt="Three Crona terminal views arranged as a branching workspace: Momentum above, Rollup on the left, and Summary on the right"
-          sizes="(min-width: 1024px) 90vw, 100vw"
+    <div class="home-workspace-screen">
+      <div class="home-workspace-screen__canvas" aria-label="Crona workspace views" role="group">
+        <MeshGradient class="home-workspace-screen__mesh--desktop" variant="workspace" />
+        <button
+          class="home-workspace-screen__image home-workspace-screen__image--momentum"
+          type="button"
+          data-workspace-open="0"
+          aria-label="Enlarge Momentum view"
+        >
+          <AppScreenshot
+            name="momentum"
+            alt="Crona Momentum terminal view showing focus patterns and habit progress across a 30-day window"
+            loading="eager"
+            sizes="(min-width: 1024px) 58vw, 100vw"
+          />
+        </button>
+        <button
+          class="home-workspace-screen__image home-workspace-screen__image--rollup"
+          type="button"
+          data-workspace-open="1"
+          aria-label="Enlarge Rollup view"
+        >
+          <AppScreenshot
+            name="rollup"
+            alt="Crona Rollup terminal view comparing estimated and logged focus across a date range"
+            loading="eager"
+            sizes="(min-width: 1024px) 48vw, 100vw"
+          />
+        </button>
+        <button
+          class="home-workspace-screen__image home-workspace-screen__image--summary"
+          type="button"
+          data-workspace-open="2"
+          aria-label="Enlarge Summary view"
+        >
+          <AppScreenshot
+            name="summary"
+            alt="Crona Summary terminal view showing focus, issues, habits, agenda, wellbeing, and momentum"
+            loading="eager"
+            sizes="(min-width: 1024px) 48vw, 100vw"
+          />
+        </button>
+        <WorkspaceCard
+          variant="momentum"
+          label="momentum"
+          description="Track habits and focus across the weeks."
+        />
+        <WorkspaceCard
+          variant="rollup"
+          label="rollup"
+          description="Compare estimated time with logged focus."
+        />
+        <WorkspaceCard
+          variant="summary"
+          label="summary"
+          description="Reconstruct the day without reconstructing it from memory."
         />
       </div>
-      <div class="home-workspace-screen__mobile" aria-label="Crona workspace views">
-        <figure class="home-workspace-screen__view">
-          <figcaption>momentum</figcaption>
-          <AppScreenshot
-            name="momentum-dashboard"
-            alt="Crona Momentum view showing habits and focus patterns across multiple weeks"
-            sizes="100vw"
-          />
-          <p>Track habits and focus across the weeks.</p>
-        </figure>
-        <figure class="home-workspace-screen__view">
-          <figcaption>rollup</figcaption>
-          <AppScreenshot
-            name="rollup-dashboard"
-            alt="Crona Rollup view comparing estimated and logged focus across a date range"
-            sizes="100vw"
-          />
-          <p>Compare estimated time with logged focus.</p>
-        </figure>
-        <figure class="home-workspace-screen__view">
-          <figcaption>summary</figcaption>
-          <AppScreenshot
-            name="daily-dashboard"
-            alt="Temporary Summary preview using Crona’s daily dashboard, showing issues, habits, signals, and focus"
-            sizes="100vw"
-          />
-          <p>Reconstruct the day without reconstructing it from memory.</p>
-        </figure>
-      </div>
-    </figure>
-    <div class="home-workflow" aria-label="Crona workspace views">
-      <article class="home-workflow__step">
-        <span class="home-workflow__key">rollup</span><p>
-          Compare estimated time with logged focus.
-        </p>
-      </article>
-      <article class="home-workflow__step">
-        <span class="home-workflow__key">momentum</span><p>
-          Track habits and focus across the weeks.
-        </p>
-      </article>
-      <article class="home-workflow__step">
-        <span class="home-workflow__key">summary</span><p>
-          Reconstruct the day without reconstructing it from memory.
-        </p>
-      </article>
     </div>
     <div class="home-workflow__footer">
       <span>rollup / momentum / summary · one local record</span><a href="https://docs.crona.work/"
@@ -123,61 +136,30 @@ import "./_home/index.scss";
     </div>
   </section>
 
+  <!-- Workspace viewer: enlarged screenshots with keyboard and button navigation. -->
+  <WorkspaceCarousel />
+
+  <!-- Runtime architecture: every client reads and writes through the local daemon. -->
   <section class="home-local home-reveal" aria-labelledby="local-title">
     <div class="home-local__copy">
-      <span class="home-features__context">crona / runtime</span>
-      <h2 id="local-title"><button class="home-local__lotr" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="lotr-overlay" data-lotr-toggle>One engine to rule them all.</button></h2>
-      <p>
-        Crona keeps issues, sessions, habits, and history in one local SQLite record. The TUI, CLI,
-        and Mac app talk to the same daemon, so there is no second workspace to reconcile.
-      </p>
-    </div>
-    <div class="home-local__architecture">
-      <div class="home-local__architecture-map" aria-label="Crona local runtime architecture">
-        <svg
-          class="home-local__connectors"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
+      <h2 id="local-title">
+        <button
+          class="home-local__lotr"
+          type="button"
+          aria-expanded="false"
+          aria-haspopup="dialog"
+          aria-controls="lotr-overlay"
+          data-lotr-toggle
         >
-          <defs>
-            <marker
-              id="home-local-arrow"
-              markerWidth="5"
-              markerHeight="5"
-              refX="4"
-              refY="2.5"
-              orient="auto"
-            >
-              <path d="M0,0 L5,2.5 L0,5 z"></path>
-            </marker>
-          </defs>
-          <path d="M16.7 20 L16.7 42 L50 42 L50 51"></path>
-          <path d="M50 20 L50 51"></path>
-          <path d="M83.3 20 L83.3 42 L50 42 L50 51"></path>
-          <path d="M50 70 L50 84"></path>
-        </svg>
-        <div class="home-local__clients">
-          <div class="home-local__node"><strong>crona-tui</strong><span>terminal</span></div>
-          <div class="home-local__node"><strong>crona</strong><span>cli</span></div>
-          <div class="home-local__node"><strong>crona-mac</strong><span>menu bar</span></div>
-        </div>
-        <div class="home-local__node home-local__node--daemon">
-          <strong>crona-daemon</strong><span>source of truth · local socket</span>
-        </div>
-        <div class="home-local__node home-local__node--storage">
-          <strong>sqlite</strong><span>local record</span>
-        </div>
-      </div>
-      <p class="home-local__architecture-summary">
-        The clients talk to the daemon. The daemon owns the record.
+          One daemon to rule them all.
+        </button>
+      </h2>
+      <p>
+        Crona keeps everything local and in one place. The TUI, CLI, and Mac app all talk to the
+        same daemon, sharing your issues, sessions, habits, and history.
       </p>
-      <div class="home-local__runtime-meta">
-        <p class="home-local__status">
-          socket: local · storage: sqlite · network: not required by default
-        </p>
-      </div>
     </div>
+    <RuntimeArchitecture />
     <div class="home-local__links">
       <a href="https://docs.crona.work/">read the docs <span aria-hidden="true">→</span></a><a
         href="/mac/">open the Mac app <span aria-hidden="true">→</span></a
@@ -185,40 +167,14 @@ import "./_home/index.scss";
     </div>
   </section>
 
-  <div class="home-lotr-overlay" id="lotr-overlay" data-lotr-overlay hidden>
-    <div class="home-lotr-overlay__backdrop" data-lotr-close></div>
-    <section
-      class="home-lotr-overlay__dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="lotr-overlay-title"
-      tabindex="-1"
-    >
-      <button class="home-lotr-overlay__close" type="button" aria-label="Close easter egg" data-lotr-close>
-        <span aria-hidden="true">×</span>
-      </button>
-      <div class="home-lotr-overlay__light" aria-hidden="true"></div>
-      <div class="home-lotr-overlay__reveal">
-        <img class="home-lotr-overlay__ring" src="/assets/easter-egg/one-ring.png" alt="" />
-        <p class="home-lotr-overlay__quote" id="lotr-overlay-title">
-          <span>One Ring to rule them all,</span>
-          <span>One Ring to find them,</span>
-          <span>One Ring to bring them all</span>
-          <span>and in the darkness bind them</span>
-        </p>
-      </div>
-      <div class="home-lotr-overlay__countdown" aria-hidden="true"><span></span></div>
-      <p class="home-lotr-overlay__countdown-label">This easter egg closes automatically.</p>
-    </section>
-  </div>
+  <!-- Easter egg: the optional LOTR reveal attached to the daemon headline. -->
+  <LotrOverlay />
 
+  <!-- Final install CTA: give the user the shortest path from reading to running Crona. -->
   <section class="home-closing home-reveal" aria-labelledby="closing-title">
     <div class="home-closing__copy">
-      <span class="home-features__context">crona / first run</span>
       <h2 id="closing-title">Put the next session on record.</h2>
-      <p>
-        Install Crona once, start in the terminal, and return to the same local record tomorrow.
-      </p>
+      <p>Crona is local, account-free, and ready when you are. Install it and get to work.</p>
       <div class="home-hero__actions">
         <button class="button" type="button" data-install-open
           ><span>[i]</span> install crona</button
@@ -227,120 +183,11 @@ import "./_home/index.scss";
         >
       </div>
     </div>
-    <div class="home-closing__terminal" aria-label="Crona first run commands">
-      <code><span class="home-closing__prompt">$</span> brew install webxsid/tap/crona</code>
-      <code><span class="home-closing__prompt">$</span> crona</code>
-      <span class="home-closing__status">local record · no account required</span>
-    </div>
+    <InstallCommands />
   </section>
 
-  <div class="install-modal" data-install-modal hidden>
-    <div class="install-modal__backdrop" data-install-close></div>
-    <section
-      class="install-modal__dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="install-modal-title"
-      aria-describedby="install-modal-description"
-      tabindex="-1"
-    >
-      <div class="install-modal__topline">
-        <div>
-          <h2 id="install-modal-title">Install Crona</h2>
-        </div>
-        <button
-          class="install-modal__close"
-          type="button"
-          aria-label="Close installation instructions"
-          data-install-close>×</button
-        >
-      </div>
-      <p class="install-modal__description" id="install-modal-description">
-        Get the latest stable release of Crona for your platform.
-      </p>
-      <div class="install-modal__tabs" role="tablist" aria-label="Installation platform">
-        <button
-          type="button"
-          role="tab"
-          aria-selected="true"
-          aria-controls="install-panel-macos"
-          id="install-tab-macos"
-          data-install-platform="macos">macOS</button
-        >
-        <button
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-controls="install-panel-linux"
-          id="install-tab-linux"
-          data-install-platform="linux">Linux</button
-        >
-        <button
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-controls="install-panel-windows"
-          id="install-tab-windows"
-          data-install-platform="windows">Windows</button
-        >
-      </div>
-      <div class="install-modal__panels">
-        <div
-          class="install-modal__panel"
-          role="tabpanel"
-          id="install-panel-macos"
-          aria-labelledby="install-tab-macos"
-          data-install-panel="macos"
-        >
-          <p>Install with Homebrew:</p>
-          <div class="install-modal__command">
-            <code>brew install webxsid/tap/crona</code><button type="button" data-install-copy
-              >[ copy ]</button
-            >
-          </div>
-          <div class="install-modal__note">Includes: crona · crona-tui · crona-daemon</div>
-
-          <a class="install-modal__companion" href="/mac/">
-            Want quick access from the menu bar? Get the companion<span aria-hidden="true">→</span>
-          </a>
-        </div>
-        <div
-          class="install-modal__panel"
-          role="tabpanel"
-          id="install-panel-linux"
-          aria-labelledby="install-tab-linux"
-          data-install-panel="linux"
-          hidden
-        >
-          <p>Install with Homebrew:</p>
-          <div class="install-modal__command">
-            <code>brew install webxsid/tap/crona</code><button type="button" data-install-copy
-              >[ copy ]</button
-            >
-          </div>
-          <div class="install-modal__note">Includes: crona · crona-tui · crona-daemon</div>
-        </div>
-        <div
-          class="install-modal__panel"
-          role="tabpanel"
-          id="install-panel-windows"
-          aria-labelledby="install-tab-windows"
-          data-install-panel="windows"
-          hidden
-        >
-          <p>Install with Scoop:</p>
-          <div class="install-modal__command">
-            <code
-              >scoop bucket add webxsid https://github.com/webxsid/scoop-bucket &amp;&amp; scoop
-              install crona</code
-            >
-            <button type="button" data-install-copy>[ copy ]</button>
-          </div>
-          <div class="install-modal__note">Includes: crona · crona-tui · crona-daemon</div>
-        </div>
-      </div>
-    </section>
-  </div>
+  <!-- Install modal: platform-specific setup opened by the page's install actions. -->
+  <InstallModal />
 </BaseLayout>
 
 <script src="./_home/index.js"></script>

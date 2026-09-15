@@ -1,19 +1,15 @@
 ---
 import { Image } from "astro:assets";
-import dailyDashboard from "../../assets/screenshots/daily-dashboard.png";
-import hero from "../../assets/screenshots/hero.png";
 import issues from "../../assets/screenshots/issues.png";
-import momentumDashboard from "../../assets/screenshots/momentum-dashboard.png";
-import rollupDashboard from "../../assets/screenshots/rollup-dashboard.png";
-import wellbeingDashboard from "../../assets/screenshots/wellbeing-dashboard.png";
+import momentum from "../../assets/screenshots/momentum.png";
+import rollup from "../../assets/screenshots/rollup.png";
+import summary from "../../assets/screenshots/summary.png";
 
 const screenshots = {
-  "daily-dashboard": dailyDashboard,
-  hero,
   issues,
-  "momentum-dashboard": momentumDashboard,
-  "rollup-dashboard": rollupDashboard,
-  "wellbeing-dashboard": wellbeingDashboard,
+  momentum,
+  rollup,
+  summary,
 } as const;
 
 type ScreenshotName = keyof typeof screenshots;
