@@ -1,0 +1,189 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "./blog.scss";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+const slugFor = (post: (typeof posts)[number]) => `/blog/${post.data.slug}/`;
+const tagSlug = (tag: string) =>
+  tag
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+const siteUrl = Astro.site ?? new URL("https://crona.work");
+const blogUrl = new URL("/blog/", siteUrl).href;
+---
+
+<BaseLayout
+  title="Blog"
+  pageTitle="Blog | Crona"
+  description="Product notes, working practices, and small ideas from the people building Crona."
+  structuredData={[
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": `${blogUrl}#page`,
+      name: "Crona Blog",
+      description:
+        "Product notes, working practices, and small ideas from the people building Crona.",
+      url: blogUrl,
+      mainEntity: { "@id": `${blogUrl}#articles` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "@id": `${blogUrl}#articles`,
+      itemListElement: posts.map((post, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: new URL(slugFor(post), siteUrl).href,
+        name: post.data.title,
+      })),
+    },
+  ]}
+>
+  <section class="blog-page container section" aria-labelledby="blog-title">
+    <header class="blog-page__header">
+      <h1 id="blog-title">Crona Blog</h1>
+      <p class="blog-page__intro">
+        Read about the development of Crona, tips and tricks for using it, and other small ideas
+        from the people building Crona.
+      </p>
+    </header>
+
+    <nav class="blog-topics" aria-label="Filter articles by topic">
+      <span class="blog-topics__label">Browse by topic</span>
+      <a class="is-active" href="/blog/" data-topic="all" aria-current="page"
+        >All posts <span>{posts.length}</span></a
+      >
+      {
+        tags.map((tag) => (
+          <a href={`/blog/?topic=${encodeURIComponent(tagSlug(tag))}`} data-topic={tagSlug(tag)}>
+            {tag}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="blog-feed" data-blog-feed>
+      {
+        posts.map((post, index) => (
+          <article
+            class:list={{ "blog-card--lead": index === 0 }}
+            class="blog-card"
+            data-post
+            data-topics={post.data.tags.map(tagSlug).join(" ")}
+          >
+            <a class="blog-card__media" href={slugFor(post)} aria-label={`Read ${post.data.title}`}>
+              {post.data.coverImage ? (
+                <img src={post.data.coverImage} alt="" loading={index === 0 ? "eager" : "lazy"} />
+              ) : (
+                <span class="blog-card__fallback">
+                  <span>crona.log</span>
+                  <strong>{(index + 1).toString().padStart(2, "0")}</strong>
+                </span>
+              )}
+            </a>
+            <div class="blog-card__content">
+              <div class="blog-card__topics">
+                {post.data.tags.map((tag) => (
+                  <span>{tag}</span>
+                ))}
+              </div>
+              <h2>
+                <a href={slugFor(post)}>{post.data.title}</a>
+              </h2>
+              <p>{post.data.description}</p>
+              <div class="blog-card__footer">
+                <>
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {formatDate(post.data.pubDate)}
+                  </time>
+                  <a href={slugFor(post)}>
+                    Read more <span aria-hidden="true">→</span>
+                  </a>
+                </>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+      <p class="blog-feed__empty" data-blog-empty hidden>No posts in this topic yet.</p>
+    </div>
+    <nav class="blog-pagination" aria-label="Blog pages" data-blog-pagination></nav>
+  </section>
+</BaseLayout>
+
+<script>
+  const pageSize = 9;
+  const feed = document.querySelector<HTMLElement>("[data-blog-feed]");
+  const cards = [...document.querySelectorAll<HTMLElement>("[data-post]")];
+  const empty = document.querySelector<HTMLElement>("[data-blog-empty]");
+  const pagination = document.querySelector<HTMLElement>("[data-blog-pagination]");
+  const topicLinks = [...document.querySelectorAll<HTMLAnchorElement>("[data-topic]")];
+  const params = new URLSearchParams(window.location.search);
+  const normalizeTopic = (value: string | null | undefined) => value?.trim().toLowerCase() || "all";
+  let topic = normalizeTopic(params.get("topic"));
+  let page = Math.max(1, Number(params.get("page") ?? "1") || 1);
+
+  const updateUrl = () => {
+    const next = new URL(window.location.href);
+    topic === "all" ? next.searchParams.delete("topic") : next.searchParams.set("topic", topic);
+    page === 1 ? next.searchParams.delete("page") : next.searchParams.set("page", String(page));
+    window.history.replaceState({}, "", next);
+  };
+  const render = () => {
+    const filtered = cards.filter((card) => {
+      if (topic === "all") return true;
+      const cardTopics = (card.dataset.topics ?? "").split(/\s+/).filter(Boolean);
+      return cardTopics.includes(topic);
+    });
+    const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
+    page = Math.min(page, pageCount);
+    cards.forEach((card) => {
+      card.hidden = true;
+    });
+    filtered.slice((page - 1) * pageSize, page * pageSize).forEach((card) => {
+      card.hidden = false;
+    });
+    if (empty) empty.hidden = filtered.length > 0;
+    topicLinks.forEach((link) => {
+      const active = link.dataset.topic === topic;
+      link.classList.toggle("is-active", active);
+      active ? link.setAttribute("aria-current", "page") : link.removeAttribute("aria-current");
+    });
+    if (pagination) {
+      pagination.replaceChildren();
+      if (pageCount > 1)
+        for (let index = 1; index <= pageCount; index += 1) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = String(index);
+          button.setAttribute("aria-label", `Page ${index}`);
+          button.setAttribute("aria-current", index === page ? "page" : "false");
+          button.addEventListener("click", () => {
+            page = index;
+            updateUrl();
+            render();
+            window.scrollTo({ top: feed?.offsetTop ?? 0, behavior: "smooth" });
+          });
+          pagination.append(button);
+        }
+    }
+    updateUrl();
+  };
+  topicLinks.forEach((link) =>
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      topic = normalizeTopic(link.dataset.topic);
+      page = 1;
+      render();
+    }),
+  );
+  render();
+</script>

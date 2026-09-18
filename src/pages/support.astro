@@ -1,81 +1,150 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "./_support/support.scss";
+
+const routes = [
+  {
+    number: "01",
+    label: "Something is broken",
+    title: "Report a bug",
+    description:
+      "Open an issue with your OS, Crona version, install method, and the steps that reproduce the problem.",
+    href: "https://github.com/webxsid/crona/issues",
+    action: "Open GitHub Issues",
+  },
+  {
+    number: "02",
+    label: "You need some context",
+    title: "Ask a question or share feedback",
+    description:
+      "Discuss a workflow, suggest an improvement, or check whether the thing you need already exists.",
+    href: "https://crona.userjot.com/?cursor=1&order=top&limit=10",
+    action: "Open feedback board",
+    secondaryHref: "https://github.com/webxsid/crona/discussions",
+    secondaryAction: "Technical discussions",
+  },
+  {
+    number: "03",
+    label: "Check what changed",
+    title: "Read the releases",
+    description:
+      "Confirm your current version, find the latest builds, and follow changes across Crona core and macOS.",
+    href: "/releases/",
+    action: "View releases",
+  },
+  {
+    number: "04",
+    label: "Make it better",
+    title: "Contribute to Crona",
+    description:
+      "Browse the source, improve the project, or learn how to contribute to the workflow and codebase.",
+    href: "https://github.com/webxsid/crona",
+    action: "Open repository",
+  },
+];
+const checklist = [
+  "Crona version",
+  "Operating system and architecture",
+  "Install method",
+  "Steps to reproduce",
+  "Relevant logs or screenshots",
+];
 ---
 
 <BaseLayout
   title="Support"
-  pageTitle="Crona support"
-  description="Need help with Crona? Bugs, questions, and contribution paths."
+  pageTitle="Support | Crona"
+  description="Find the right place to ask a question, report a bug, or contribute to Crona."
 >
-  <section class="container section">
-    <div class="page-header flow measure">
-      <h1>Need help with Crona?</h1>
-      <p>Bugs, questions, and contribution paths.</p>
-      <p class="support-sub-headline">Crona is maintained in the open. The fastest way to get help is usually through GitHub.</p>
-    </div>
+  <section class="support-page container section" aria-labelledby="support-title">
+    <header class="support-hero">
+      <h1 id="support-title">Let’s find the right place to start.</h1>
+      <p class="support-hero__intro">
+        Crona is maintained in the open. Choose the path that best matches what you need and the
+        project can help you move forward.
+      </p>
+    </header>
 
-    <div class="support-grid page-body">
-      <article class="support-card support-card--primary">
-        <span>Releases</span>
-        <strong>Check the latest Crona builds and release notes.</strong>
-        <p>Find current core and macOS releases, then follow the project updates on GitHub.</p>
-        <ul class="support-card__links">
-          <li><a href="/releases/">Releases</a></li>
-          <li><a href="https://github.com/webxsid/crona/releases" rel="noreferrer">GitHub releases</a></li>
-        </ul>
-      </article>
-
-      <article class="support-card support-card--primary">
-        <span>Report a Bug</span>
-        <strong>Found broken behavior or an incorrect result?</strong>
-        <p>Found a bug or broken workflow? Open an issue with your OS, Crona version, install method, and reproduction steps.</p>
-        <ul class="support-card__links">
-          <li><a href="https://github.com/webxsid/crona/issues" rel="noreferrer">GitHub Issues</a></li>
-        </ul>
-      </article>
-
-      <article class="support-card support-card--primary">
-        <span>Ask a Question</span>
-        <strong>Need help understanding a workflow or feature?</strong>
-        <p>Ask how something works, discuss workflows, or check whether a feature already exists.</p>
-        <ul class="support-card__links">
-          <li><a href="https://github.com/webxsid/crona/discussions" rel="noreferrer">GitHub Discussions</a></li>
-        </ul>
-      </article>
-
-      <article class="support-card support-card--primary">
-        <span>Contribute</span>
-        <strong>Browse the code, file improvements, or help shape the workflow.</strong>
-        <p>Crona is open source. Browse the code, file improvements, or help shape the workflow.</p>
-        <ul class="support-card__links">
-          <li><a href="https://github.com/webxsid/crona" rel="noreferrer">GitHub repository</a></li>
-          <li><a href="https://docs.crona.work/contributing/" rel="noreferrer">Contribution guide</a></li>
-          <li><a href="https://docs.crona.work/development/" rel="noreferrer">Development docs</a></li>
-        </ul>
-      </article>
-    </div>
-
-    <section class="support-section page-body">
-      <div class="page-header flow support-section__header">
-        <h2>Common places to start</h2>
+    <section class="support-routes" aria-labelledby="support-routes-title">
+      <div class="support-section-heading">
+        <h2 id="support-routes-title">What brings you here?</h2>
       </div>
-
-      <ul class="support-topics">
-        <li><a href="https://github.com/webxsid/crona/issues" rel="noreferrer">Report a bug</a></li>
-        <li><a href="https://github.com/webxsid/crona/discussions" rel="noreferrer">Ask a question</a></li>
-        <li><a href="/releases/">Read release notes</a></li>
-      </ul>
+      <div class="support-route-list">
+        {
+          routes.map((route) => (
+            <article class="support-route">
+              <>
+                <span class="support-route__number">{route.number}</span>
+                <div class="support-route__body">
+                  <>
+                    <p class="support-route__label">{route.label}</p>
+                    <h3>{route.title}</h3>
+                    <p>{route.description}</p>
+                    <div class="support-route__actions">
+                      <a
+                        class="support-route__action"
+                        href={route.href}
+                        {...(route.href.startsWith("http") ? { rel: "noreferrer" } : {})}
+                      >
+                        {route.action} <span aria-hidden="true">↗</span>
+                      </a>
+                      {route.secondaryHref && (
+                        <a
+                          class="support-route__secondary"
+                          href={route.secondaryHref}
+                          rel="noreferrer"
+                        >
+                          {route.secondaryAction} <span aria-hidden="true">↗</span>
+                        </a>
+                      )}
+                    </div>
+                  </>
+                </div>
+              </>
+            </article>
+          ))
+        }
+      </div>
     </section>
 
-    <section class="support-section page-body">
-      <div class="page-header flow support-section__header">
-        <h2>Support expectations</h2>
+    <section class="support-details" aria-labelledby="support-details-title">
+      <div class="support-section-heading">
+        <h2 id="support-details-title">Bring a little context.</h2>
       </div>
+      <div class="support-details__content">
+        <p>
+          Before opening an issue, check the latest release and include the details below. A small,
+          reproducible report is easier to act on.
+        </p><ul class="support-checklist">
+          {
+            checklist.map((item, index) => (
+              <li>
+                <span>{(index + 1).toString().padStart(2, "0")}</span>
+                {item}
+              </li>
+            ))
+          }
+        </ul><a class="support-inline-link" href="/releases/"
+          >Check current releases <span aria-hidden="true">→</span></a
+        >
+      </div>
+    </section>
 
-      <p class="support-copy">
-        Crona is an open-source project maintained in public. Community support happens through GitHub Issues and Discussions. Response times may vary.
+    <section class="support-expectations" aria-labelledby="support-expectations-title">
+      <h2 id="support-expectations-title">Support happens in public.</h2><p>
+        Crona is an open-source project maintained in public through GitHub Issues, Discussions, and
+        UserJot. Response times may vary, but keeping the conversation there helps the next person
+        too.
       </p>
     </section>
+    <div class="support-closing">
+      <a class="button" href="https://github.com/webxsid/crona/issues" rel="noreferrer"
+        >Open GitHub Issues</a
+      ><a
+        class="button button--secondary"
+        href="https://crona.userjot.com/?cursor=1&order=top&limit=10"
+        rel="noreferrer">Share feedback</a
+      >
+    </div>
   </section>
 </BaseLayout>

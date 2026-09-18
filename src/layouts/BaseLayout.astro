@@ -12,6 +12,7 @@ interface Props {
   noindex?: boolean;
   ogType?: "website" | "article";
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
+  hideChrome?: boolean;
 }
 
 const {
@@ -23,11 +24,15 @@ const {
   noindex = false,
   ogType = "website",
   structuredData,
+  hideChrome = false,
 } = Astro.props;
 
-const documentTitle = pageTitle ?? (title === "Crona" ? "Crona | Make the workday readable" : `${title} | Crona`);
+const documentTitle =
+  pageTitle ?? (title === "Crona" ? "Crona | Make the workday readable" : `${title} | Crona`);
 const siteUrl = Astro.site ?? new URL("https://crona.work");
-const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : new URL(Astro.url.pathname, siteUrl).href;
+const canonicalUrl = canonical
+  ? new URL(canonical, siteUrl).href
+  : new URL(Astro.url.pathname, siteUrl).href;
 const imageUrl = new URL(image ?? "/social/crona-og.png", siteUrl).href;
 const imageAlt = `${pageTitle ?? title} preview`;
 const robotsContent = noindex ? "noindex,follow" : "index,follow";
@@ -61,6 +66,12 @@ const jsonLdEntries = [
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c0c0b" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0c0c0b" />
     <link rel="canonical" href={canonicalUrl} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Crona notes"
+      href={new URL("/blog/rss.xml", siteUrl).href}
+    />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="Crona" />
     <meta property="og:type" content={ogType} />
@@ -76,24 +87,65 @@ const jsonLdEntries = [
     <meta name="twitter:title" content={documentTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
-    <link rel="icon" type="image/svg+xml" href="/brand/marks/crona-dark.svg" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/svg+xml" href="/brand/marks/crona-light.svg" media="(prefers-color-scheme: light)" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/brand/icons/crona-dark-16.png" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/brand/icons/crona-dark-32.png" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/brand/icons/crona-light-16.png" media="(prefers-color-scheme: light)" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/brand/icons/crona-light-32.png" media="(prefers-color-scheme: light)" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/brand/marks/crona-dark.svg"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/brand/marks/crona-light.svg"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/brand/icons/crona-dark-16.png"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/brand/icons/crona-dark-32.png"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/brand/icons/crona-light-16.png"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/brand/icons/crona-light-32.png"
+      media="(prefers-color-scheme: light)"
+    />
     <link rel="icon" type="image/x-icon" href="/brand/icons/crona-favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" sizes="1024x1024" href="/brand/icons/crona-light-1024.png" />
     <title>{documentTitle}</title>
-    {jsonLdEntries.map((schema) => <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />)}
+    {
+      jsonLdEntries.map((schema) => (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+      ))
+    }
   </head>
   <body>
-    <div class="site-shell" data-route={Astro.url.pathname}>
-      <SiteHeader currentPath={Astro.url.pathname} />
+    <div
+      class:list={{ "site-shell": true, "site-shell--minimal": hideChrome }}
+      data-route={Astro.url.pathname}
+    >
+      {!hideChrome && <SiteHeader currentPath={Astro.url.pathname} />}
       <main class="site-buffer" data-route={Astro.url.pathname}>
         <slot />
       </main>
-      <SiteFooter currentPath={Astro.url.pathname} />
+      {!hideChrome && <SiteFooter currentPath={Astro.url.pathname} />}
     </div>
   </body>
 </html>

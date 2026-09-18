@@ -1,0 +1,116 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "./blog.scss";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.data.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const byRef = new Map(
+  posts.flatMap((entry) => [
+    [entry.id, entry],
+    [entry.data.slug, entry],
+    [entry.id.replace(/\.(md|mdx)$/, ""), entry],
+    [`/blog/${entry.data.slug}/`, entry],
+  ]),
+);
+for (const ref of post.data.relatedArticles) {
+  if (!/^https?:\/\//.test(ref) && !byRef.has(ref))
+    throw new Error(`Unknown related blog article: ${ref}`);
+}
+const related = post.data.relatedArticles
+  .map((ref) => ({ ref, post: byRef.get(ref) }))
+  .filter((entry) => entry.post || /^https?:\/\//.test(entry.ref));
+const canonical = post.data.canonicalUrl;
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+const articleUrl = new URL(
+  `/blog/${post.data.slug}/`,
+  Astro.site ?? "https://crona.work",
+).href;
+---
+
+<BaseLayout
+  title={post.data.title}
+  pageTitle={`${post.data.title} | Crona blog`}
+  description={post.data.description}
+  canonical={canonical}
+  ogType="article"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${articleUrl}#article`,
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${articleUrl}#page` },
+    author: { "@type": "Organization", name: post.data.author, url: "https://crona.work" },
+    publisher: {
+      "@type": "Organization",
+      "@id": "https://crona.work/#organization",
+      name: "Crona",
+      url: "https://crona.work",
+    },
+    ...(post.data.coverImage
+      ? { image: new URL(post.data.coverImage, Astro.site ?? "https://crona.work").href }
+      : {}),
+  }}
+>
+  <article class="blog-article container section">
+    <a class="blog-article__back" href="/blog/">← all notes</a>
+    <header class="blog-article__header">
+      <h1>{post.data.title}</h1>
+      <p class="blog-article__description">{post.data.description}</p>
+      <div class="blog-article__meta">
+        <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>{
+          post.data.tags.map((tag) => <span>{tag}</span>)
+        }{canonical && <span>reposted · canonical source</span>}
+      </div>
+    </header>
+    <div class="blog-article__layout">
+      <div class="blog-prose" id="article-content"><Content /></div>
+    </div>
+    {
+      related.length > 0 && (
+        <section class="blog-related" id="related" aria-labelledby="related-title">
+          <>
+            <div class="blog-index__heading">
+              <>
+                <span id="related-title">Related notes</span>
+                <span>{related.length.toString().padStart(2, "0")} links</span>
+              </>
+            </div>
+            <div class="blog-related__grid">
+              {related.map(({ ref, post: relatedPost }) =>
+                relatedPost ? (
+                  <a href={`/blog/${relatedPost.data.slug}/`}>
+                    <span>{formatDate(relatedPost.data.pubDate)}</span>
+                    <strong>{relatedPost.data.title}</strong>
+                  </a>
+                ) : (
+                  <a href={ref} rel="noreferrer">
+                    <span>external note ↗</span>
+                    <strong>{ref}</strong>
+                  </a>
+                ),
+              )}
+            </div>
+          </>
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>

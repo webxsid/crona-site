@@ -1,0 +1,91 @@
+media:
+  input: public/assets/blog
+  output: /assets/blog
+  rename: safe
+  extensions: [png, jpg, jpeg, webp, avif]
+
+content:
+  - name: blog
+    label: Blog posts
+    type: collection
+    path: src/content/blog
+    format: yaml-frontmatter
+    filename: "{slug}.md"
+    view:
+      fields: [title, pubDate, author, draft]
+      primary: title
+      sort: [pubDate, title]
+      search: [title, description, tags, author]
+      default:
+        sort: pubDate
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: slug
+        label: URL slug
+        type: string
+        required: true
+        pattern:
+          regex: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          message: "Use lowercase words separated by hyphens."
+        description: "The article URL segment. Keep this stable after publishing."
+      - name: description
+        label: Description
+        type: text
+        required: true
+        description: "A concise summary used in cards and search metadata."
+      - name: pubDate
+        label: Publication date
+        type: date
+        required: true
+      - name: updatedDate
+        label: Updated date
+        type: date
+      - name: tags
+        label: Topics
+        type: string
+        list: true
+      - name: coverImage
+        label: Cover image
+        type: image
+      - name: coverImageAlt
+        label: Cover image alt text
+        type: text
+        description: "Describe the image for readers using assistive technology."
+      - name: author
+        label: Author
+        type: string
+        required: true
+      - name: relatedArticles
+        label: Related articles
+        type: string
+        list: true
+        description: "Use another article slug or a complete external URL."
+      - name: canonicalUrl
+        label: Canonical URL
+        type: string
+        description: "Only use this when reposting an article published elsewhere."
+        pattern:
+          regex: "^https?://[^\\s]+$"
+          message: "Enter a complete http:// or https:// URL."
+      - name: draft
+        label: Draft
+        type: boolean
+        description: "Draft posts stay out of the public blog, RSS feed, and sitemap."
+      - name: body
+        label: Article body
+        type: rich-text
+        required: true
+
+settings:
+  content:
+    merge: true
+  commit:
+    templates:
+      create: "content(blog): create {filename}"
+      update: "content(blog): update {filename}"
+      delete: "content(blog): delete {filename}"
+      rename: "content(blog): rename {oldFilename} to {newFilename}"
